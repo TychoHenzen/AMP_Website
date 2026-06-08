@@ -12,6 +12,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
+      "browserExecutablePath": "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "applicationUrl": "https://localhost:7294;http://localhost:5111",
       "environmentVariables": {

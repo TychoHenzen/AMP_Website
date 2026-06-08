@@ -1,42 +1,79 @@
-﻿@page "/"
+@page "/"
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Tycho Henzen - Software Engineer Portfolio</PageTitle>
 
 <div class="container mt-5">
-    <div class="jumbotron">
-        <h1 class="display-4">Tycho Henzen</h1>
-        <p class="lead">Versatile and innovative Software Engineer with 8+ years of experience in game development, industrial automation, and complex software systems.</p>
-        <hr class="my-4">
-        <p>Expertise in C#, C++, and game development, with a strong background in performance optimization, network programming, and algorithm development.</p>
+    <div class="terminal-hero">
+        <div class="terminal-section">
+            <div class="terminal-header">
+                <span class="terminal-title">portfolio.sh</span>
+                <div class="terminal-buttons ms-auto">
+                    <span class="terminal-button"></span>
+                    <span class="terminal-button"></span>
+                    <span class="terminal-button"></span>
+                </div>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">whoami</span>
+                </div>
+                <p class="mt-2 mb-3" style="color: #e5c07b; font-size: 1.5rem; font-weight: 600;">Tycho Henzen</p>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">cat role.txt</span>
+                </div>
+                <p class="mt-2 mb-3" style="color: #98c379;">Software Engineer</p>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">echo $BIO</span>
+                </div>
+                <p class="mt-2 mb-0" style="color: #abb2bf;">
+                    <span id="typing-text"></span><span class="typing-cursor"></span>
+                </p>
+            </div>
+        </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-md-4">
-            <h2>Skills</h2>
-            <ul>
-                <li>C#, C++, Java, Python</li>
-                <li>Unity, Godot, WPF, Blazor</li>
-                <li>Network Programming (UDP/TCP)</li>
-                <li>Performance Optimization</li>
-                <li>Algorithm Development</li>
-            </ul>
-        </div>
-        <div class="col-md-4">
-            <h2>Experience</h2>
-            <h5 class="fs-6">Software Engineer - Ellips B.V.</h5>
-            <p class="fs-8">Sep 2023 - Present</p>
-            <h5 class="fs-6">Software Engineer - VRee B.V.</h5>
-            <p class="fs-8">Nov 2019 - Jun 2023</p>
-        </div>
-        <div class="col-md-4">
-            <h2>Education</h2>
-            <h5>ICT / Software Engineering</h5>
-            <p>Fontys Hogescholen, Eindhoven (2010 - 2015)</p>
-            <ul>
-                <li>Minor in Game design</li>
-                <li>OpenGL in C++</li>
-                <li>Linear algebra for 3D rendering</li>
-            </ul>
-        </div>
+    <p class="text-center mt-4" style="color: #9ca3af; font-size: 1.1rem;">
+        Versatile Software Engineer with 8+ years of experience in game development, industrial automation, and complex software systems.
+    </p>
+
+    <div class="cta-grid mt-5">
+        <a href="projects" class="cta-card">
+            <i class="fa-solid fa-folder-open"></i>
+            <h3>Projects</h3>
+            <p>Games, tools, and experiments</p>
+        </a>
+        <a href="skills" class="cta-card">
+            <i class="fa-solid fa-code"></i>
+            <h3>Skills</h3>
+            <p>Languages, frameworks, and tools</p>
+        </a>
+        <a href="experience" class="cta-card">
+            <i class="fa-solid fa-briefcase"></i>
+            <h3>Experience</h3>
+            <p>Professional career timeline</p>
+        </a>
+        <a href="contact" class="cta-card">
+            <i class="fa-solid fa-envelope"></i>
+            <h3>Contact</h3>
+            <p>Get in touch</p>
+        </a>
     </div>
 </div>
+
+@code {
+    private bool hasRendered = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !hasRendered)
+        {
+            hasRendered = true;
+            await JSRuntime.InvokeVoidAsync("startTypingAnimation", "typing-text",
+                "Expertise in C#, C++, and game development. Strong background in performance optimization, network programming, and algorithm development.", 30);
+        }
+    }
+}

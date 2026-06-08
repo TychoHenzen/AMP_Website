@@ -30,7 +30,9 @@ Single-project Blazor WASM app. Solution file: `AutoARPG_WebAsm.sln`, project: `
 
 **Pages** (5 routes in `Pages/`): Index (`/`), Projects (`/projects`), Skills (`/skills`), Experience (`/experience`), Contact (`/contact`). Projects page is the most complex — has search, tag filtering, category grouping, and media display (images/videos/PDFs).
 
-**Layout**: `Shared/MainLayout.razor` + `Shared/NavMenu.razor`. Component-scoped CSS via `.razor.css` files.
+**Layout**: `Shared/MainLayout.razor` (top navbar + footer) + `Shared/NavMenu.razor` (horizontal nav with Font Awesome icons, hamburger on mobile). Dark modern theme — `#0a0a0a` body, `#1a1a2e` navbar, `#60a5fa` accent. Global styles in `wwwroot/css/app.css` with Bootstrap dark overrides. Inter font (Google Fonts CDN) for body, monospace for terminal elements.
+
+**Design patterns**: Terminal-style sections (`.terminal-section`, `.terminal-header`, `.terminal-body`) used on Index hero, Skills page, and Projects page. Experience page uses vertical timeline (`.timeline`, `.timeline-item`). Index has JS-interop typing animation (`OnAfterRenderAsync`).
 
 **State**: Component-local only. No global state store. `SessionStorage` available via Blazored but used sparingly.
 

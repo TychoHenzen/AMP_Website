@@ -1,49 +1,48 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top site-navbar">
+    <div class="container">
         <a class="navbar-brand" href="">Tycho Henzen</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+        <button class="navbar-toggler" type="button" @onclick="ToggleNavMenu" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse @NavMenuCssClass" @onclick="ToggleNavMenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <i class="fa-solid fa-house"></i> Home
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="projects">
+                        <i class="fa-solid fa-folder-open"></i> Projects
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="skills">
+                        <i class="fa-solid fa-code"></i> Skills
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="experience">
+                        <i class="fa-solid fa-briefcase"></i> Experience
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="contact">
+                        <i class="fa-solid fa-envelope"></i> Contact
+                    </NavLink>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="projects">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Projects
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="skills">
-                <span class="oi oi-code" aria-hidden="true"></span> Skills
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="experience">
-                <span class="oi oi-briefcase" aria-hidden="true"></span> Experience
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="contact">
-                <span class="oi oi-envelope-closed" aria-hidden="true"></span> Contact
-            </NavLink>
-        </div>
-    </nav>
-</div>
+</nav>
 
 @code {
-private bool collapseNavMenu = true;
+    private bool collapseNavMenu = true;
 
-private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string? NavMenuCssClass => collapseNavMenu ? null : "show";
 
-private void ToggleNavMenu()
-{
-collapseNavMenu = !collapseNavMenu;
-}
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
 }

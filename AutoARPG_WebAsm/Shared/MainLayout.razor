@@ -1,24 +1,25 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://github.com/TychoHenzen" target="_blank" class="ml-md-auto">GitHub</a>
-            <a href="https://www.linkedin.com/in/tychohenzen" target="_blank" class="ml-2">LinkedIn</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+<div class="navbar-wrapper">
+    <NavMenu />
 </div>
 
-<footer class="border-top footer text-muted">
+<main class="main-content">
+    <article class="content px-4">
+        @Body
+    </article>
+</main>
+
+<footer class="site-footer">
     <div class="container">
-        &copy; 2024 Tycho Henzen - Software Engineer
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="https://github.com/TychoHenzen" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/tychohenzen" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://twitter.com/siriusblack9999" target="_blank" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://steamcommunity.com/aerialmage" target="_blank" aria-label="Steam"><i class="fab fa-steam"></i></a>
+            </div>
+            <p>&copy; 2026 Tycho Henzen. All rights reserved.</p>
+        </div>
     </div>
 </footer>

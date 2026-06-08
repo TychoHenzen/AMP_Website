@@ -1,7 +1,16 @@
-﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+﻿/* Dark Modern Portfolio Theme */
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #0a0a0a;
+    color: #e5e7eb;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #f9fafb;
+    font-weight: 600;
 }
 
 h1:focus {
@@ -9,13 +18,49 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: #60a5fa;
+    transition: color 0.2s ease;
+}
+
+a:hover, .btn-link:hover {
+    color: #93c5fd;
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.btn-secondary {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+.btn-secondary:hover {
+    background-color: #4b5563;
+    border-color: #6b7280;
+}
+
+.btn-outline-primary {
+    color: #60a5fa;
+    border-color: #60a5fa;
+}
+
+.btn-outline-primary:hover {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+    color: #fff;
+}
+
+.text-muted {
+    color: #9ca3af !important;
 }
 
 .content {
@@ -27,23 +72,24 @@ a, .btn-link {
 }
 
 .invalid {
-    outline: 1px solid red;
+    outline: 1px solid #ef4444;
 }
 
 .validation-message {
-    color: red;
+    color: #ef4444;
 }
 
 #blazor-error-ui {
-    background: lightyellow;
+    background: #1f2937;
     bottom: 0;
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.4);
     display: none;
     left: 0;
     padding: 0.6rem 1.25rem 0.7rem 1.25rem;
     position: fixed;
     width: 100%;
     z-index: 1000;
+    color: #fbbf24;
 }
 
 #blazor-error-ui .dismiss {
@@ -63,36 +109,102 @@ a, .btn-link {
     content: "An error has occurred."
 }
 
+/* --- Top Navbar --- */
+.site-navbar {
+    background-color: #1a1a2e;
+    border-bottom: 1px solid #2d2d44;
+}
+
+.site-navbar .navbar-brand {
+    color: #f9fafb;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.site-navbar .nav-link {
+    color: #9ca3af;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+.site-navbar .nav-link:hover {
+    color: #60a5fa;
+}
+
+.site-navbar .nav-link.active {
+    color: #60a5fa !important;
+}
+
+.site-navbar .nav-link i {
+    margin-right: 0.4rem;
+}
+
+/* --- Footer --- */
+.site-footer {
+    background-color: #111827;
+    border-top: 1px solid #1f2937;
+    padding: 2rem 0;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.footer-social a {
+    color: #9ca3af;
+    font-size: 1.5rem;
+    transition: color 0.2s ease;
+    text-decoration: none;
+}
+
+.footer-social a:hover {
+    color: #60a5fa;
+}
+
+.footer-content p {
+    color: #6b7280;
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+/* --- Social Icons (Contact page) --- */
 .social-icons {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 20px; /* Adds space between icons */
+    gap: 20px;
     margin-top: 15px;
 }
 
-/* Individual Icon Styles */
 .social-icons a {
-    color: #333;
+    color: #9ca3af;
     transition: color 0.3s ease;
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px; /* Fixed width for each icon container */
-    height: 60px; /* Fixed height for each icon container */
+    width: 60px;
+    height: 60px;
 }
 
 .social-icons a:hover {
-    color: #007bff;
+    color: #60a5fa;
 }
 
-/* Twitter/X Icon Specific Styles */
 .twitter-icon {
     position: relative;
     display: inline-block;
-    width: 60px; /* Match the width of other icons */
-    height: 60px; /* Match the height of other icons */
+    width: 60px;
+    height: 60px;
 }
 
 .twitter-icon .x-icon,
@@ -116,25 +228,68 @@ a, .btn-link {
     opacity: 1;
 }
 
-/* Ensure all icons are the same size */
 .social-icons i.fab {
-    font-size: 2.5rem; /* Adjust size as needed */
+    font-size: 2.5rem;
 }
 
+/* --- Bootstrap Dark Overrides --- */
+.container {
+    max-width: 1140px;
+}
+
+.form-control {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+.form-control:focus {
+    background-color: #1f2937;
+    border-color: #60a5fa;
+    color: #e5e7eb;
+    box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25);
+}
+
+.form-control::placeholder {
+    color: #6b7280;
+}
+
+.list-group-item {
+    background-color: #111827;
+    border-color: #1f2937;
+    color: #e5e7eb;
+}
+
+.alert-danger {
+    background-color: #451a1a;
+    border-color: #7f1d1d;
+    color: #fca5a5;
+}
+
+/* --- Dropdown --- */
 .dropdown-menu {
     max-height: 200px;
     overflow-y: auto;
+    background-color: #1f2937;
+    border-color: #374151;
 }
 
 .dropdown-item {
     cursor: pointer;
+    color: #e5e7eb;
+}
+
+.dropdown-item:hover {
+    background-color: #374151;
+    color: #f9fafb;
 }
 
 .dropdown-item:active {
-    background-color: #007bff;
+    background-color: #3b82f6;
     color: white;
 }
 
+/* --- Modal Dark Theme --- */
 .modal {
     position: fixed;
     top: 0;
@@ -143,7 +298,7 @@ a, .btn-link {
     height: 100%;
     overflow-y: auto;
     z-index: 1050;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .modal-dialog {
@@ -154,60 +309,66 @@ a, .btn-link {
 .modal-content {
     max-height: calc(100vh - 3.5rem);
     overflow-y: auto;
-    border: none;
+    border: 1px solid #2d2d44;
     border-radius: 0.5rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.5);
+    background-color: #111827;
+    color: #e5e7eb;
 }
 
 .modal-header {
-    border-bottom: none;
+    border-bottom: 1px solid #1f2937;
     padding: 1.5rem;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
+    background-color: #1a1a2e;
 }
 
 .modal-body {
-    padding: 0.5rem;
+    padding: 1.5rem;
 }
 
 .modal-footer {
-    border-top: none;
-    padding: 0.5rem;
+    border-top: 1px solid #1f2937;
+    padding: 1rem 1.5rem;
 }
 
+/* --- Badge --- */
 .badge {
     font-size: 0.85em;
     padding: 0.35em 0.65em;
     transition: background-color 0.3s ease-in-out;
 }
 
-.badge:hover {
-    background-color: #4a4a4a;
+.badge.bg-secondary {
+    background-color: #374151 !important;
+    color: #e5e7eb;
 }
 
-.btn-outline-primary:hover {
-    background-color: #0056b3;
+.badge:hover {
+    background-color: #4b5563 !important;
 }
+
+/* --- Project Cards --- */
 .modal .project-image-placeholder {
-    height: 300px; /* Adjust this value as needed */
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f8f9fa;
-    color: #6c757d;
+    background-color: #1f2937;
+    color: #6b7280;
 }
 
 .modal .card-body .img-fluid {
     width: 100%;
-    height: 300px; /* Should match the placeholder height */
+    height: 300px;
     object-fit: cover;
 }
+
 .custom-carousel {
     position: relative;
 }
 
 .custom-carousel .carousel-content {
-    background-color: #f8f9fa;
+    background-color: #1f2937;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -216,39 +377,25 @@ a, .btn-link {
     width: 100%;
     height: auto;
     object-fit: contain;
-    max-height: 400px; /* Adjust this value as needed */
+    max-height: 400px;
 }
 
 .custom-carousel .ratio {
-    max-height: 400px; /* Should match the image max-height */
+    max-height: 400px;
 }
 
 .custom-carousel .carousel-controls {
     margin-top: 10px;
 }
 
-.custom-carousel .btn-outline-primary {
-    border-color: #007bff;
-    color: #007bff;
-}
-
-.custom-carousel .btn-outline-primary:hover:not(:disabled) {
-    background-color: #007bff;
-    color: white;
-}
-
-.custom-carousel .btn-outline-primary:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
 .pdf-thumbnail, .pdf-preview {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 200px;
-    background-color: #f8f9fa;
-    color: #495057;
+    background-color: #1f2937;
+    color: #9ca3af;
 }
 
 .pdf-thumbnail i, .pdf-preview i {
@@ -276,15 +423,24 @@ a, .btn-link {
 
 .card {
     transition: all 0.3s ease;
+    background-color: #111827;
+    border: 1px solid #1f2937;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border-color: #3b82f6;
 }
 
 .card-body {
-    background-color: #f8f9fa;
+    background-color: #111827;
+    color: #e5e7eb;
+}
+
+.card-footer {
+    background-color: #0f172a;
+    border-top: 1px solid #1f2937;
 }
 
 .project-image {
@@ -293,7 +449,7 @@ a, .btn-link {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e9ecef;
+    background-color: #1f2937;
 }
 
 .project-image img {
@@ -312,13 +468,15 @@ a, .btn-link {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #6c757d;
+    color: #6b7280;
 }
+
+/* --- Terminal Styles --- */
 .terminal-section {
     background-color: #1e1e1e;
     border-radius: 6px;
     overflow: hidden;
-    font-family: 'Consolas', 'Courier New', monospace;
+    font-family: 'Consolas', 'JetBrains Mono', 'Courier New', monospace;
 }
 
 .terminal-header {
@@ -353,6 +511,7 @@ a, .btn-link {
     padding: 20px;
     color: #abb2bf;
 }
+
 .comment-line {
     color: #5c6370;
     margin-bottom: 20px;
@@ -404,6 +563,161 @@ a, .btn-link {
     hyphens: auto;
 }
 
+/* --- Terminal Hero (Home page) --- */
+.terminal-hero {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.terminal-hero .terminal-body {
+    min-height: 120px;
+}
+
+.typing-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.2em;
+    background-color: #61afef;
+    margin-left: 2px;
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* --- Terminal Skill Bar --- */
+.terminal-skill-bar {
+    font-family: 'Consolas', 'JetBrains Mono', 'Courier New', monospace;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.terminal-skill-name {
+    color: #98c379;
+    display: inline-block;
+    min-width: 200px;
+}
+
+.terminal-skill-blocks {
+    color: #61afef;
+    letter-spacing: 1px;
+}
+
+.terminal-skill-pct {
+    color: #e5c07b;
+    margin-left: 0.5rem;
+}
+
+/* --- Timeline (Experience page) --- */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #3b82f6;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -1.85rem;
+    top: 0.5rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #3b82f6;
+    border: 3px solid #0a0a0a;
+}
+
+.timeline-card {
+    background-color: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transition: border-color 0.2s ease;
+}
+
+.timeline-card:hover {
+    border-color: #3b82f6;
+}
+
+.timeline-date {
+    color: #60a5fa;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* --- CTA Section (Home page) --- */
+.cta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cta-card {
+    background-color: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    color: #e5e7eb;
+    transition: all 0.2s ease;
+    display: block;
+}
+
+.cta-card:hover {
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+    color: #f9fafb;
+    text-decoration: none;
+}
+
+.cta-card i {
+    font-size: 2rem;
+    color: #60a5fa;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.cta-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.cta-card p {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* --- Contact Form Dark --- */
+.dark-form label {
+    color: #e5e7eb;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.dark-form .form-group {
+    margin-bottom: 1rem;
+}
+
+/* --- Utility --- */
 .row.g-2 {
     margin-right: -5px;
     margin-left: -5px;

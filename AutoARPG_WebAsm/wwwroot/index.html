@@ -32,10 +32,6 @@
                         resolve(JSON.stringify({success: false, error: "Unexpected error: " + error}));
                     }));
         };
-        window.setPlaceholderImage = function (img) {
-            img.onerror = null; // Prevents infinite loop if placeholder also fails to load
-            img.src = 'images/placeholder.jpg'; // Replace with your actual placeholder image path
-        }
     </script>
 </head>
 
@@ -48,14 +44,6 @@
     <a class="dismiss">🗙</a>
 </div>
 <script src="_framework/blazor.webassembly.js"></script>
-<script>
-    window.scrollToElement = elementId => {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.scrollIntoView({behavior: 'smooth'});
-        }
-    };
-</script>
 </body>
 
 </html>

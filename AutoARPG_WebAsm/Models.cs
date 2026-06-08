@@ -1,31 +1,5 @@
-﻿using System.Net.Http.Json;
-
-public class ProjectService
-{
-    private readonly HttpClient _httpClient;
-
-    public ProjectService(HttpClient httpClient)
-    {
-        _httpClient = httpClient;
-    }
-
-    public async Task<List<ProjectInfo>> GetProjectsAsync()
-    {
-        try
-        {
-            var projects = await _httpClient.GetFromJsonAsync<List<ProjectInfo>>("projects/projects.json");
-            return projects ?? new List<ProjectInfo>();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading projects: {ex.Message}");
-            return new List<ProjectInfo>();
-        }
-    }
-}
 public class ProjectInfo
 {
-    
     public bool Finished { get; set; } = false;
     public string Title { get; set; } = "";
     public string Description { get; set; } = "";
@@ -42,7 +16,7 @@ public class MediaItem
     public string Url { get; set; } = "";
     public string Name { get; set; } = "";
     public MediaType Type { get; set; }
-}   
+}
 
 public enum MediaType
 {

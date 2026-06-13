@@ -1,0 +1,295 @@
+@page "/edit/new"
+@page "/edit/{Index:int}"
+@inject ProjectDataService DataService
+@inject NavigationManager Nav
+@rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
+
+<h1 class="mb-3">@(Index.HasValue ? "Edit Project" : "New Project")</h1>
+
+<a href="/" class="btn btn-outline-secondary mb-3">← Back to list</a>
+
+@if (_errorMessage != null)
+{
+    <div class="alert alert-danger">@_errorMessage</div>
+}
+
+<EditForm Model="_project" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+
+    <div class="row g-3">
+        <!-- Title -->
+        <div class="col-12">
+            <label class="form-label fw-bold">Title <span class="text-danger">*</span></label>
+            <InputText class="form-control" @bind-Value="_project.Title" />
+        </div>
+
+        <!-- Description -->
+        <div class="col-12">
+            <label class="form-label fw-bold">Description</label>
+            <InputTextArea class="form-control" rows="3" @bind-Value="_project.Description" />
+        </div>
+
+        <!-- FullDescription -->
+        <div class="col-12">
+            <label class="form-label fw-bold">FullDescription</label>
+            <InputTextArea class="form-control" rows="5" @bind-Value="_project.FullDescription" />
+        </div>
+
+        <!-- Tags -->
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Tags <span class="text-muted">(comma-separated)</span></label>
+            <InputText class="form-control" @bind-Value="_tagsInput" placeholder="e.g. C#, Unity, 3D" />
+        </div>
+
+        <!-- Category -->
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Category</label>
+            <InputText class="form-control" @bind-Value="_project.Category" placeholder="e.g. Games" />
+        </div>
+
+        <!-- SourceUrl -->
+        <div class="col-md-8">
+            <label class="form-label fw-bold">SourceUrl</label>
+            <InputText class="form-control" @bind-Value="_project.SourceUrl" placeholder="https://github.com/..." />
+        </div>
+
+        <!-- ImageFit -->
+        <div class="col-md-4">
+            <label class="form-label fw-bold">ImageFit</label>
+            <div class="d-flex gap-2 mt-1">
+                <button type="button"
+                        class="btn @(_project.ImageFit == ImageFitType.Cover ? "btn-primary" : "btn-outline-primary")"
+                        @onclick="() => _project.ImageFit = ImageFitType.Cover">Cover</button>
+                <button type="button"
+                        class="btn @(_project.ImageFit == ImageFitType.Contain ? "btn-primary" : "btn-outline-primary")"
+                        @onclick="() => _project.ImageFit = ImageFitType.Contain">Contain</button>
+            </div>
+        </div>
+
+        <!-- Finished -->
+        <div class="col-12">
+            <div class="form-check">
+                <InputCheckbox class="form-check-input" @bind-Value="_project.Finished" id="finishedCheck" />
+                <label class="form-check-label" for="finishedCheck">Finished</label>
+            </div>
+        </div>
+
+        <!-- MediaItems sub-list -->
+        <div class="col-12">
+            <h5 class="mt-2">MediaItems</h5>
+
+            @if (_project.MediaItems.Count == 0)
+            {
+                <p class="text-muted">No media items yet.</p>
+            }
+            else
+            {
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Url</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < _project.MediaItems.Count; i++)
+                        {
+                            var idx = i;
+                            var item = _project.MediaItems[i];
+                            <tr>
+                                <td><InputText class="form-control form-control-sm" @bind-Value="item.Url" /></td>
+                                <td><InputText class="form-control form-control-sm" @bind-Value="item.Name" /></td>
+                                <td>
+                                    <InputSelect class="form-select form-select-sm" @bind-Value="item.Type">
+                                        <option value="@MediaType.Image">Image</option>
+                                        <option value="@MediaType.Video">Video</option>
+                                        <option value="@MediaType.Pdf">Pdf</option>
+                                    </InputSelect>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-danger"
+                                            @onclick="() => RemoveMediaItem(idx)">Remove</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+            <!-- Add new MediaItem manually -->
+            <div class="card p-3 mt-2">
+                <h6>Add Media Item</h6>
+                <div class="row g-2">
+                    <div class="col-md-5">
+                        <label class="form-label small">Url</label>
+                        <InputText class="form-control form-control-sm" @bind-Value="_newMediaUrl" placeholder="Projects/images/..." />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small">Name</label>
+                        <InputText class="form-control form-control-sm" @bind-Value="_newMediaName" placeholder="Screenshot" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small">Type</label>
+                        <InputSelect class="form-select form-select-sm" @bind-Value="_newMediaType">
+                            <option value="@MediaType.Image">Image</option>
+                            <option value="@MediaType.Video">Video</option>
+                            <option value="@MediaType.Pdf">Pdf</option>
+                        </InputSelect>
+                    </div>
+                </div>
+
+                <!-- File upload -->
+                <div class="mt-2">
+                    <label class="form-label small">Upload file (auto-detects type, copies to wwwroot)</label>
+                    <InputFile OnChange="OnFileUpload" class="form-control form-control-sm"
+                               accept=".jpg,.jpeg,.png,.gif,.webp,.svg,.mp4,.webm,.mov,.pdf" />
+                    @if (_uploadStatus != null)
+                    {
+                        <small class="text-success">@_uploadStatus</small>
+                    }
+                </div>
+
+                <button type="button" class="btn btn-outline-success btn-sm mt-2" @onclick="AddMediaItem">
+                    + Add Media Item
+                </button>
+            </div>
+        </div>
+
+        <!-- Save / Cancel -->
+        <div class="col-12 mt-3 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Save Project</button>
+            <a href="/" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public int? Index { get; set; }
+
+    private ProjectInfo _project = new();
+    private string _tagsInput = "";
+    private string? _errorMessage;
+
+    // New media item fields
+    private string _newMediaUrl = "";
+    private string _newMediaName = "";
+    private MediaType _newMediaType = MediaType.Image;
+    private string? _uploadStatus;
+
+    protected override void OnParametersSet()
+    {
+        if (Index.HasValue)
+        {
+            var projects = DataService.GetProjects();
+            if (Index.Value >= 0 && Index.Value < projects.Count)
+            {
+                _project = projects[Index.Value];
+                _tagsInput = string.Join(", ", _project.Tags);
+            }
+            else
+            {
+                Nav.NavigateTo("/");
+            }
+        }
+        else
+        {
+            _project = new ProjectInfo();
+            _tagsInput = "";
+        }
+    }
+
+    private void AddMediaItem()
+    {
+        _project.MediaItems.Add(new MediaItem
+        {
+            Url = _newMediaUrl,
+            Name = _newMediaName,
+            Type = _newMediaType
+        });
+        _newMediaUrl = "";
+        _newMediaName = "";
+        _newMediaType = MediaType.Image;
+        _uploadStatus = null;
+    }
+
+    private void RemoveMediaItem(int index)
+    {
+        _project.MediaItems.RemoveAt(index);
+    }
+
+    private async Task OnFileUpload(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        var ext = Path.GetExtension(file.Name).ToLowerInvariant();
+
+        string subfolder = ext switch
+        {
+            ".jpg" or ".jpeg" or ".png" or ".gif" or ".webp" or ".svg" => "images",
+            ".mp4" or ".webm" or ".mov" => "videos",
+            ".pdf" => "pdfs",
+            _ => "images"
+        };
+
+        var baseProjectsPath = DataService.GetProjectsBasePath();
+        var targetDir = Path.Combine(baseProjectsPath, subfolder);
+        Directory.CreateDirectory(targetDir);
+        var targetPath = Path.Combine(targetDir, file.Name);
+
+        try
+        {
+            using var readStream = file.OpenReadStream(maxAllowedSize: 100 * 1024 * 1024);
+            using var fileStream = new FileStream(targetPath, FileMode.Create, FileAccess.Write);
+            await readStream.CopyToAsync(fileStream);
+
+            _newMediaUrl = $"Projects/{subfolder}/{file.Name}";
+            _newMediaName = Path.GetFileNameWithoutExtension(file.Name);
+            _newMediaType = subfolder switch
+            {
+                "videos" => MediaType.Video,
+                "pdfs" => MediaType.Pdf,
+                _ => MediaType.Image
+            };
+            _uploadStatus = $"Uploaded: {file.Name}";
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Upload failed: {ex.Message}";
+        }
+    }
+
+    private void Save()
+    {
+        _project.Tags = _tagsInput
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .ToList();
+
+        if (string.IsNullOrWhiteSpace(_project.Title))
+        {
+            _errorMessage = "Title is required.";
+            return;
+        }
+
+        try
+        {
+            var projects = DataService.GetProjects();
+
+            if (Index.HasValue)
+            {
+                projects[Index.Value] = _project;
+            }
+            else
+            {
+                projects.Add(_project);
+            }
+
+            DataService.SaveProjects(projects);
+            Nav.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Save failed: {ex.Message}";
+        }
+    }
+}

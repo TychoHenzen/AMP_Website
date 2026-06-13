@@ -48,6 +48,23 @@ Push to `master` triggers GitHub Actions → Azure Static Web Apps deploy. Workf
 
 SPA routing configured in `staticwebapp.config.json` — all routes rewrite to `/index.html` except images and CSS.
 
+## ProjectEditor (Local Portfolio Manager)
+
+Second project in the solution. .NET 8 Blazor Server app for editing portfolio data locally. **Not deployed** — local-only, no auth, outside Azure SWA build path.
+
+```bash
+# From ProjectEditor/ directory
+dotnet run    # serves at https://localhost:7xxx
+```
+
+**What it does**: reads/writes `AutoARPG_WebAsm/wwwroot/Projects/projects.json` directly via `ProjectDataService`. Features: project list with reorder (↑/↓) and delete, create/edit form with all fields, file upload (auto-routes by extension → `Projects/images/|videos/|pdfs/`).
+
+**Path resolution**: `Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../AutoARPG_WebAsm/wwwroot/Projects/projects.json"))` with a `Directory.GetCurrentDirectory()` fallback for `dotnet run`.
+
+**Models**: `ProjectEditor/Models.cs` duplicates `AutoARPG_WebAsm/Models.cs` as POCOs (no project reference). Keep in sync manually when model changes are needed.
+
+**Pages**: `ProjectEditor/Pages/ProjectList.razor` (`/`), `ProjectEditor/Pages/ProjectEdit.razor` (`/edit/new`, `/edit/{Index:int}`). Note: pages live in `Pages/` (not `Components/Pages/`) — avoid creating Blazor-scaffolded pages with `@page "/"` in `Components/Pages/` or you'll get `AmbiguousMatchException`.
+
 ## Project Data
 
 To add/edit portfolio projects, modify `wwwroot/Projects/projects.json`. Each entry has: `finished`, `title`, `description`, `fullDescription`, `mediaItems` (array of `{url, name, type}`), `sourceUrl`, `tags`, `category`, `imageFit` (Cover/Contain).

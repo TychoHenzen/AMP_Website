@@ -1,5 +1,6 @@
 @page "/"
 @inject TaglineService TaglineService
+@implements IDisposable
 
 <PageTitle>Nido Suave — Massage & Ontspanning</PageTitle>
 
@@ -45,3 +46,8 @@
         <a class=”btn-soft” href=”over”>Lees mijn verhaal</a>
     </div>
 </section>
+
+@code {
+    protected override void OnInitialized() => TaglineService.OnChange += StateHasChanged;
+    public void Dispose() => TaglineService.OnChange -= StateHasChanged;
+}

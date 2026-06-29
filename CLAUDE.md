@@ -76,7 +76,11 @@ dotnet run
 
 **Pages** (`Pages/`): Home (`/`), Over (`/over`), Behandelingen (`/behandelingen`), Boeken (`/boeken` — appointment booking), Contact (`/contact`), Admin (`/admin` — booking management).
 
-**Logo assets**: Design source at `gfx/nido_suave_logo_lelie.svg` (full logo with text, not served). Served variants in `wwwroot/gfx/`: `nido_suave_mark.svg` (simplified 3-figures-in-nest mark, 64×64 — favicon + nav), `nido_suave_illustration.svg` (full lily wreath + figures, no text — hero + splash). Favicon: SVG primary with PNG fallback (`wwwroot/favicon.png`).
+**Logo assets**: Design source at `gfx/nido_suave_logo_lelie.svg` (full logo with text, not served). Served variants in `wwwroot/gfx/`: `nido_suave_mark.svg` (simplified 3-figures-in-nest mark, 64×64 — favicon + nav), `nido_suave_illustration.svg` (full lily wreath + figures, no text — hero + splash). Favicon: SVG only (no PNG fallback — removed to ensure SVG takes effect).
+
+**Loading splash**: Fixed overlay `#loading-panel` (outside `#app`, so it's not replaced by Blazor). A `MutationObserver` on `#app.childElementCount` triggers `.loading-panel--exit` (CSS `translateY(100%)` slide-down) when Blazor first mounts. Panel shows illustration + "Nido Suave" wordmark + fixed tagline.
+
+**Taglines**: `Services/TaglineService.cs` — scoped service that picks one random tagline at startup (consistent for the session). Injected into `Home.razor` (used as hero `<h1>`) and `NavMenu.razor` (shown as `.brand-tagline` below the wordmark on non-home pages; hidden on mobile). NavMenu subscribes to `NavigationManager.LocationChanged` to toggle the tagline on SPA navigation.
 
 ## tools/ProjectEditor — Local Portfolio Manager
 

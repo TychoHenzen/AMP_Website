@@ -1,9 +1,19 @@
+@inject NavigationManager Nav
+@inject TaglineService TaglineService
+@implements IDisposable
+
 <header class="site-header">
     <div class="site-header__inner">
-        <a class="brand" href="">
-            <img class="brand__mark" src="gfx/nido_suave_mark.svg" alt="" aria-hidden="true" />
-            Nido <span>Suave</span>
-        </a>
+        <div class="brand-group">
+            <a class="brand" href="">
+                <img class="brand__mark" src="gfx/nido_suave_mark.svg" alt="" aria-hidden="true" />
+                Nido <span>Suave</span>
+            </a>
+            @if (!_isHome)
+            {
+                <span class="brand-tagline">@TaglineService.Current</span>
+            }
+        </div>
 
         <button class="nav-toggle" @onclick="ToggleMenu" aria-label="Menu">☰</button>
 
@@ -19,6 +29,24 @@
 
 @code {
     private bool _open;
+    private bool _isHome;
+
+    protected override void OnInitialized()
+    {
+        _isHome = CheckIsHome();
+        Nav.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        _isHome = CheckIsHome();
+        InvokeAsync(StateHasChanged);
+    }
+
+    private bool CheckIsHome() => new Uri(Nav.Uri).AbsolutePath == "/";
+
+    public void Dispose() => Nav.LocationChanged -= OnLocationChanged;
+
     private void ToggleMenu() => _open = !_open;
     private void CloseMenu() => _open = false;
 }

@@ -18,11 +18,12 @@
 </head>
 
 <body>
-    <div id="app">
-        <div class="loading-splash">
-            <img class="loading-splash__logo" src="gfx/nido_suave_illustration.svg" alt="Nido Suave" />
-            <div class="loading-splash__sub">een moment voor jou…</div>
-        </div>
+    <div id="app"></div>
+
+    <div id="loading-panel" class="loading-panel">
+        <img class="loading-panel__logo" src="gfx/nido_suave_illustration.svg" alt="" aria-hidden="true" />
+        <div class="loading-panel__brand">Nido <span>Suave</span></div>
+        <div class="loading-panel__tagline">Een zachte plek voor groot en klein</div>
     </div>
 
     <div id="blazor-error-ui">
@@ -31,6 +32,19 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+    <script>
+        (function () {
+            var panel = document.getElementById('loading-panel');
+            var app   = document.getElementById('app');
+            var obs   = new MutationObserver(function () {
+                if (app.childElementCount > 0) {
+                    obs.disconnect();
+                    panel.classList.add('loading-panel--exit');
+                }
+            });
+            obs.observe(app, { childList: true });
+        }());
+    </script>
 </body>
 
 </html>

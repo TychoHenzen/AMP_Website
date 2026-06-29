@@ -1,4 +1,5 @@
 @page "/"
+@inject TaglineService TaglineService
 
 <PageTitle>Nido Suave — Massage & Ontspanning</PageTitle>
 
@@ -6,7 +7,7 @@
     <div class="container-narrow">
         <img class="hero__illustration" src="gfx/nido_suave_illustration.svg" alt="" aria-hidden="true" />
         <p class="hero__eyebrow">Massage &amp; Ontspanning</p>
-        <h1>Een plek waar je<br />even niets hoeft</h1>
+        <h1>@TaglineService.Current</h1>
         <p class="lead">
             Bij Nido Suave krijg je de ruimte om terug te zakken in je eigen lijf.
             Geen rol te spelen, geen verwachting waar je aan moet voldoen.

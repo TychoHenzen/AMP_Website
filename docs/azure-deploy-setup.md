@@ -14,15 +14,17 @@ Context-survival doc. Pick up here after a restart. Last updated 2026-06-29.
 
 | Resource | Type | RG | Region | Purpose |
 | --- | --- | --- | --- | --- |
-| AutoARPG | Static Web App | BWG_AutoARPG | West Europe | portfolio (icy-meadow-06fe80803) |
+| AutoARPG | Static Web App | rg-websites | West Europe | portfolio (icy-meadow-06fe80803; domains www.aerialmage.com + arpg.aerialmage.com) |
 | Manim | Cognitive Services | BWG_AutoARPG | East US | separate (leave alone) |
-| nido-suave | Static Web App | DuurzaamDigitaal_group | West Europe | nido (zealous-moss-0d5fb8903) |
+| nido-suave | Static Web App | rg-websites | West Europe | nido (zealous-moss-0d5fb8903) |
 | DuurzaamDigitaal | App Service | DuurzaamDigitaal_group | North Europe | repair site (server-side) |
 | ASP-DuurzaamDigitaalgroup-a945 | App Service Plan | DuurzaamDigitaal_group | North Europe | repair plan |
 | duurzaamdigitaal | Cosmos DB | DuurzaamDigitaal_group | (multi) | SHARED DB (free-tier) |
 | DuurzaamDigitaal-id-a078 | Managed Identity | DuurzaamDigitaal_group | North Europe | repair identity |
 
-RG deletion is OFF — every RG holds live resources. Tidy = create dedicated RG and *move* SWAs (Phase 4).
+RG deletion is OFF — every RG holds live resources. SWAs now live in `rg-websites` (Phase 4 done).
+`amp-api-730024` (+ storage `ampapi730024`), Cosmos `duurzaamdigitaal`, and the repair App Service
+still sit in `DuurzaamDigitaal_group`.
 
 ## Decisions locked
 
@@ -98,9 +100,16 @@ RG deletion is OFF — every RG holds live resources. Tidy = create dedicated RG
 - Schedule rules live in `apps/api/Nido/NidoSchedule.cs` (days/hours/slot length) — edit there.
 - Not yet: admin view of bookings, email/notification on new booking, configurable services.
 
-### Phase 4 — RG tidy + hardening
-- [ ] Create `rg-websites` (westeurope); MOVE AutoARPG + nido-suave SWAs into it (preserves hostnames).
-- [ ] Custom domains per site (`az staticwebapp hostname set ...` / App Service custom domain).
+### Phase 4 — RG tidy + hardening ✅ DONE (2026-06-29)
+- [x] Created `rg-websites` (westeurope); MOVED AutoARPG + nido-suave SWAs into it via
+      `az resource move`. Hostnames, deploy tokens, and custom domains all preserved; both serve 200.
+      Source RGs kept (BWG_AutoARPG still has Manim; DuurzaamDigitaal_group still has the App Service,
+      Cosmos, Function App, storage) — no RG deletion.
+- [x] Custom domains: portfolio already has `www.aerialmage.com` + `arpg.aerialmage.com` (status
+      Ready, survived the move). Apex `aerialmage.com` is NOT bound (only www/arpg).
+- [ ] (later) Custom domains for nido (`nidosuave.nl`) + repair (`duurzaamdigitaal.nl`) when DNS ready.
+      Flow per SWA: `az staticwebapp hostname set -n <swa> -g rg-websites --hostname <domain>` →
+      Azure returns a CNAME/TXT validation record → add it at the registrar → it flips to Ready.
 
 ## Handy commands
 

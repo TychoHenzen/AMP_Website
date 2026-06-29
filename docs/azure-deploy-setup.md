@@ -60,9 +60,15 @@ RG deletion is OFF — every RG holds live resources. Tidy = create dedicated RG
       Repair site references it; builds clean, 18/18 tests pass. (commit 4cd0ee4)
 - [x] New `apps/api/` Azure Functions app (`Amp.Api`, .NET 8 isolated), references `Amp.Data`,
       registers CosmosDbConfig + CosmosClient from app settings. `GET /api/health` endpoint. Builds.
-- [ ] **Provision** Functions app in Azure (consumption): needs a storage account + function app.
-      Set its `CosmosDb__ConnectionString` app setting to the **secondary** Cosmos connection string.
-      Configure CORS for site origins. Add `deploy-api.yml` (path filter `apps/api/**`) + publish secret.
+- [x] **Provisioned** (2026-06-29): Function App `amp-api-730024` + storage `ampapi730024`
+      (RG DuurzaamDigitaal_group, westeurope, consumption, dotnet-isolated 8). App settings set
+      (Cosmos secondary conn + db/container IDs). CORS allows nido + portfolio origins.
+      `deploy-api.yml` deploys via `AMP_API_PUBLISHPROFILE`. Live: `GET /api/health` →
+      `{"status":"ok","cosmosConfigured":true}`.
+      GOTCHA: SCM basic-auth was disabled by default → functions-action got 401. Fix:
+      `az resource update -g <rg> --namespace Microsoft.Web --parent sites/<funcapp>
+      --resource-type basicPublishingCredentialsPolicies --name scm --set properties.allow=true`.
+      Also had to register the `Microsoft.Storage` provider first (one-time, several minutes).
 - [ ] (later) Repair site can switch from direct Cosmos to the shared lib/API; keep direct for now.
 
       Provision sketch:

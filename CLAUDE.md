@@ -12,12 +12,17 @@ AMP_Website/
 │  ├─ portfolio/        Tycho's portfolio. Blazor WASM (.NET 6). → SWA "icy-meadow" (live)
 │  ├─ nido-suave/       Denise's massage business (Dutch). Blazor WASM (.NET 8). → SWA "zealous-moss"
 │  └─ duurzaam-digitaal/ Tycho's repair business (Dutch). Blazor Server (.NET 8) + Cosmos DB. → App Service
+├─ apps/
+│  └─ api/              Amp.Api — shared .NET 8 isolated Azure Functions. → Function App "amp-api-730024"
+├─ shared/
+│  └─ Data/            Amp.Data — shared Cosmos data layer (config, entities, repositories)
 ├─ tools/
 │  └─ ProjectEditor/    Local-only editor for portfolio data (.NET 8 Blazor Server). Not deployed.
 ├─ .github/workflows/
 │  ├─ deploy-portfolio.yml   path filter: sites/portfolio/**       → SWA (token secret)
 │  ├─ deploy-nido.yml        path filter: sites/nido-suave/**       → SWA (token secret)
-│  └─ deploy-duurzaam.yml    path filter: sites/duurzaam-digitaal/** → App Service (publish profile)
+│  ├─ deploy-duurzaam.yml    path filter: sites/duurzaam-digitaal/** → App Service (publish profile)
+│  └─ deploy-api.yml         path filter: apps/api/**, shared/Data/** → Function App (publish profile)
 └─ AutoARPG_WebAsm.sln       solution covering all projects
 ```
 
@@ -115,11 +120,20 @@ has an empty `CosmosDb:ConnectionString` plus the non-secret container IDs. For 
 
 ## Shared data layer (in progress)
 
-Direction: all sites share **one Cosmos account** (`duurzaamdigitaal`, the free-tier account) with
-per-site databases/containers. Because WASM sites (portfolio, nido) run in the browser and **cannot
-hold a connection string**, DB access for them goes through **one shared Azure Functions app** (.NET
-isolated) that owns the Cosmos connection and exposes `/api/<site>/...` (CORS per origin). First
-feature planned: Nido Suave appointment booking. See `docs/azure-deploy-setup.md` for the phased plan.
+All sites share **one Cosmos account** (`duurzaamdigitaal`, the free-tier account) with per-site
+databases/containers. Because WASM sites (portfolio, nido) run in the browser and **cannot hold a
+connection string**, DB access for them goes through the shared **Azure Functions app**
+`amp-api-730024` (`apps/api` → `Amp.Api`), which owns the Cosmos connection (app setting
+`CosmosDb__ConnectionString` = secondary key) and exposes `/api/*` (CORS allows the nido + portfolio
+origins). The data layer is `shared/Data` (`Amp.Data`), referenced by both the Functions app and the
+repair site.
+
+- Functions app: `https://amp-api-730024.azurewebsites.net` — health: `GET /api/health`
+- Deploy needs SCM basic-auth enabled on the Function App (it was off by default → publish-profile
+  auth 401'd until enabled). Secret: `AMP_API_PUBLISHPROFILE`.
+
+Next: Nido Suave appointment booking (Cosmos `nido` db/containers + API endpoints + booking UI).
+See `docs/azure-deploy-setup.md` for the phased plan.
 
 ## Deployment
 

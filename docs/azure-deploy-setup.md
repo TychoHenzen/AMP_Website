@@ -83,10 +83,20 @@ RG deletion is OFF — every RG holds live resources. Tidy = create dedicated RG
       az functionapp cors add -n amp-api -g DuurzaamDigitaal_group --allowed-origins https://<nido-host>
       ```
 
-### Phase 3 — Nido Suave appointment booking
-- [ ] Cosmos: `nido` database + `appointments`, `timeslots` containers.
-- [ ] API endpoints: list timeslots, create appointment, etc.
-- [ ] Nido WASM booking UI calling the API; replace Contact/Behandelingen placeholders as needed.
+### Phase 3 — Nido Suave appointment booking ✅ DONE (2026-06-29)
+- [x] Cosmos: `nido` database + `appointments` container (pk `/partitionKey` = date). Serverless
+      account → no throughput to provision.
+- [x] Data layer `shared/Data/Nido` (`NidoAppointment` + `NidoAppointmentRepository`, own db).
+- [x] API (`apps/api`): `GET /api/nido/availability?date=` (slots minus booked, NL tz, open
+      Tue–Sat 09–17) + `POST /api/nido/appointments` (validation + 409 slot-conflict).
+- [x] Nido site `/boeken` booking page (service → date → slot grid → contact → confirm),
+      `ApiBaseUrl` from `wwwroot/appsettings.json`; nav link + CTAs on Behandelingen/Contact.
+- Verified live end-to-end (201 / slot-taken / 409 / 400-Dutch-errors). All deploys green.
+- NOTE: Cosmos has an IP firewall (ipRules) — the API (Azure, via the `0.0.0.0` "allow Azure
+  services" rule) can reach it, but **local data-plane access from a home IP is blocked (403)**.
+  To inspect/edit docs locally: use Portal Data Explorer, or temporarily add your IP to ipRules.
+- Schedule rules live in `apps/api/Nido/NidoSchedule.cs` (days/hours/slot length) — edit there.
+- Not yet: admin view of bookings, email/notification on new booking, configurable services.
 
 ### Phase 4 — RG tidy + hardening
 - [ ] Create `rg-websites` (westeurope); MOVE AutoARPG + nido-suave SWAs into it (preserves hostnames).

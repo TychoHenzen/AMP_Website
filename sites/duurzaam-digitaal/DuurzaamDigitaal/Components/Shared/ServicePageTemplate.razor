@@ -1,0 +1,29 @@
+<PageTitle>@PageTitle - DuurzaamDigitaal</PageTitle>
+
+<div class="service-page">
+    <HeroSection Data="@Hero"/>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-8">
+                @MainContent
+            </div>
+            <div class="col-lg-4">
+                <Sidebar Data="@SidebarData"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string PageTitle { get; set; } = string.Empty;
+
+    [Parameter]
+    public HeroSectionData Hero { get; set; } = new();
+
+    [Parameter]
+    public RenderFragment MainContent { get; set; } = null!;
+
+    [Parameter]
+    public SidebarData SidebarData { get; set; } = new();
+}

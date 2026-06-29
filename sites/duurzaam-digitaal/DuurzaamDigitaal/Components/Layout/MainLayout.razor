@@ -1,0 +1,36 @@
+@inherits LayoutComponentBase
+
+<div class="page">
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <NavMenu/>
+        </div>
+    </nav>
+    <main class="content">
+        <ErrorBoundary>
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent Context="ex">
+                <div class="alert alert-danger">
+                    <h4>Error</h4>
+                    <p>@ex.Message</p>
+                </div>
+            </ErrorContent>
+        </ErrorBoundary>
+    </main>
+</div>
+
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="mb-0">© @DateTime.Now.Year DuurzaamDigitaal</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="privacy" class="text-muted me-3">Privacy</a>
+                <a href="voorwaarden" class="text-muted">Voorwaarden</a>
+            </div>
+        </div>
+    </div>
+</footer>

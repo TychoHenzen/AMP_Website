@@ -1,0 +1,36 @@
+/* Primary action buttons */
+.btn-success {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--text-light);
+}
+
+.btn-success:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* Secondary and light buttons */
+.btn-light {
+    background-color: var(--text-light);
+    color: var(--primary);
+    border-color: var(--text-light);
+}
+
+.btn-light:hover {
+    background-color: var(--supporting-light);
+    color: var(--primary-dark);
+    border-color: var(--supporting-light);
+}
+
+/* Outline buttons */
+.btn-outline-light {
+    color: var(--text-light);
+    border-color: var(--text-light);
+    background-color: var(--primary);
+}
+
+.btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+

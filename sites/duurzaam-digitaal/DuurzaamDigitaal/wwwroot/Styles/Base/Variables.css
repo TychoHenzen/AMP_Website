@@ -1,0 +1,23 @@
+/* Color Variables */
+:root {
+    /* Primary Colors */
+    --primary-dark: #1B4332;     /* Deep forest green - For navbar and dark elements */
+    --primary: #2D6A4F;          /* Main brand color */
+    --primary-light: #95D5B2;    /* Light forest green - For highlights and accents */
+
+    /* Supporting Colors */
+    --supporting-warm: #774936;   /* Warm accent - For secondary elements */
+    --supporting-neutral: #B7B7A4;/* Neutral accent - For subtle contrasts */
+    --supporting-light: #E9EDC9;  /* Light accent - For backgrounds */
+
+    /* Base Colors */
+    --text-dark: #2F3E46;        /* Main text color */
+    --text-light: #FFFFFF;       /* Light text color */
+    --background: #F0F4F4;       /* Page background */
+    --border: #CCD5AE;           /* Border color */
+
+    /* State Colors */
+    --success: #40916C;          /* Success messages and icons */
+    --warning: #DDA15E;          /* Warning messages */
+    --error: #BC4749;            /* Error messages */
+}

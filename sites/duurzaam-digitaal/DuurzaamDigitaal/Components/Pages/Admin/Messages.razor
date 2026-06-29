@@ -1,0 +1,94 @@
+@page "/admin/messages"
+@using DuurzaamDigitaal.Components.Layout
+@using DuurzaamDigitaal.Data.Entities
+@using DuurzaamDigitaal.Data.Repositories
+@layout AdminLayout
+@inject IContactMessageRepository MessageRepository
+
+<h1 class="mb-4">Contact Messages</h1>
+
+<div class="card">
+    <div class="card-body">
+        @if (_messages == null)
+        {
+            <div class="text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+        else if (!_messages.Any())
+        {
+            <p class="text-center mb-0">No messages found.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var message in _messages)
+                    {
+                        <tr>
+                            <td>@message.CreatedAt.ToLocalTime().ToString("g")</td>
+                            <td>@message.Name</td>
+                            <td>@message.Email</td>
+                            <td>@message.Message</td>
+                            <td>
+                                <button class="btn btn-sm btn-danger" @onclick="() => DeleteMessage(message.Id)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private IEnumerable<ContactMessage>? _messages;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMessages();
+    }
+
+    private async Task LoadMessages()
+    {
+        try
+        {
+            _messages = await MessageRepository.GetAllAsync();
+        }
+        catch (Exception ex)
+        {
+            // In a real app, we would log this error
+            Console.WriteLine($"Error loading messages: {ex.Message}");
+        }
+    }
+
+    private async Task DeleteMessage(string id)
+    {
+        try
+        {
+            await MessageRepository.DeleteAsync(id);
+            await LoadMessages(); // Refresh the list
+        }
+        catch (Exception ex)
+        {
+            // In a real app, we would log this error
+            Console.WriteLine($"Error deleting message: {ex.Message}");
+        }
+    }
+
+}

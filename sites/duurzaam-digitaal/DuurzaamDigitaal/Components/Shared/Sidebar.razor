@@ -1,0 +1,98 @@
+@using DuurzaamDigitaal.Models
+@code {
+    [Parameter]
+    public SidebarData Data { get; set; } = new();
+
+    private string GetButtonClass(HeroButton button)
+    {
+        return $"btn {(button.IsOutline ? "btn-outline-success" : "btn-success")} w-100 mb-2";
+    }
+}
+
+<div class="col-lg-4">
+    @foreach (var sidebarSection in Data.Sections)
+    {
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">@sidebarSection.Title</h3>
+                @if (!string.IsNullOrEmpty(sidebarSection.Description))
+                {
+                    <p>@((MarkupString)sidebarSection.Description)</p>
+                }
+
+                @if (sidebarSection.PricingItems.Any())
+                {
+                    <ul class="list-unstyled pricing-list">
+                        @foreach (var item in sidebarSection.PricingItems)
+                        {
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>
+                                        @if (!string.IsNullOrEmpty(item.Icon))
+                                        {
+                                            <i class="@item.Icon me-2"></i>
+                                        }
+                                        @item.Label
+                                    </span>
+                                    <span class="@(item.Price.ToLower() == "gratis" ? "text-success" : "")">@item.Price</span>
+                                </div>
+                                @if (!string.IsNullOrEmpty(item.Description))
+                                {
+                                    <small class="text-muted d-block mt-1">@item.Description</small>
+                                }
+                            </li>
+                        }
+                    </ul>
+                }
+
+                @if (sidebarSection.ContactItems.Any())
+                {
+                    @foreach (var item in sidebarSection.ContactItems)
+                    {
+                        <div class="mb-3">
+                            <strong>
+                                @if (!string.IsNullOrEmpty(item.Icon))
+                                {
+                                    <i class="@item.Icon me-2"></i>
+                                }
+                                @item.Label
+                            </strong><br />
+                            @if (!string.IsNullOrEmpty(item.Href))
+                            {
+                                <a href="@item.Href">@item.Value</a>
+                            }
+                            else
+                            {
+                                @item.Value
+                            }
+                        </div>
+                    }
+                }
+
+                @if (sidebarSection.Buttons.Any())
+                {
+                    @foreach (var button in sidebarSection.Buttons)
+                    {
+                        <NavLink href="@button.Href" class="@GetButtonClass(button)">
+                            @if (!string.IsNullOrEmpty(button.Icon))
+                            {
+                                <i class="@button.Icon me-2"></i>
+                            }
+                            @button.Text
+                        </NavLink>
+                    }
+                }
+
+                @if (!string.IsNullOrEmpty(sidebarSection.FooterText))
+                {
+                    <div class="mt-3 text-center">
+                        <small class="text-muted">
+                            <i class="bi bi-info-circle me-1"></i>
+                            @sidebarSection.FooterText
+                        </small>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,191 @@
+@page "/admin/dashboard"
+@using DuurzaamDigitaal.Components.Layout
+@using DuurzaamDigitaal.Data.Entities
+@using DuurzaamDigitaal.Data.Repositories
+@layout AdminLayout
+@inject IContactMessageRepository ContactMessageRepository
+@inject IAppointmentRepository AppointmentRepository
+@inject IRefurbishedDeviceRepository RefurbishedDeviceRepository
+
+<h1 class="mb-4">Admin Dashboard</h1>
+
+@if (_isLoading)
+{
+    <div class="alert alert-info">
+        <div class="d-flex align-items-center">
+            <div class="spinner-border spinner-border-sm me-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            Loading dashboard data...
+        </div>
+    </div>
+}
+else if (!string.IsNullOrEmpty(_errorMessage))
+{
+    <div class="alert alert-danger">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        @_errorMessage
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Recent Contact Messages</h5>
+            </div>
+            <div class="card-body">
+                @if (_messages == null)
+                {
+                    <p>Loading...</p>
+                }
+                else if (!_messages.Any())
+                {
+                    <p>No messages found.</p>
+                }
+                else
+                {
+                    <div class="list-group">
+                        @foreach (var message in _messages)
+                        {
+                            <div class="list-group-item">
+                                <h6 class="mb-1">@message.Name</h6>
+                                <p class="mb-1 small">@message.Email</p>
+                                <p class="mb-1">@message.Message</p>
+                                <small class="text-muted">@message.CreatedAt.ToLocalTime().ToString("g")</small>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Upcoming Appointments</h5>
+            </div>
+            <div class="card-body">
+                @if (_appointments == null)
+                {
+                    <p>Loading...</p>
+                }
+                else if (!_appointments.Any())
+                {
+                    <p>No appointments found.</p>
+                }
+                else
+                {
+                    <div class="list-group">
+                        @foreach (var appointment in _appointments)
+                        {
+                            <div class="list-group-item">
+                                <h6 class="mb-1">@appointment.FirstName @appointment.LastName</h6>
+                                <p class="mb-1 small">@appointment.Email</p>
+                                <p class="mb-1">@appointment.Description</p>
+                                <p class="mb-1">
+                                    <span class="badge @GetStatusBadgeClass(appointment.Status)">
+                                        @appointment.Status
+                                    </span>
+                                </p>
+                                <small class="text-muted">@appointment.CreatedAt.ToLocalTime().ToString("g")</small>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Available Refurbished Devices</h5>
+            </div>
+            <div class="card-body">
+                @if (_devices == null)
+                {
+                    <p>Loading...</p>
+                }
+                else if (!_devices.Any())
+                {
+                    <p>No devices found.</p>
+                }
+                else
+                {
+                    <div class="list-group">
+                        @foreach (var device in _devices)
+                        {
+                            <div class="list-group-item">
+                                <h6 class="mb-1">@device.Name</h6>
+                                <p class="mb-1">@device.Brand @device.Model</p>
+                                <p class="mb-1">€@device.Price.ToString("N2")</p>
+                                <p class="mb-1">
+                                    <span class="badge @GetDeviceStatusBadgeClass(device.Status)">
+                                        @device.Status
+                                    </span>
+                                </p>
+                                <small class="text-muted">Added @device.CreatedAt.ToLocalTime().ToString("g")</small>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<ContactMessage>? _messages;
+    private List<Appointment>? _appointments;
+    private List<RefurbishedDevice>? _devices;
+    private string? _errorMessage;
+    private bool _isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _isLoading = true;
+            _errorMessage = null;
+
+            // Load data sequentially to better identify issues
+            _messages = (await ContactMessageRepository.GetAllAsync())?.Take(5).ToList();
+            _appointments = (await AppointmentRepository.GetAllAsync())?.Take(5).ToList();
+            _devices = (await RefurbishedDeviceRepository.GetAllAsync())?.Take(5).ToList();
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Error loading dashboard data: {ex.Message}";
+            Console.WriteLine(_errorMessage);
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Scheduled" => "bg-primary",
+            "Completed" => "bg-success",
+            "Cancelled" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+    private string GetDeviceStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Available" => "bg-success",
+            "Reserved" => "bg-warning",
+            "Sold" => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+
+}

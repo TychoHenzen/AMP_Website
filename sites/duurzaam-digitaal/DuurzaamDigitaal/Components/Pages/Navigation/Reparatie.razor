@@ -1,0 +1,31 @@
+@page "/reparatie"
+@using DuurzaamDigitaal.Models
+@using DuurzaamDigitaal.Components.Shared
+@inherits ReparatieBase
+
+<ServicePageTemplate 
+    PageTitle="Computer Reparatie"
+    Hero="@HeroData"
+    SidebarData="@SidebarData">
+    <MainContent>
+        <section class="mb-5">
+            <ServiceCard Data="@GuaranteeCard" />
+        </section>
+
+        <section class="mb-5">
+            <h2 class="text-center mb-4">Onze Reparatieservice</h2>
+            <div class="row">
+                @foreach (var card in ServiceCards)
+                {
+                    <div class="col-md-6 mb-4">
+                        <ServiceCard Data="@card" />
+                    </div>
+                }
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <ServiceCard Data="@ProcessCard" />
+        </section>
+    </MainContent>
+</ServicePageTemplate>

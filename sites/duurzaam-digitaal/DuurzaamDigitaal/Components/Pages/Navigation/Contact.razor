@@ -1,0 +1,74 @@
+@page "/contact"
+@using DuurzaamDigitaal.Models
+@using DuurzaamDigitaal.Components.Shared
+@using System.ComponentModel.DataAnnotations
+@inherits ContactBase
+
+<ServicePageTemplate 
+    PageTitle="Contact"
+    Hero="@HeroData"
+    SidebarData="@SidebarData">
+    <MainContent>
+        <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Stuur ons een bericht</h2>
+                    
+                    <EditForm Model="@contactForm" OnValidSubmit="@HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Naam</label>
+                            <InputText id="name" class="form-control" @bind-Value="contactForm.Name" />
+                            <ValidationMessage For="@(() => contactForm.Name)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">E-mail</label>
+                            <InputText id="email" class="form-control" @bind-Value="contactForm.Email" />
+                            <ValidationMessage For="@(() => contactForm.Email)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Telefoon (optioneel)</label>
+                            <InputText id="phone" class="form-control" @bind-Value="contactForm.Phone" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Onderwerp</label>
+                            <InputSelect id="subject" class="form-control" @bind-Value="contactForm.Subject">
+                                <option value="">Kies een onderwerp...</option>
+                                <option value="reparatie">Computer Reparatie</option>
+                                <option value="software">Software Support</option>
+                                <option value="datarecovery">Data Recovery</option>
+                                <option value="recycling">E-waste Recycling</option>
+                                <option value="refurbished">Refurbished Apparatuur</option>
+                                <option value="other">Anders</option>
+                            </InputSelect>
+                            <ValidationMessage For="@(() => contactForm.Subject)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Bericht</label>
+                            <InputTextArea id="message" class="form-control" @bind-Value="contactForm.Message" rows="5" />
+                            <ValidationMessage For="@(() => contactForm.Message)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <InputCheckbox id="privacy" class="form-check-input" @bind-Value="contactForm.AcceptPrivacy" />
+                                <label class="form-check-label" for="privacy">
+                                    Ik ga akkoord met de <a href="/privacy">privacyverklaring</a>
+                                </label>
+                            </div>
+                            <ValidationMessage For="@(() => contactForm.AcceptPrivacy)" />
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            Verstuur Bericht
+                        </button>
+                    </EditForm>
+                </div>
+        </div>
+    </MainContent>
+</ServicePageTemplate>

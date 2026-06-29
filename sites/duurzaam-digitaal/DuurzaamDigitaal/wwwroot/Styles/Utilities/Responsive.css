@@ -1,0 +1,35 @@
+/* Navigation responsiveness */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        flex-direction: column;
+        padding: 1rem 0;
+    }
+
+    .nav-item {
+        padding: 0.5rem 0;
+    }
+
+    .navbar-nav .btn {
+        margin: 0.25rem 0;
+        width: 100%;
+        text-align: left;
+    }
+}
+
+/* Logo adjustments for mobile */
+@media (max-width: 768px) {
+    .navbar-logo {
+        height: 52px !important;
+    }
+}
+
+/* Service card responsive behavior */
+@media (max-width: 768px) {
+    .service-card {
+        margin-bottom: 1.5rem;
+    }
+
+    .service-card .btn {
+        padding: 0.5rem 1rem;
+    }
+}

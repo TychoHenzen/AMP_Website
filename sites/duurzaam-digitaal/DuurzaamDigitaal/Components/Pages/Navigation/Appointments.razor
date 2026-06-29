@@ -1,0 +1,121 @@
+@page "/afspraak"
+<ServicePageTemplate 
+    PageTitle="Afspraak Maken"
+    Hero="@HeroData"
+    SidebarData="@SidebarData">
+    <MainContent>
+            <div class="card">
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @ErrorMessage
+                        </div>
+                    }
+                    
+                    <EditForm Model="@AppointmentModel" OnValidSubmit="@HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        <div class="mb-4">
+                            <h3>Persoonlijke gegevens</h3>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName" class="form-label">Voornaam</label>
+                                    <InputText id="firstName" class="form-control" @bind-Value="AppointmentModel.FirstName" />
+                                    <ValidationMessage For="@(() => AppointmentModel.FirstName)" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName" class="form-label">Achternaam</label>
+                                    <InputText id="lastName" class="form-control" @bind-Value="AppointmentModel.LastName" />
+                                    <ValidationMessage For="@(() => AppointmentModel.LastName)" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <InputText id="email" class="form-control" @bind-Value="AppointmentModel.Email" />
+                                <ValidationMessage For="@(() => AppointmentModel.Email)" />
+                                <div class="form-text">We gebruiken uw email alleen voor bevestiging en eventuele vragen.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Telefoonnummer</label>
+                                <InputText id="phone" class="form-control" @bind-Value="AppointmentModel.Phone" />
+                                <ValidationMessage For="@(() => AppointmentModel.Phone)" />
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h3>Afspraak details</h3>
+                            <div class="mb-3">
+                                <label for="serviceType" class="form-label">Type dienst</label>
+                                <InputSelect id="serviceType" class="form-select" @bind-Value="AppointmentModel.ServiceType">
+                                    <option value="">Selecteer een dienst...</option>
+                                    <option value="computer-repair">Computer/Laptop Reparatie</option>
+                                    <option value="software-support">Software Ondersteuning</option>
+                                    <option value="data-recovery">Data Recovery</option>
+                                    <option value="training">Computer Training</option>
+                                    <option value="recycling">E-waste Recycling</option>
+                                </InputSelect>
+                                <ValidationMessage For="@(() => AppointmentModel.ServiceType)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="preferredDate" class="form-label">Voorkeursdatum</label>
+                                <InputDate id="preferredDate" class="form-control" @bind-Value="AppointmentModel.PreferredDate" />
+                                <ValidationMessage For="@(() => AppointmentModel.PreferredDate)" />
+                                <div class="form-text">Kies een datum vanaf morgen.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="preferredTime" class="form-label">Voorkeurstijd</label>
+                                <InputSelect id="preferredTime" class="form-select" @bind-Value="AppointmentModel.PreferredTime">
+                                    <option value="">Selecteer een tijd...</option>
+                                    <option value="morning">Ochtend (9:00 - 12:00)</option>
+                                    <option value="afternoon">Middag (13:00 - 17:00)</option>
+                                </InputSelect>
+                                <ValidationMessage For="@(() => AppointmentModel.PreferredTime)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Omschrijving van het probleem</label>
+                                <InputTextArea id="description" class="form-control" @bind-Value="AppointmentModel.Description" rows="4" />
+                                <ValidationMessage For="@(() => AppointmentModel.Description)" />
+                                <div class="form-text">Beschrijf kort wat er aan de hand is, zodat we ons kunnen voorbereiden.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label d-block">Locatie</label>
+                                <InputRadioGroup @bind-Value="AppointmentModel.Location">
+                                    <div class="form-check form-check-inline">
+                                        <InputRadio Value="@("workshop")" class="form-check-input" id="location-workshop" name="location" />
+                                        <label class="form-check-label" for="location-workshop">In de werkplaats</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <InputRadio Value="@("home")" class="form-check-input" id="location-home" name="location" />
+                                        <label class="form-check-label" for="location-home">Aan huis</label>
+                                    </div>
+                                </InputRadioGroup>
+                                <ValidationMessage For="@(() => AppointmentModel.Location)" />
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg" disabled="@IsSubmitting">
+                                @if (IsSubmitting)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                    <span>Even geduld...</span>
+                                }
+                                else
+                                {
+                                    <span>Afspraak Aanvragen</span>
+                                }
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+    </MainContent>
+</ServicePageTemplate>

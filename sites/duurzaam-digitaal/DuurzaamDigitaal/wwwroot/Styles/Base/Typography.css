@@ -1,0 +1,48 @@
+/* Core typography settings */
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+/* Heading hierarchy */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+/* Lead paragraph style */
+.lead {
+    font-size: 1.25rem;
+    line-height: 1.8;
+}
+
+/* Link styles */
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Text emphasis classes */
+.text-success {
+    color: var(--success) !important;
+}
+
+.text-warning {
+    color: var(--warning) !important;
+}
+
+.text-error {
+    color: var(--error) !important;
+}
+
+.text-muted {
+    color: var(--supporting-neutral) !important;
+}

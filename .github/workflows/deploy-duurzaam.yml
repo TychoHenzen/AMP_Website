@@ -1,0 +1,80 @@
+name: Deploy DuurzaamDigitaal (repair site)
+
+# Server-side Blazor app on Azure App Service (App Service "DuurzaamDigitaal",
+# RG DuurzaamDigitaal_group). Cosmos connection comes from the App Service
+# application setting CosmosDb__ConnectionString — never from the repo.
+# Requires GitHub secret AZUREWEBAPP_PUBLISHPROFILE (the App Service publish profile).
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'sites/duurzaam-digitaal/**'
+      - '.github/workflows/deploy-duurzaam.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'sites/duurzaam-digitaal/**'
+      - '.github/workflows/deploy-duurzaam.yml'
+
+env:
+  AZURE_WEBAPP_NAME: DuurzaamDigitaal
+  DOTNET_VERSION: '8.0.x'
+  PROJECT_PATH: sites/duurzaam-digitaal/DuurzaamDigitaal/DuurzaamDigitaal.csproj
+  TEST_PATH: sites/duurzaam-digitaal/DuurzaamDigitaal.Tests/DuurzaamDigitaal.Tests.csproj
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build
+        run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release
+
+      - name: Test
+        run: dotnet test ${{ env.TEST_PATH }} --configuration Release
+
+      - name: Publish
+        run: |
+          dotnet publish ${{ env.PROJECT_PATH }} \
+            -c Release \
+            -o ${{ env.DOTNET_ROOT }}/myapp \
+            --runtime linux-x64 \
+            --framework net8.0 \
+            --no-self-contained \
+            /p:EnvironmentName=Production
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: .net-app
+          path: ${{ env.DOTNET_ROOT }}/myapp
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push'
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZUREWEBAPP_PUBLISHPROFILE }}
+          package: .

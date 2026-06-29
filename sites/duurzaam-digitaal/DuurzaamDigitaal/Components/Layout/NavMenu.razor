@@ -1,0 +1,78 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">
+            <img src="Images/Logo.svg" alt="Logo" class="navbar-logo" />
+            DuurzaamDigitaal
+        </a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+        <li class="nav-item dropdown">
+            <NavLink class="nav-link dropdown-toggle" href="#" id="diensten-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="bi bi-tools" aria-hidden="true"></span> Diensten
+            </NavLink>
+            <ul class="dropdown-menu" aria-labelledby="diensten-dropdown">
+                <li><a class="dropdown-item" href="reparatie">Reparaties</a></li>
+                <li><a class="dropdown-item" href="software">Ondersteuning</a></li>
+                <li><a class="dropdown-item" href="datarecovery">Data Herstel</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="diensten">Alle Diensten</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="refurbished">
+                <span class="bi bi-laptop" aria-hidden="true"></span> Refurbished
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="recycling">
+                <span class="bi bi-recycle" aria-hidden="true"></span> E-waste
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="prijzen">
+                <span class="bi bi-currency-euro" aria-hidden="true"></span> Prijzen
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="faq">
+                <span class="bi bi-question-circle" aria-hidden="true"></span> FAQ
+            </NavLink>
+        </li>
+    </ul>
+    <div class="navbar-nav">
+        <div class="nav-item">
+            <NavLink class="btn btn-light me-2" href="afspraak">
+                <span class="bi bi-calendar" aria-hidden="true"></span> Afspraak Maken
+            </NavLink>
+        </div>
+        <div class="nav-item">
+            <NavLink class="btn btn-outline-light" href="contact">
+                <span class="bi bi-envelope" aria-hidden="true"></span> Contact
+            </NavLink>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse navbar-collapse" : "navbar-collapse";
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

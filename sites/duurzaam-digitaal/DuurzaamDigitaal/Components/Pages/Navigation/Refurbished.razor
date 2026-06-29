@@ -1,0 +1,132 @@
+@page "/refurbished"
+@using DuurzaamDigitaal.Components.Shared
+@inherits RefurbishedBase
+
+<ServicePageTemplate 
+    PageTitle="Refurbished Computers"
+    Hero="@HeroData"
+    SidebarData="@SidebarData">
+    <MainContent>
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2>Waarom Refurbished?</h2>
+                <p>Bij DuurzaamDigitaal geven we computers een tweede leven. Onze refurbished systemen worden zorgvuldig getest, gereinigd en waar nodig voorzien van nieuwe onderdelen. Dit is niet alleen duurzaam, maar ook voordelig voor u.</p>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title">Upgrade Service</h3>
+                        <p>Ook als u uw computer niet bij ons heeft gekocht, kunt u profiteren van onze upgrade
+                            services:</p>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>SSD upgrades voor snellere
+                                prestaties
+                            </li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>RAM uitbreiding voor betere
+                                multitasking
+                            </li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Professionele installatie</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Prijs gebaseerd op onderdelen +
+                                arbeid
+                            </li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Gratis advies over beste
+                                upgrade opties
+                            </li>
+                        </ul>
+                        <NavLink class="btn btn-success mt-3" href="contact">
+                            Vraag een upgrade offerte aan
+                        </NavLink>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title">Verkoop uw apparatuur</h3>
+                        <p>Heeft u een laptop, desktop of computer die u niet meer gebruikt? Wij kopen deze graag van u
+                            over! Uw apparatuur krijgt een tweede leven en u draagt bij aan een duurzame toekomst.</p>
+                        <ul class="list-unstyled">
+                            <li>Eerlijke prijzen voor uw apparatuur</li>
+                            <li>Accepteren laptops, desktops en computers</li>
+                            <li>Veilige dataverwijdering gegarandeerd</li>
+                            <li>Gratis waardebepaling</li>
+                            <li>Direct contant uitbetaald</li>
+                        </ul>
+                        <NavLink class="btn btn-success mt-3" href="contact">
+                            Vraag een waardebepaling aan
+                        </NavLink>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title">Onze Garanties</h3>
+                        <ul class="list-unstyled">
+                            <li>6 maanden garantie op alle systemen</li>
+                            <li>Uitgebreide technische controle</li>
+                            <li>Professionele reiniging</li>
+                            <li>Nieuwe SSD voor betere prestaties</li>
+                            <li>Windows 11 Pro met licentie</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Voordelen</h3>
+                        <ul class="list-unstyled">
+                            <li>Bespaar tot 70% t.o.v. nieuw</li>
+                            <li>Duurzame keuze</li>
+                            <li>Direct gebruiksklaar</li>
+                            <li>Inclusief support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="mb-4">Beschikbare Systemen</h2>
+        <div class="row">
+            @foreach (var device in AvailableDevices)
+            {
+                <div class="col-md-4 mb-4">
+                    <RefurbishedDeviceCard Device="@device"/>
+                </div>
+            }
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Ons Refurbishment Proces</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Technisch</h4>
+                                <ul class="list-unstyled">
+                                    <li>Uitgebreide hardware tests</li>
+                                    <li>Professionele reiniging</li>
+                                    <li>SSD upgrade</li>
+                                    <li>RAM upgrade indien nodig</li>
+                                    <li>Nieuwe thermische pasta</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Software</h4>
+                                <ul class="list-unstyled">
+                                    <li>Nieuwe Windows installatie</li>
+                                    <li>Alle updates geïnstalleerd</li>
+                                    <li>Basis software pakket</li>
+                                    <li>Prestatie optimalisatie</li>
+                                    <li>Virusscanner</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MainContent>
+</ServicePageTemplate>

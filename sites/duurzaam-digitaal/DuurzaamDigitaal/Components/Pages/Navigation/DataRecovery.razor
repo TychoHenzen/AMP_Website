@@ -1,0 +1,31 @@
+@page "/datarecovery"
+@using DuurzaamDigitaal.Models
+@using DuurzaamDigitaal.Components.Shared
+@inherits DataRecoveryBase
+
+<ServicePageTemplate 
+    PageTitle="Data Recovery"
+    Hero="@HeroData"
+    SidebarData="@SidebarData">
+    <MainContent>
+        <section class="mb-5">
+            <ServiceCard Data="@IntroCard" />
+        </section>
+
+        <section class="mb-5">
+            <h2 class="text-center mb-4">Recovery Oplossingen</h2>
+            <div class="row">
+                @foreach (var card in SolutionCards)
+                {
+                    <div class="col-md-6 mb-4">
+                        <ServiceCard Data="@card" />
+                    </div>
+                }
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <ServiceCard Data="@ProcessCard" />
+        </section>
+    </MainContent>
+</ServicePageTemplate>

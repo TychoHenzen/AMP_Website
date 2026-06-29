@@ -1,0 +1,59 @@
+/* Error UI Component Styling */
+#blazor-error-ui {
+    /* Positioning */
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1050;
+
+    /* Visual styling */
+    background-color: var(--warning);
+    color: var(--text-dark);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+
+    /* Spacing */
+    padding: 1rem;
+
+    /* Display behavior */
+    display: none;
+}
+
+/* Dismiss button styling */
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    margin-left: 1rem;
+    color: var(--text-dark);
+    transition: color 0.2s ease-in-out;
+}
+
+#blazor-error-ui .dismiss:hover {
+    color: var(--error);
+}
+
+/* Error message link styling */
+#blazor-error-ui a {
+    color: var(--primary-dark);
+    text-decoration: underline;
+    transition: color 0.2s ease-in-out;
+}
+
+#blazor-error-ui a:hover {
+    color: var(--primary);
+}
+
+/* Animation for error UI appearance */
+#blazor-error-ui.show {
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

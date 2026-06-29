@@ -1,0 +1,92 @@
+/* Components/RefurbishedDetails.css */
+
+/* Container layout */
+.refurbished-details-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Device image styling */
+.device-main-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Price and availability section */
+.price-availability-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.device-price {
+    font-weight: bold;
+    color: var(--success);
+}
+
+.availability-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.available {
+    background-color: var(--supporting-light);
+    color: var(--success);
+}
+
+.unavailable {
+    background-color: var(--supporting-light);
+    color: var(--error);
+}
+
+/* Description styling */
+.device-description {
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* Lists styling */
+.specifications-list, .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.specifications-list li, .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+/* Icons */
+.bi {
+    font-size: 1.1em;
+}
+
+/* Order button */
+.order-btn {
+    font-weight: 500;
+    padding: 12px;
+}
+
+.order-btn i {
+    margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .price-availability-container {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+}

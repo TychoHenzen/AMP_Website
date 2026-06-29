@@ -1,96 +1,89 @@
-# Azure Deploy Setup — Next Steps
+# Azure Setup & Architecture — Status + Next Steps
 
-Context-survival doc for the multi-site monorepo migration + Nido Suave deploy.
-Written 2026-06-29. Pick up here after a restart.
+Context-survival doc. Pick up here after a restart. Last updated 2026-06-29.
 
-## Where things stand
+## Account / environment
 
-Done (committed):
-- Repo restructured to a **multi-site monorepo**:
-  - `sites/portfolio/` — Tycho's portfolio (Blazor WASM .NET 6). Already live on existing SWA `icy-meadow-06fe80803`.
-  - `sites/nido-suave/` — Denise's massage site (Blazor WASM .NET 8, Dutch). **Not yet deployed.**
-  - `tools/ProjectEditor/` — local-only editor.
-- Path-filtered workflows: `.github/workflows/deploy-portfolio.yml` and `deploy-nido.yml`.
-- **Azure CLI 2.87.0** installed locally (`C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd`).
-- **Azure MCP server** registered project-scoped in `.mcp.json` (`@azure/mcp`, runs via `cmd /c npx`). Auth uses your `az login` — no secrets in the file.
+- Subscription: **Azure subscription 1** — ID `7b0a4103-a709-4adf-9d70-ae2cfa43279d`
+- Tenant: `8d570529-0ba9-46d6-8ed2-24a1b1683a75` (`siriusblack9999hotmail.onmicrosoft.com`), role Owner
+- Login (MFA required on tenant): `az login --tenant 8d570529-0ba9-46d6-8ed2-24a1b1683a75`
+- Azure CLI 2.87.0 at `C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd`
+- Azure MCP server registered in `.mcp.json` (`@azure/mcp`, `cmd /c npx`, auth via az login)
 
-Account facts (from portal):
-- Subscription name: **Azure subscription 1**
-- Subscription ID: **`7b0a4103-a709-4adf-9d70-ae2cfa43279d`**
-- Tenant ID: **`8d570529-0ba9-46d6-8ed2-24a1b1683a75`** ("Default Directory", `siriusblack9999hotmail.onmicrosoft.com`)
-- Role: Owner
+## Azure inventory (as of 2026-06-29)
 
-## Blocker: az login needs MFA on the tenant
+| Resource | Type | RG | Region | Purpose |
+| --- | --- | --- | --- | --- |
+| AutoARPG | Static Web App | BWG_AutoARPG | West Europe | portfolio (icy-meadow-06fe80803) |
+| Manim | Cognitive Services | BWG_AutoARPG | East US | separate (leave alone) |
+| nido-suave | Static Web App | DuurzaamDigitaal_group | West Europe | nido (zealous-moss-0d5fb8903) |
+| DuurzaamDigitaal | App Service | DuurzaamDigitaal_group | North Europe | repair site (server-side) |
+| ASP-DuurzaamDigitaalgroup-a945 | App Service Plan | DuurzaamDigitaal_group | North Europe | repair plan |
+| duurzaamdigitaal | Cosmos DB | DuurzaamDigitaal_group | (multi) | SHARED DB (free-tier) |
+| DuurzaamDigitaal-id-a078 | Managed Identity | DuurzaamDigitaal_group | North Europe | repair identity |
 
-Plain `az login` failed: `AADSTS50076 ... must use multi-factor authentication`.
-Fix — log in against the tenant explicitly (forces the MFA prompt):
+RG deletion is OFF — every RG holds live resources. Tidy = create dedicated RG and *move* SWAs (Phase 4).
 
-```powershell
-az login --tenant 8d570529-0ba9-46d6-8ed2-24a1b1683a75
-az account set --subscription 7b0a4103-a709-4adf-9d70-ae2cfa43279d
-az account show -o table   # confirm the right sub is active
-```
+## Decisions locked
 
-(Run these yourself — interactive browser. In Claude prompt: prefix with `! `.)
+- Multi-site monorepo, one Azure host per site, path-filtered deploys.
+- Repo `AMP_Website` stays **PUBLIC** → repair site merged via **squash (no history)** + secrets externalized.
+- Shared **Cosmos account = existing `duurzaamdigitaal`** (free-tier; only one allowed).
+- WASM sites can't hold DB secrets → **one shared Azure Functions app** (.NET isolated) fronts Cosmos.
 
-## MCP server activation
+## DONE
 
-New `.mcp.json` servers only load on Claude Code **restart**. On first load Claude will
-ask to **approve the `azure` project MCP server** — approve it. Note: Azure MCP has **no
-native Static Web Apps tool**; SWA is managed through its `extension` (az CLI passthrough).
-So the steps below use `az` directly — they work whether or not the MCP server is loaded.
+- Restructured to `sites/` + `tools/`; portfolio + nido (WASM) live/ready.
+- Deploy secrets set in GitHub repo: `AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_MEADOW_06FE80803`,
+  `AZURE_STATIC_WEB_APPS_API_TOKEN_NIDO_SUAVE`, `AZUREWEBAPP_PUBLISHPROFILE`.
+- **Cosmos key rotated** (2026-06-29): the leaked PRIMARY key (was committed in the repair repo's
+  `appsettings*.json`) is DEAD. Live app moved to SECONDARY via App Service setting
+  `CosmosDb__ConnectionString`, then primary regenerated. Zero downtime. The dead key remains only in
+  the *private* DuurzaamDigitaal repo history (harmless — invalid).
+- **Repair site merged** → `sites/duurzaam-digitaal/` (squash, no history). Sanitized appsettings
+  (empty connection string + container IDs kept). Fixed triple-BOM in MainLayout.razor + _Imports.razor.
+  Added to root sln. `deploy-duurzaam.yml` created (path-filtered, publish-profile deploy).
+  Builds clean; 18/18 tests pass.
 
-## Create the Nido Suave Static Web App
+## TODO
 
-Pick/confirm a resource group and region (`westeurope` is closest for NL).
+### Phase 1 — finish the merge (almost done)
+- [ ] Commit + push. Pushing redeploys portfolio (harmless) and triggers nido + duurzaam deploys.
+      Verify each Action goes green.
+- [ ] Confirm repair site still serves after a monorepo-sourced deploy (config now from App Service setting).
+- [ ] (optional) Archive/private-note the old `TychoHenzen/DuurzaamDigitaal` repo to avoid drift.
+- [ ] (optional) App Service `httpsOnly=true` on DuurzaamDigitaal (currently false).
 
-```bash
-# 1. Resource group (reuse the portfolio's RG if you want them together; list them first)
-az group list -o table
-# az group create -n rg-websites -l westeurope    # only if you need a new one
+### Phase 2 — shared data layer + Functions API
+- [ ] Extract a `shared/Data` class library (.NET 8) from the repair site's `Data/` (Cosmos client,
+      repositories, models, `CosmosDbConfig`). Per-site database/container naming.
+- [ ] New `apps/api/` Azure Functions app (.NET 8 isolated), references `shared/Data`, reads
+      `CosmosDb__ConnectionString` from app settings, CORS for site origins. Endpoints `/api/<site>/...`.
+- [ ] Provision Functions app in Azure (consumption), set its `CosmosDb__ConnectionString` app setting
+      to the **secondary** Cosmos connection string. Add deploy workflow + publish secret.
+- [ ] (later) Repair site can switch from direct Cosmos to the shared lib/API; keep direct for now.
 
-# 2. Create the SWA (Free tier). No --source/--repo: we deploy via our own GH Action.
-az staticwebapp create \
-  --name nido-suave \
-  --resource-group <resource-group> \
-  --location westeurope \
-  --sku Free
+### Phase 3 — Nido Suave appointment booking
+- [ ] Cosmos: `nido` database + `appointments`, `timeslots` containers.
+- [ ] API endpoints: list timeslots, create appointment, etc.
+- [ ] Nido WASM booking UI calling the API; replace Contact/Behandelingen placeholders as needed.
 
-# 3. Get the deploy token
-az staticwebapp secrets list \
-  --name nido-suave \
-  --resource-group <resource-group> \
-  --query "properties.apiKey" -o tsv
-```
+### Phase 4 — RG tidy + hardening
+- [ ] Create `rg-websites` (westeurope); MOVE AutoARPG + nido-suave SWAs into it (preserves hostnames).
+- [ ] Custom domains per site (`az staticwebapp hostname set ...` / App Service custom domain).
 
-## Wire the token into GitHub Actions
-
-The `deploy-nido.yml` workflow expects secret `AZURE_STATIC_WEB_APPS_API_TOKEN_NIDO_SUAVE`.
-
-```bash
-# Requires gh authenticated (gh auth status)
-az staticwebapp secrets list --name nido-suave --resource-group <rg> --query "properties.apiKey" -o tsv \
-  | gh secret set AZURE_STATIC_WEB_APPS_API_TOKEN_NIDO_SUAVE
-```
-
-Then push to `master` — the path filter (`sites/nido-suave/**`) triggers `deploy-nido.yml`
-and the site goes live at the SWA's default `*.azurestaticapps.net` URL.
-
-## Custom domain / DNS (later)
-
-Each site = its own SWA = its own custom domain. Once Nido is live:
+## Handy commands
 
 ```bash
-az staticwebapp hostname set --name nido-suave --resource-group <rg> --hostname www.nidosuave.nl
+# Cosmos connection strings (secondary is the one currently in use)
+az cosmosdb keys list -n duurzaamdigitaal -g DuurzaamDigitaal_group --type connection-strings
+
+# Repair App Service settings / restart
+az webapp config appsettings list -n DuurzaamDigitaal -g DuurzaamDigitaal_group -o table
+az webapp restart -n DuurzaamDigitaal -g DuurzaamDigitaal_group
+
+# Static web app deploy tokens
+az staticwebapp secrets list -n nido-suave -g DuurzaamDigitaal_group --query properties.apiKey -o tsv
 ```
 
-Then add the validation/CNAME records at the domain registrar. Repeat per future site
-(repair site, wife's CV site) — new SWA each, new path-filtered workflow each.
-
-## Quick reference — what I (Claude) can do once you're logged in
-
-- Drive all the `az staticwebapp` commands above from here.
-- Set the GitHub secret via `gh secret set`.
-- Trigger/observe the deploy.
-
-I **cannot** run `az login` (interactive browser) — that stays with you.
+I (Claude) can run all `az`/`gh` steps. Only `az login` (interactive browser) is yours.

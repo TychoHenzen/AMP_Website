@@ -1,0 +1,79 @@
+/* Process timeline styling */
+.process-section {
+    background-color: var(--background);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.process-timeline {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.process-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background-color: var(--border);
+}
+
+.process-step {
+    position: relative;
+    margin-bottom: 3rem;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.process-step:last-child {
+    margin-bottom: 0;
+}
+
+.process-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1rem;
+    background-color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.process-icon i {
+    font-size: 1.75rem;
+    color: var(--text-light);
+}
+
+.process-step h4 {
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+}
+
+.process-step p {
+    color: var(--text-dark);
+    margin-bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .process-timeline::before {
+        left: 24px;
+    }
+
+    .process-step {
+        text-align: left;
+        padding-left: 80px;
+    }
+
+    .process-icon {
+        position: absolute;
+        left: 0;
+        margin: 0;
+    }
+}

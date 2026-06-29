@@ -1,0 +1,40 @@
+@using DuurzaamDigitaal.Models
+
+<div class="card service-card h-100">
+    <div class="card-body @(Data.IsCentered ? "text-center" : "")">
+        @if (!string.IsNullOrEmpty(Data.Icon))
+        {
+            <i class="@Data.Icon service-icon"></i>
+        }
+        <h4 class="card-title">@Data.Title</h4>
+        <p class="card-text">@Data.Description</p>
+
+        @if (Data.Features.Any())
+        {
+            <div class="@(Data.IsCentered ? "text-start" : "") mt-4">
+                <ul class="list-unstyled">
+                    @foreach (var feature in Data.Features)
+                    {
+                        <li>
+                            @if (!string.IsNullOrEmpty(feature.Icon))
+                            {
+                                <i class="@feature.Icon me-2"></i>
+                            }
+                            @feature.Text
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public ServiceCardData Data { get; set; } = new();
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

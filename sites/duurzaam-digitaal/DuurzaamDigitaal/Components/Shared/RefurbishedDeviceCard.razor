@@ -1,0 +1,107 @@
+@using DuurzaamDigitaal.Models
+<div class="card h-100">
+    <div class="card-body">
+        @if (!string.IsNullOrEmpty(Device.ImageUrl))
+        {
+            <img src="@Device.ImageUrl" alt="@Device.Name" class="card-img-top mb-3"/>
+        }
+        <h3 class="card-title">@Device.Name</h3>
+        <p class="text-success fs-4 mb-3">€@Device.Price.ToString("N2")</p>
+
+        <div class="specs-preview mb-3">
+            @foreach (var spec in Device.Specifications.Take(4))
+            {
+                <div class="spec-item">
+                    <i class="bi bi-check2"></i>
+                    @spec
+                </div>
+            }
+        </div>
+
+        <div class="category-badge mb-3">
+            <span class="badge @GetCategoryClass()">@Device.Category</span>
+            @if (Device.IsAvailable)
+            {
+                <span class="badge bg-success">Op voorraad</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Niet beschikbaar</span>
+            }
+        </div>
+
+        <NavLink class="btn btn-success w-100" href="@($"refurbished/{Device.Id}")">
+            Bekijk Details
+        </NavLink>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .specs-preview {
+        font-size: 0.9em;
+    }
+
+    .spec-item {
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .spec-item i {
+        color: var(--primary-color);
+    }
+
+    .category-badge {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .badge {
+        padding: 0.5em 1em;
+    }
+
+    .badge-basic {
+        background-color: #6c757d;
+    }
+
+    .badge-mid {
+        background-color: #0d6efd;
+    }
+
+    .badge-high {
+        background-color: #6f42c1;
+    }
+</style>
+
+@code {
+
+    [Parameter]
+    public required RefurbishedDeviceData Device { get; set; }
+
+    private string GetCategoryClass()
+    {
+        return Device.Category.ToLower() switch
+        {
+            "basic" => "badge-basic",
+            "mid" => "badge-mid",
+            "high" => "badge-high",
+            _ => "badge-secondary"
+        };
+    }
+
+}

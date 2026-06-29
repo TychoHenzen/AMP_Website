@@ -1,0 +1,164 @@
+@using DuurzaamDigitaal.Models
+<div class="system-performance">
+    <div class="performance-scores">
+        <div class="score-item">
+            <div class="score-circle @GetScoreClass(Data.GraphicsScore)">
+                <span class="score-value">@Data.GraphicsScore</span>
+            </div>
+            <div class="score-label">Graphics</div>
+        </div>
+        <div class="score-item">
+            <div class="score-circle @GetScoreClass(Data.ProcessorScore)">
+                <span class="score-value">@Data.ProcessorScore</span>
+            </div>
+            <div class="score-label">Processor</div>
+        </div>
+        <div class="score-item">
+            <div class="score-circle @GetScoreClass(Data.MemoryScore)">
+                <span class="score-value">@Data.MemoryScore</span>
+            </div>
+            <div class="score-label">Memory</div>
+        </div>
+        <div class="score-item">
+            <div class="score-circle @GetScoreClass(Data.StorageScore)">
+                <span class="score-value">@Data.StorageScore</span>
+            </div>
+            <div class="score-label">Storage</div>
+        </div>
+    </div>
+
+    <div class="performance-tier">
+        <h3>Overall Score: @Data.OverallScore</h3>
+        <p class="tier-description">@SystemPerformanceData.GetPerformanceTier(Data.OverallScore)</p>
+    </div>
+
+    <div class="performance-examples">
+        <h4>What can this system do?</h4>
+        <ul>
+            @foreach (var example in SystemPerformanceData.GetPerformanceExamples(Data.OverallScore))
+            {
+                <li><i class="bi bi-check-circle-fill text-success"></i> @example</li>
+            }
+        </ul>
+    </div>
+</div>
+
+<style>
+    .system-performance {
+        padding: 20px;
+        background: var(--surface-color);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .performance-scores {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .score-item {
+        text-align: center;
+    }
+
+    .score-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: white;
+        transition: transform 0.3s ease;
+    }
+
+    .score-circle:hover {
+        transform: scale(1.1);
+    }
+
+    .score-excellent {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+    }
+
+    .score-good {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+    }
+
+    .score-moderate {
+        background: linear-gradient(135deg, #f1c40f, #f39c12);
+    }
+
+    .score-basic {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+
+    .score-label {
+        font-weight: 500;
+        color: var(--text-color);
+    }
+
+    .performance-tier {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+    }
+
+    .tier-description {
+        font-size: 1.1em;
+        color: var(--primary-color);
+        margin-top: 10px;
+    }
+
+    .performance-examples {
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+    }
+
+    .performance-examples h4 {
+        margin-bottom: 15px;
+        color: var(--secondary-color);
+    }
+
+    .performance-examples ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .performance-examples li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .performance-examples i {
+        font-size: 1.2em;
+    }
+</style>
+
+@code {
+
+    [Parameter]
+    public required SystemPerformanceData Data { get; set; }
+
+    private string GetScoreClass(int score)
+    {
+        return score switch
+        {
+            >= 80 => "score-excellent",
+            >= 60 => "score-good",
+            >= 40 => "score-moderate",
+            _ => "score-basic"
+        };
+    }
+
+}

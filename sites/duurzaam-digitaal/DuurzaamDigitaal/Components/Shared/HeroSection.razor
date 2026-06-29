@@ -1,0 +1,34 @@
+@using DuurzaamDigitaal.Models
+
+<div class="hero py-5">
+    <div class="container">
+        <h1 class="mb-3">@Data.Title</h1>
+        <p class="lead mb-4">@Data.Subtitle</p>
+
+        @if (Data.Buttons.Any())
+        {
+            <div class="d-flex gap-3">
+                @foreach (var button in Data.Buttons)
+                {
+                    <NavLink href="@button.Href" class="@GetButtonClass(button)">
+                        @if (!string.IsNullOrEmpty(button.Icon))
+                        {
+                            <i class="@button.Icon me-2"></i>
+                        }
+                        @button.Text
+                    </NavLink>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public HeroSectionData Data { get; set; } = new();
+
+    private string GetButtonClass(HeroButton button)
+    {
+        return $"btn {(button.IsOutline ? "btn-outline-light" : "btn-light")}";
+    }
+}

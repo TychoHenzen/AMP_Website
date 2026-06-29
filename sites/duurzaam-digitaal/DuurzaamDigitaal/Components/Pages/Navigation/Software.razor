@@ -1,0 +1,40 @@
+@page "/software"
+@using DuurzaamDigitaal.Models
+@using DuurzaamDigitaal.Components.Shared
+@inherits SoftwareBase
+
+<ServicePageTemplate 
+    PageTitle="Software Support"
+    Hero="@HeroData"
+    SidebarData="@SidebarData">
+    <MainContent>
+        <h2>Persoonlijke Software Ondersteuning</h2>
+        <p class="mb-4">Bij DuurzaamDigitaal begrijpen we dat iedereen een ander niveau van computerkennis heeft.<br/> Onze software ondersteuning is specifiek afgestemd op uw behoeften, met extra aandacht en geduld voor senioren die willen leren omgaan met moderne technologie.</p>
+
+        <div class="row mb-4">
+            @foreach (var card in MainCards)
+            {
+                <div class="col-md-6 mb-4">
+                    <ServiceCard Data="@card" />
+                </div>
+            }
+        </div>
+
+        <section class="my-3">
+            <h2 class="text-center mb-4">Onze Aanpak</h2>
+            <div class="row">
+                @foreach (var card in ApproachCards)
+                {
+                    <div class="col-md-6 mb-4">
+                        <ServiceCard Data="@card" />
+                    </div>
+                }
+            </div>
+        </section>
+
+        <section class="my-3">
+            <h2 class="text-center mb-4">Virus & Malware Verwijdering</h2>
+            <ServiceCard Data="@SecurityCard" />
+        </section>
+    </MainContent>
+</ServicePageTemplate>

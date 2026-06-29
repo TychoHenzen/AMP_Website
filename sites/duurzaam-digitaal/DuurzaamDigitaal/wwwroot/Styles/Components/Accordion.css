@@ -1,0 +1,63 @@
+/* Components/Accordion.css */
+
+/* Base accordion styling */
+.accordion-button {
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    background-color: var(--text-light);
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+/* Active state styling */
+.accordion-button:not(.collapsed) {
+    background-color: var(--supporting-light);
+    color: var(--primary-dark);
+}
+
+/* Focus state for accessibility */
+.accordion-button:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(45, 106, 79, 0.25);
+}
+
+/* Content area styling */
+.accordion-body {
+    background-color: var(--text-light);
+    padding: 1.25rem;
+}
+
+/* FAQ specific styling */
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.accordion-section {
+    margin-bottom: 2rem;
+}
+
+.accordion-section h2 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+/* FAQ list styling */
+.accordion-body ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.accordion-body li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.accordion-body li:before {
+    content: "•";
+    color: var(--primary);
+    position: absolute;
+    left: 0;
+}

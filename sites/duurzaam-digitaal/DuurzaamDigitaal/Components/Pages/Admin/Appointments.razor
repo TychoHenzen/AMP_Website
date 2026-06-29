@@ -1,0 +1,223 @@
+@page "/admin/appointments"
+@using DuurzaamDigitaal.Components.Layout
+@using DuurzaamDigitaal.Data.Entities
+@using DuurzaamDigitaal.Data.Repositories
+@layout AdminLayout
+@inject IAppointmentRepository AppointmentRepository
+
+<h1 class="mb-4">Appointments</h1>
+
+<div class="card">
+    <div class="card-body">
+        <div class="mb-3">
+            <div class="btn-group" role="group">
+                <button class="btn @(_currentFilter == "all" ? "btn-primary" : "btn-outline-primary")"
+                        @onclick="@(() => FilterAppointments("all"))">
+                    All
+                </button>
+                <button class="btn @(_currentFilter == "scheduled" ? "btn-primary" : "btn-outline-primary")"
+                        @onclick="@(() => FilterAppointments("scheduled"))">
+                    Scheduled
+                </button>
+                <button class="btn @(_currentFilter == "completed" ? "btn-primary" : "btn-outline-primary")"
+                        @onclick="@(() => FilterAppointments("completed"))">
+                    Completed
+                </button>
+                <button class="btn @(_currentFilter == "cancelled" ? "btn-primary" : "btn-outline-primary")"
+                        @onclick="@(() => FilterAppointments("cancelled"))">
+                    Cancelled
+                </button>
+            </div>
+        </div>
+
+        @if (_appointments == null)
+        {
+            <div class="text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+        else if (!_appointments.Any())
+        {
+            <p class="text-center mb-0">No appointments found.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Service Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var appointment in _appointments)
+                    {
+                        <tr>
+                            <td>@appointment.CreatedAt.ToLocalTime().ToString("g")</td>
+                            <td>@appointment.FirstName @appointment.LastName</td>
+                            <td>@appointment.Email</td>
+                            <td>@appointment.ServiceType</td>
+                            <td>
+                                    <span class="badge @GetStatusBadgeClass(appointment.Status)">
+                                        @appointment.Status
+                                    </span>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-success"
+                                            @onclick="@(() => UpdateStatus(appointment.Id, "Completed"))"
+                                            disabled="@(appointment.Status == "Completed" || appointment.Status == "Cancelled")">
+                                        <i class="bi bi-check"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger"
+                                            @onclick="@(() => UpdateStatus(appointment.Id, "Cancelled"))"
+                                            disabled="@(appointment.Status == "Completed" || appointment.Status == "Cancelled")">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-info" @onclick="@(() => ShowDetails(appointment))">
+                                        <i class="bi bi-info-circle"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+@if (_selectedAppointment != null)
+{
+    <div class="modal fade show" style="display: block;" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Appointment Details</h5>
+                    <button type="button" class="btn-close" @onclick="@(() => _selectedAppointment = null)"></button>
+                </div>
+                <div class="modal-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Name</dt>
+                        <dd class="col-sm-8">@_selectedAppointment.FirstName @_selectedAppointment.LastName</dd>
+
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8">@_selectedAppointment.Email</dd>
+
+                        <dt class="col-sm-4">Phone</dt>
+                        <dd class="col-sm-8">@_selectedAppointment.Phone</dd>
+
+                        <dt class="col-sm-4">Service Type</dt>
+                        <dd class="col-sm-8">@_selectedAppointment.ServiceType</dd>
+
+                        <dt class="col-sm-4">Description</dt>
+                        <dd class="col-sm-8">@_selectedAppointment.Description</dd>
+
+                        <dt class="col-sm-4">Location</dt>
+                        <dd class="col-sm-8">@_selectedAppointment.Location</dd>
+
+                        <dt class="col-sm-4">Status</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge @GetStatusBadgeClass(_selectedAppointment.Status)">
+                                @_selectedAppointment.Status
+                            </span>
+                        </dd>
+
+                        <dt class="col-sm-4">Created</dt>
+                        <dd class="col-sm-8">@_selectedAppointment.CreatedAt.ToLocalTime().ToString("g")</dd>
+
+                        @if (!string.IsNullOrEmpty(_selectedAppointment.AdminNotes))
+                        {
+                            <dt class="col-sm-4">Admin Notes</dt>
+                            <dd class="col-sm-8">@_selectedAppointment.AdminNotes</dd>
+                        }
+                    </dl>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="@(() => _selectedAppointment = null)">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+}
+
+@code {
+    private IEnumerable<Appointment>? _appointments;
+    private Appointment? _selectedAppointment;
+    private string _currentFilter = "all";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAppointments();
+    }
+
+    private async Task LoadAppointments()
+    {
+        try
+        {
+            _appointments = _currentFilter switch
+            {
+                "scheduled" => await AppointmentRepository.GetByStatusAsync("Scheduled"),
+                "completed" => await AppointmentRepository.GetByStatusAsync("Completed"),
+                "cancelled" => await AppointmentRepository.GetByStatusAsync("Cancelled"),
+                _ => await AppointmentRepository.GetAllAsync()
+            };
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading appointments: {ex.Message}");
+        }
+    }
+
+    private async Task FilterAppointments(string filter)
+    {
+        _currentFilter = filter;
+        await LoadAppointments();
+    }
+
+    private async Task UpdateStatus(string id, string status)
+    {
+        try
+        {
+            var appointment = await AppointmentRepository.GetByIdAsync(id);
+            if (appointment != null)
+            {
+                appointment.Status = status;
+                await AppointmentRepository.UpdateAsync(appointment);
+                await LoadAppointments();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating appointment status: {ex.Message}");
+        }
+    }
+
+    private void ShowDetails(Appointment appointment)
+    {
+        _selectedAppointment = appointment;
+    }
+
+    private string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Scheduled" => "bg-primary",
+            "Completed" => "bg-success",
+            "Cancelled" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+}

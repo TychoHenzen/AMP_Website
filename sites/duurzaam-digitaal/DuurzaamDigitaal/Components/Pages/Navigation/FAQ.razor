@@ -1,0 +1,289 @@
+@page "/faq"
+@inherits FaqBase
+
+<ServicePageTemplate
+    PageTitle="Veelgestelde Vragen"
+    Hero="@HeroData"
+    SidebarData="@SidebarData">
+    <MainContent>
+        <div class="faq-container">
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-section mb-4">
+                <h2>Services</h2>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="business-services-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#business-services" aria-expanded="true"
+                                aria-controls="business-services">
+                            Welke diensten bieden jullie voor bedrijven?
+                        </button>
+                    </h3>
+                    <div id="business-services" class="accordion-collapse collapse show"
+                         aria-labelledby="business-services-header">
+                        <div class="accordion-body">
+                            <p>We bieden uitgebreide IT-ondersteuning voor bedrijven, waaronder:</p>
+                            <ul>
+                                <li>Email setup en configuratie</li>
+                                <li>Digitale handtekening implementatie</li>
+                                <li>Document management ondersteuning</li>
+                                <li>IT-training voor medewerkers</li>
+                                <li>Hardware upgrades en onderhoud</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="upgrades-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#upgrades" aria-expanded="false" aria-controls="upgrades">
+                            Bieden jullie upgrades aan voor apparaten die niet bij jullie zijn gekocht?
+                        </button>
+                    </h3>
+                    <div id="upgrades" class="accordion-collapse collapse" aria-labelledby="upgrades-header">
+                        <div class="accordion-body">
+                            <p>Ja! We bieden SSD en RAM upgrades aan voor elk compatibel apparaat. De prijs is gebaseerd
+                                op onderdelen plus arbeid. Neem contact met ons op voor een persoonlijke offerte.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="phone-repairs-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#phone-repairs" aria-expanded="false" aria-controls="phone-repairs">
+                            Welke telefoonreparaties doen jullie?
+                        </button>
+                    </h3>
+                    <div id="phone-repairs" class="accordion-collapse collapse" aria-labelledby="phone-repairs-header">
+                        <div class="accordion-body">
+                            <p>We repareren diverse telefoonproblemen waaronder schermvervanging, batterijvervanging,
+                                oplaadpoort reparaties en meer. Prijzen variëren op basis van de benodigde onderdelen en
+                                arbeid.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-section mb-4">
+                <h2>Systeemprestaties</h2>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="performance-rating-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#performance-rating" aria-expanded="false"
+                                aria-controls="performance-rating">
+                            Hoe beoordelen jullie systeemprestaties?
+                        </button>
+                    </h3>
+                    <div id="performance-rating" class="accordion-collapse collapse"
+                         aria-labelledby="performance-rating-header">
+                        <div class="accordion-body">
+                            <p>We gebruiken een uitgebreid scoringssysteem (0-100) voor elk onderdeel:</p>
+                            <ul>
+                                <li>Graphics Score: GPU prestaties voor gaming en visuele taken</li>
+                                <li>Processor Score: CPU mogelijkheden voor algemene computing</li>
+                                <li>Memory Score: RAM capaciteit en snelheid</li>
+                                <li>Storage Score: Schijfprestaties en capaciteit</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="performance-tiers-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#performance-tiers" aria-expanded="false"
+                                aria-controls="performance-tiers">
+                            Wat betekenen de prestatieniveaus?
+                        </button>
+                    </h3>
+                    <div id="performance-tiers" class="accordion-collapse collapse"
+                         aria-labelledby="performance-tiers-header">
+                        <div class="accordion-body">
+                            <p>Onze prestatieniveaus geven praktische mogelijkheden aan:</p>
+                            <ul>
+                                <li>80-100: Uitstekend voor de nieuwste AAA games op hoge instellingen</li>
+                                <li>60-80: Goed voor de meeste moderne games op medium instellingen</li>
+                                <li>40-60: Geschikt voor esports en oudere titels</li>
+                                <li>Onder 40: Basis computing en lichte gaming</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-section mb-4">
+                <h2>Openingstijden & Contact</h2>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="opening-hours-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#opening-hours" aria-expanded="false" aria-controls="opening-hours">
+                            Wat zijn jullie openingstijden?
+                        </button>
+                    </h3>
+                    <div id="opening-hours" class="accordion-collapse collapse" aria-labelledby="opening-hours-header">
+                        <div class="accordion-body">
+                            <p>We zijn open:</p>
+                            <ul>
+                                <li>Dinsdag - Zaterdag: 9:00 - 17:00</li>
+                                <li>Maandag: Gesloten (Alleen spoedafspraken)</li>
+                                <li>Zondag: Gesloten</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="contact-methods-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#contact-methods" aria-expanded="false" aria-controls="contact-methods">
+                            Hoe kan ik contact met jullie opnemen?
+                        </button>
+                    </h3>
+                    <div id="contact-methods" class="accordion-collapse collapse"
+                         aria-labelledby="contact-methods-header">
+                        <div class="accordion-body">
+                            <p>U kunt ons bereiken via:</p>
+                            <ul>
+                                <li>Telefoon</li>
+                                <li>Email</li>
+                                <li>WhatsApp</li>
+                                <li>Contactformulier op onze website</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-section mb-4">
+                <h2>Prijzen & Garantie</h2>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="no-cure-no-pay-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#no-cure-no-pay" aria-expanded="false" aria-controls="no-cure-no-pay">
+                            Wat betekent no-cure-no-pay?
+                        </button>
+                    </h3>
+                    <div id="no-cure-no-pay" class="accordion-collapse collapse"
+                         aria-labelledby="no-cure-no-pay-header">
+                        <div class="accordion-body">
+                            <p>Dit betekent dat u alleen betaalt als we uw probleem succesvol kunnen oplossen. De
+                                diagnose is altijd gratis.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="parts-pricing-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#parts-pricing" aria-expanded="false" aria-controls="parts-pricing">
+                            Hoe werkt de prijsberekening voor onderdelen?
+                        </button>
+                    </h3>
+                    <div id="parts-pricing" class="accordion-collapse collapse" aria-labelledby="parts-pricing-header">
+                        <div class="accordion-body">
+                            <p>Voor nieuwe onderdelen rekenen we de inkoopprijs plus 20%. Bij refurbished onderdelen is
+                                dit de inkoopprijs plus 30%. We bespreken altijd vooraf de geschatte kosten.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="pricing-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#pricing" aria-expanded="false" aria-controls="pricing">
+                            Hoe werkt jullie prijsmodel?
+                        </button>
+                    </h3>
+                    <div id="pricing" class="accordion-collapse collapse" aria-labelledby="pricing-header">
+                        <div class="accordion-body">
+                            <p>Onze prijzen zijn transparant en eerlijk:</p>
+                            <ul>
+                                <li>Diagnose is altijd gratis</li>
+                                <li>Vooraf duidelijke prijsopgave</li>
+                                <li>Geen verborgen kosten</li>
+                                <li>Betaling mogelijk in termijnen</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="warranty-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#warranty" aria-expanded="false" aria-controls="warranty">
+                            Welke garantie bieden jullie?
+                        </button>
+                    </h3>
+                    <div id="warranty" class="accordion-collapse collapse" aria-labelledby="warranty-header">
+                        <div class="accordion-body">
+                            <p>We staan achter ons werk:</p>
+                            <ul>
+                                <li>6 maanden garantie op refurbished systemen</li>
+                                <li>3 maanden garantie op reparaties</li>
+                                <li>Garantie op nieuwe onderdelen volgens fabrieksvoorwaarden</li>
+                                <li>Bij problemen altijd gratis diagnose</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </MainContent>
+</ServicePageTemplate>
+
+<style>
+    .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .accordion-section {
+        margin-bottom: 2rem;
+    }
+
+    .accordion-section h2 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+
+    .accordion-button {
+        background-color: var(--surface-color);
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .accordion-button:focus {
+        box-shadow: none;
+        border-color: rgba(0, 0, 0, .125);
+    }
+
+    .accordion-body {
+        background-color: var(--surface-color);
+    }
+
+    .accordion-body ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .accordion-body li {
+        margin-bottom: 0.5rem;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+
+    .accordion-body li:before {
+        content: "•";
+        color: var(--primary-color);
+        position: absolute;
+        left: 0;
+    }
+</style>

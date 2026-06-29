@@ -1,0 +1,154 @@
+@page "/prijzen"
+@using DuurzaamDigitaal.Components.Shared
+@inherits PricingBase
+
+<ServicePageTemplate 
+    PageTitle="Prijzen"
+    Hero="@HeroData"
+    SidebarData="@SidebarData">
+    <MainContent>
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">No-Cure-No-Pay Garantie</h2>
+                        <p>Bij DuurzaamDigitaal betaalt u alleen als we uw probleem daadwerkelijk kunnen oplossen. 
+                           Zo weet u zeker dat u nooit voor niets betaalt.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Reparatie Services</h3>
+                        <ul class="list-unstyled pricing-list">
+                            <li>
+                                <strong>Diagnose</strong>
+                                <span class="text-success">Gratis</span>
+                            </li>
+                            <li>
+                                <strong>Arbeidsloon</strong>
+                                <span>€45 per uur</span>
+                            </li>
+                            <li>
+                                <strong>Nieuwe Onderdelen</strong>
+                                <span>Kostprijs + 20%</span>
+                            </li>
+                            <li>
+                                <strong>Refurbished Onderdelen</strong>
+                                <span>Kostprijs + 30%</span>
+                            </li>
+                            <li>
+                                <strong>APK Pakket</strong>
+                                <span>€95</span>
+                            </li>
+                            <li>
+                                <strong>Voorrijkosten</strong>
+                                <span>Gratis binnen 15km</span>
+                            </li>
+                        </ul>
+                        <div class="mt-3">
+                            <small class="text-muted">* Betaling alleen bij succesvolle reparatie</small><br/>
+                            <small class="text-muted">** APK Pakket: Complete systeem check, interne reiniging, thermal
+                                paste vervanging en optimalisatie</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Software Services</h3>
+                        <ul class="list-unstyled pricing-list">
+                            <li>
+                                <strong>Basis Consultatie</strong>
+                                <span>€35 per uur</span>
+                            </li>
+                            <li>
+                                <strong>Training Sessies</strong>
+                                <span>€40 per uur</span>
+                            </li>
+                            <li>
+                                <strong>Virus Verwijdering</strong>
+                                <span>€60 vast tarief</span>
+                            </li>
+                            <li>
+                                <strong>Data Recovery</strong>
+                                <span>Vanaf €75</span>
+                            </li>
+                            <li>
+                                <strong>Computer Reiniging</strong>
+                                <span>€35 per apparaat</span>
+                            </li>
+                        </ul>
+                        <div class="mt-3">
+                            <small class="text-muted">* Prijzen inclusief BTW</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Refurbished Systemen</h3>
+                        <ul class="list-unstyled pricing-list">
+                            <li>
+                                <strong>Basic Systemen</strong>
+                                <span>€200 - €300</span>
+                            </li>
+                            <li>
+                                <strong>Mid-range Systemen</strong>
+                                <span>€300 - €450</span>
+                            </li>
+                            <li>
+                                <strong>High-end Systemen</strong>
+                                <span>€450 - €600</span>
+                            </li>
+                            <li>
+                                <strong>Garantie</strong>
+                                <span>6 maanden</span>
+                            </li>
+                            <li>
+                                <strong>Support</strong>
+                                <span>Inclusief</span>
+                            </li>
+                        </ul>
+                        <div class="mt-3">
+                            <small class="text-muted">* Inclusief software installatie</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </MainContent>
+</ServicePageTemplate>
+
+<style>
+    .pricing-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .pricing-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background-color: var(--supporting-light);
+        color: var(--primary-dark);
+    }
+    
+    .accordion-button:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem rgba(45, 106, 79, 0.25);
+    }
+</style>

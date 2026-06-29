@@ -9,17 +9,23 @@ A **monorepo** hosting multiple small websites, each deployed to its own Azure S
 ```
 AMP_Website/
 ├─ sites/
-│  ├─ portfolio/      Tycho's portfolio. Blazor WASM (.NET 6). → SWA "icy-meadow" (live)
-│  └─ nido-suave/     Denise's massage business (Dutch). Blazor WASM (.NET 8). → SWA TBD
+│  ├─ portfolio/        Tycho's portfolio. Blazor WASM (.NET 6). → SWA "icy-meadow" (live)
+│  ├─ nido-suave/       Denise's massage business (Dutch). Blazor WASM (.NET 8). → SWA "zealous-moss"
+│  └─ duurzaam-digitaal/ Tycho's repair business (Dutch). Blazor Server (.NET 8) + Cosmos DB. → App Service
 ├─ tools/
-│  └─ ProjectEditor/  Local-only editor for portfolio data (.NET 8 Blazor Server). Not deployed.
+│  └─ ProjectEditor/    Local-only editor for portfolio data (.NET 8 Blazor Server). Not deployed.
 ├─ .github/workflows/
-│  ├─ deploy-portfolio.yml   path filter: sites/portfolio/**
-│  └─ deploy-nido.yml        path filter: sites/nido-suave/**
+│  ├─ deploy-portfolio.yml   path filter: sites/portfolio/**       → SWA (token secret)
+│  ├─ deploy-nido.yml        path filter: sites/nido-suave/**       → SWA (token secret)
+│  └─ deploy-duurzaam.yml    path filter: sites/duurzaam-digitaal/** → App Service (publish profile)
 └─ AutoARPG_WebAsm.sln       solution covering all projects
 ```
 
 Path-filtered workflows mean editing one site only redeploys that site.
+
+**Hosting is NOT uniform**: the WASM sites (portfolio, nido) are static → Azure Static Web Apps. The repair site is server-side Blazor + Cosmos → Azure App Service. See "Shared data layer" below for the in-progress shared-DB direction.
+
+**Secrets**: never commit connection strings/keys. Prod config lives in Azure (App Service application settings / SWA settings). GitHub deploy secrets: `AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_MEADOW_06FE80803`, `AZURE_STATIC_WEB_APPS_API_TOKEN_NIDO_SUAVE`, `AZUREWEBAPP_PUBLISHPROFILE`.
 
 **Adding a new site**: scaffold under `sites/<name>/`, add a `staticwebapp.config.json` to its `wwwroot/`, add to the `.sln`, create a path-filtered `deploy-<name>.yml`, then create the Azure SWA instance + add its deploy token as a GitHub secret.
 
@@ -81,6 +87,39 @@ dotnet run    # https://localhost:7xxx
 **Models**: `tools/ProjectEditor/Models.cs` duplicates `sites/portfolio/Models.cs` as POCOs (no project reference). Keep in sync manually.
 
 **Pages**: live in `Pages/` (not `Components/Pages/`) — `ProjectList.razor` (`/`), `ProjectEdit.razor` (`/edit/new`, `/edit/{Index:int}`). Avoid scaffolding `@page "/"` pages in `Components/Pages/` or you'll get `AmbiguousMatchException`.
+
+## sites/duurzaam-digitaal — Tycho's repair business
+
+Blazor **Server** (.NET 8, interactive server components) + **Cosmos DB**. Dutch-language.
+Merged in from the former standalone repo `TychoHenzen/DuurzaamDigitaal` (squash, no history).
+Live on Azure App Service `DuurzaamDigitaal` (RG `DuurzaamDigitaal_group`, North Europe):
+`https://duurzaamdigitaal-gjc5e2gdejfph9gz.northeurope-01.azurewebsites.net`
+
+```bash
+# From sites/duurzaam-digitaal/
+dotnet build && dotnet test
+dotnet run --project DuurzaamDigitaal     # needs a Cosmos connection (see below)
+```
+
+**Projects**: `DuurzaamDigitaal/` (web app) + `DuurzaamDigitaal.Tests/` (18 tests). Data layer
+in `DuurzaamDigitaal/Data/` (Cosmos repositories: messages, appointments, timeslots, refurbished
+devices, invoices, payments, admin users). `Program.cs` binds the `CosmosDb` config section.
+
+**Cosmos config / secrets**: the connection string is **never in the repo**. In prod it comes from
+the App Service application setting `CosmosDb__ConnectionString`. The committed `appsettings.json`
+has an empty `CosmosDb:ConnectionString` plus the non-secret container IDs. For local dev:
+`dotnet user-secrets set "CosmosDb:ConnectionString" "<conn>"` (UserSecretsId already set).
+
+**Deploy**: `deploy-duurzaam.yml` builds/tests/publishes the project and deploys via publish profile
+(`AZUREWEBAPP_PUBLISHPROFILE`). Not a SWA.
+
+## Shared data layer (in progress)
+
+Direction: all sites share **one Cosmos account** (`duurzaamdigitaal`, the free-tier account) with
+per-site databases/containers. Because WASM sites (portfolio, nido) run in the browser and **cannot
+hold a connection string**, DB access for them goes through **one shared Azure Functions app** (.NET
+isolated) that owns the Cosmos connection and exposes `/api/<site>/...` (CORS per origin). First
+feature planned: Nido Suave appointment booking. See `docs/azure-deploy-setup.md` for the phased plan.
 
 ## Deployment
 

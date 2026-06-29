@@ -1,0 +1,200 @@
+@page "/admin/devices"
+@using DuurzaamDigitaal.Components.Layout
+@using DuurzaamDigitaal.Data.Entities
+@using DuurzaamDigitaal.Data.Repositories
+@layout AdminLayout
+@inject IRefurbishedDeviceRepository DeviceRepository
+
+<h1 class="mb-4">Refurbished Devices</h1>
+
+<div class="card">
+    <div class="card-body">
+        <div class="mb-3">
+            <button class="btn btn-primary" @onclick="() => _showAddDialog = true">
+                <i class="bi bi-plus"></i> Add Device
+            </button>
+        </div>
+
+        @if (_devices == null)
+        {
+            <div class="text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+        else if (!_devices.Any())
+        {
+            <p class="text-center mb-0">No devices found.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Model</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var device in _devices)
+                    {
+                        <tr>
+                            <td>@device.Name</td>
+                            <td>@device.Brand</td>
+                            <td>@device.Model</td>
+                            <td>€@device.Price.ToString("N2")</td>
+                            <td>
+                                    <span class="badge @GetStatusBadgeClass(device.Status)">
+                                        @device.Status
+                                    </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary me-1" @onclick="() => EditDevice(device)">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" @onclick="() => DeleteDevice(device.Id)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+@if (_showAddDialog)
+{
+    <div class="modal fade show" style="display: block;" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Device</h5>
+                    <button type="button" class="btn-close" @onclick="() => _showAddDialog = false"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="@_newDevice" OnValidSubmit="AddDevice">
+                        <DataAnnotationsValidator/>
+                        <ValidationSummary/>
+
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <InputText @bind-Value="_newDevice.Name" class="form-control"/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Brand</label>
+                            <InputText @bind-Value="_newDevice.Brand" class="form-control"/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Model</label>
+                            <InputText @bind-Value="_newDevice.Model" class="form-control"/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Device Type</label>
+                            <InputText @bind-Value="_newDevice.DeviceType" class="form-control"/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <InputNumber @bind-Value="_newDevice.Price" class="form-control"/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Condition</label>
+                            <InputText @bind-Value="_newDevice.Condition" class="form-control"/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <InputTextArea @bind-Value="_newDevice.Description" class="form-control" rows="3"/>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" @onclick="() => _showAddDialog = false">Cancel
+                        </button>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+}
+
+@code {
+    private IEnumerable<RefurbishedDevice>? _devices;
+    private bool _showAddDialog;
+    private RefurbishedDevice _newDevice = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDevices();
+    }
+
+    private async Task LoadDevices()
+    {
+        try
+        {
+            _devices = await DeviceRepository.GetAllAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading devices: {ex.Message}");
+        }
+    }
+
+    private async Task AddDevice()
+    {
+        try
+        {
+            await DeviceRepository.CreateAsync(_newDevice);
+            _showAddDialog = false;
+            _newDevice = new RefurbishedDevice();
+            await LoadDevices();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding device: {ex.Message}");
+        }
+    }
+
+    private void EditDevice(RefurbishedDevice device)
+    {
+        // TODO: Implement edit functionality
+    }
+
+    private async Task DeleteDevice(string id)
+    {
+        try
+        {
+            await DeviceRepository.DeleteAsync(id);
+            await LoadDevices();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting device: {ex.Message}");
+        }
+    }
+
+    private string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Available" => "bg-success",
+            "Reserved" => "bg-warning",
+            "Sold" => "bg-info",
+            _ => ""
+        };
+    }
+
+}

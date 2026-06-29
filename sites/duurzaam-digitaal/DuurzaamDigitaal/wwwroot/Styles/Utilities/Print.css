@@ -1,0 +1,40 @@
+/* Print style overrides
+   These styles are applied when the page is being printed */
+
+@media print {
+    /* Hide non-essential elements during printing */
+    .navbar,
+    .footer {
+        display: none;
+    }
+
+    /* Ensure proper page breaks and readability */
+    @page {
+        margin: 2cm;
+    }
+
+    /* Improve text readability for printed content */
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+    }
+
+    /* Ensure links and references are useful in printed format */
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 90%;
+    }
+
+    /* Prevent background colors and images from printing */
+    * {
+        background-color: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+    }
+
+    /* Ensure proper page breaks */
+    h1, h2, h3,
+    table, figure {
+        page-break-inside: avoid;
+    }
+}

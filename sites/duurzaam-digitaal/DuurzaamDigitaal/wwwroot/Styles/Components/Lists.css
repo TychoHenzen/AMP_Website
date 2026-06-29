@@ -1,0 +1,22 @@
+/* List group styling */
+.list-group-item {
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.list-group-item:hover {
+    border-left-color: var(--primary);
+    background-color: var(--background);
+}
+
+/* Custom lists */
+.list-unstyled li {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.list-unstyled li::before {
+    position: absolute;
+    left: 0;
+    color: var(--success);
+}

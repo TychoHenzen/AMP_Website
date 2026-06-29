@@ -1,0 +1,83 @@
+/* Components/Cards.css */
+
+/* Base card styling */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+    background-color: var(--text-light);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-title {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+/* Card image styling */
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Feature card styling */
+.feature-item {
+    background-color: var(--background);
+    padding: 10px;
+    border-radius: 8px;
+    height: 100%;
+}
+
+/* Performance and warranty cards */
+.performance-card, .warranty-card {
+    background-color: var(--text-light);
+}
+
+.warranty-details {
+    color: var(--text-dark);
+}
+
+/* Specifications preview */
+.specs-preview {
+    font-size: 0.9em;
+}
+
+.spec-item {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.spec-item i {
+    color: var(--primary);
+}
+
+/* Category badges */
+.category-badge {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.badge {
+    padding: 0.5em 1em;
+}
+
+.badge-basic {
+    background-color: var(--supporting-neutral);
+}
+
+.badge-mid {
+    background-color: var(--primary);
+}
+
+.badge-high {
+    background-color: var(--supporting-warm);
+}

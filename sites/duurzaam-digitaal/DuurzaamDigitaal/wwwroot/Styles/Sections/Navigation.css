@@ -1,0 +1,66 @@
+/* Primary navigation bar */
+.navbar {
+    background-color: var(--primary-dark) !important;
+    height: 60px !important;
+    padding: 0 !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030 !important;
+}
+
+/* Top navigation row */
+.top-row {
+    padding: 0 !important;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+/* Brand styling */
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-light) !important;
+    padding: 0 !important;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+/* Logo specifications */
+.navbar-logo {
+    height: 52px !important;
+    width: auto !important;
+    padding: 4px 4px;
+    display: block;
+}
+
+/* Navigation links */
+.nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    color: var(--supporting-light) !important;
+    height: 3rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+    color: var(--text-light) !important;
+    background-color: var(--primary);
+}
+
+.nav-link.active {
+    color: var(--text-light) !important;
+    background-color: var(--primary);
+}
+
+/* Button navigation link overrides */
+.btn.nav-link.active {
+    background-color: var(--primary) !important;
+    color: var(--text-light) !important;
+    border-color: var(--text-light) !important;
+}

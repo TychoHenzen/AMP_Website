@@ -1,0 +1,111 @@
+@page "/afspraak-bevestiging"
+@using DuurzaamDigitaal.Data.Repositories
+@using DuurzaamDigitaal.Data.Entities
+@inject IAppointmentRepository AppointmentRepository
+
+<PageTitle>Afspraak Bevestiging - DuurzaamDigitaal</PageTitle>
+
+<div class="hero py-5">
+    <div class="container">
+        <h1 class="mb-3">Bedankt voor uw afspraak</h1>
+        <p class="lead mb-4">We hebben uw aanvraag ontvangen en nemen binnen 24 uur contact met u op.</p>
+        @if (appointment != null)
+        {
+            <div class="alert alert-info">
+                <p class="mb-1"><strong>Afspraaknummer:</strong> @appointment.Id</p>
+                <p class="mb-1"><strong>Type dienst:</strong> @GetServiceTypeText(appointment.ServiceType)</p>
+                <p class="mb-1"><strong>Datum:</strong> @appointment.TimeSlot.Date.ToString("dd-MM-yyyy")</p>
+                <p class="mb-1"><strong>Tijdvak:</strong> @GetTimeSlotText(appointment.TimeSlot.TimeOfDay)</p>
+                <p class="mb-1"><strong>Locatie:</strong> @GetLocationText(appointment.Location)</p>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Wat kunt u verwachten?</h2>
+                    <ul class="list-unstyled">
+                        <li>Een bevestigingsmail met de details van uw aanvraag</li>
+                        <li>Telefonisch contact om de afspraak definitief in te plannen</li>
+                        <li>Gratis diagnose van uw probleem</li>
+                        <li>No-cure-no-pay garantie bij reparaties</li>
+                    </ul>
+                    
+                    <div class="mt-4">
+                        <h3>Heeft u nog vragen?</h3>
+                        <p>Neem gerust contact met ons op:</p>
+                        <div class="mb-3">
+                            <strong>Telefoon:</strong><br />
+                            <a href="tel:[Your Phone]">[Your Phone]</a>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Email:</strong><br />
+                            <a href="mailto:[Your Email]">[Your Email]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Handige informatie</h3>
+                    <ul class="list-unstyled">
+                        <li>Gratis diagnose van problemen</li>
+                        <li>Transparante prijzen zonder verborgen kosten</li>
+                        <li>Voorrijkosten gratis binnen 15km</li>
+                        <li>Reparatie alleen na uw goedkeuring</li>
+                    </ul>
+                    <NavLink class="btn btn-outline-success mt-3" href="prijzen">
+                        Bekijk onze tarieven
+                    </NavLink>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Appointment? appointment;
+    
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(Id))
+        {
+            appointment = await AppointmentRepository.GetByIdAsync(Id);
+        }
+    }
+
+    private string GetServiceTypeText(string serviceType) => serviceType switch
+    {
+        "computer-repair" => "Computer/Laptop Reparatie",
+        "software-support" => "Software Ondersteuning",
+        "data-recovery" => "Data Recovery",
+        "training" => "Computer Training",
+        "recycling" => "E-waste Recycling",
+        _ => serviceType
+    };
+
+    private string GetTimeSlotText(string timeSlot) => timeSlot switch
+    {
+        "morning" => "Ochtend (9:00 - 12:00)",
+        "afternoon" => "Middag (13:00 - 17:00)",
+        _ => timeSlot
+    };
+
+    private string GetLocationText(string location) => location switch
+    {
+        "workshop" => "In de werkplaats",
+        "home" => "Aan huis",
+        _ => location
+    };
+}

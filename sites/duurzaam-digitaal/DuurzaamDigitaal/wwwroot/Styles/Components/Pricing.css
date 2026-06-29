@@ -1,0 +1,35 @@
+/* Components/Pricing.css */
+
+/* Base pricing container */
+.pricing {
+    font-family: var(--bs-font-sans-serif);
+}
+
+.pricing .display-5 {
+    font-weight: 600;
+    color: var(--bs-primary);
+}
+
+/* Pricing list structure */
+.pricing-list {
+    margin: 0;
+    padding: 0;
+}
+
+.pricing-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.pricing-list li:last-child {
+    border-bottom: none;
+}
+
+/* Pricing values and highlights */
+.pricing-list .price-value {
+    font-weight: 600;
+    color: var(--success);
+}

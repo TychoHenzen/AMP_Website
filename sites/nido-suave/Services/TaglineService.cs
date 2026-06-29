@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
+
 namespace NidoSuave.Services;
 
-public class TaglineService
+public class TaglineService : IDisposable
 {
     private static readonly string[] Taglines =
     [
@@ -17,5 +20,25 @@ public class TaglineService
         "Aanraking kan helen — niet alleen fysiek, maar ook emotioneel.",
     ];
 
-    public string Current { get; } = Taglines[Random.Shared.Next(Taglines.Length)];
+    public string Current { get; private set; }
+    public event Action? OnChange;
+
+    private readonly NavigationManager _nav;
+
+    public TaglineService(NavigationManager nav)
+    {
+        _nav = nav;
+        Current = Pick();
+        _nav.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        Current = Pick();
+        OnChange?.Invoke();
+    }
+
+    private static string Pick() => Taglines[Random.Shared.Next(Taglines.Length)];
+
+    public void Dispose() => _nav.LocationChanged -= OnLocationChanged;
 }

@@ -1,5 +1,6 @@
 @inherits LayoutComponentBase
 @inject NidoSuave.Services.TaglineService TaglineService
+@implements IDisposable
 
 <div class="page">
     <NavMenu />
@@ -17,3 +18,8 @@
         </div>
     </footer>
 </div>
+
+@code {
+    protected override void OnInitialized() => TaglineService.OnChange += StateHasChanged;
+    public void Dispose() => TaglineService.OnChange -= StateHasChanged;
+}

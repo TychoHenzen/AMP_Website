@@ -1,12 +1,12 @@
 #region
 
 using System.Net;
-using DuurzaamDigitaal.Data.Entities;
+using Amp.Data.Entities;
 using Microsoft.Azure.Cosmos;
 
 #endregion
 
-namespace DuurzaamDigitaal.Data.Repositories;
+namespace Amp.Data.Repositories;
 
 public class PaymentRepository : IPaymentRepository
 {

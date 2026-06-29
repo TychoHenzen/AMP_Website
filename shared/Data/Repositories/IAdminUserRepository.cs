@@ -1,10 +1,10 @@
 #region
 
-using DuurzaamDigitaal.Data.Entities;
+using Amp.Data.Entities;
 
 #endregion
 
-namespace DuurzaamDigitaal.Data.Repositories;
+namespace Amp.Data.Repositories;
 
 public interface IAdminUserRepository
 {

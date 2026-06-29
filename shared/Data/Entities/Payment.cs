@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 #endregion
 
-namespace DuurzaamDigitaal.Data.Entities;
+namespace Amp.Data.Entities;
 
 public class Payment : BaseDocument
 {

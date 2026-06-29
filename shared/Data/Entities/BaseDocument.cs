@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 #endregion
 
-namespace DuurzaamDigitaal.Data.Entities;
+namespace Amp.Data.Entities;
 
 public abstract class BaseDocument
 {

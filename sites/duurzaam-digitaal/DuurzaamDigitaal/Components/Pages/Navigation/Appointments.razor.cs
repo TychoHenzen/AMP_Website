@@ -1,7 +1,7 @@
 #region
 
-using DuurzaamDigitaal.Data.Entities;
-using DuurzaamDigitaal.Data.Repositories;
+using Amp.Data.Entities;
+using Amp.Data.Repositories;
 using DuurzaamDigitaal.Models;
 using Microsoft.AspNetCore.Components;
 

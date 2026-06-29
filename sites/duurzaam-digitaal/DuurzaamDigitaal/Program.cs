@@ -1,8 +1,8 @@
 #region
 
 using DuurzaamDigitaal.Components;
-using DuurzaamDigitaal.Data;
-using DuurzaamDigitaal.Data.Repositories;
+using Amp.Data;
+using Amp.Data.Repositories;
 using Microsoft.Azure.Cosmos;
 
 #endregion

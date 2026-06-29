@@ -1,4 +1,4 @@
-namespace DuurzaamDigitaal.Data;
+namespace Amp.Data;
 
 public class CosmosDbConfig
 {

@@ -19,7 +19,9 @@ Context-survival doc. Pick up here after a restart. Last updated 2026-06-29.
 | nido-suave | Static Web App | rg-websites | West Europe | nido (zealous-moss-0d5fb8903) |
 | DuurzaamDigitaal | App Service | DuurzaamDigitaal_group | North Europe | repair site (server-side) |
 | ASP-DuurzaamDigitaalgroup-a945 | App Service Plan | DuurzaamDigitaal_group | North Europe | repair plan |
-| duurzaamdigitaal | Cosmos DB | DuurzaamDigitaal_group | (multi) | SHARED DB (free-tier) |
+| duurzaamdigitaal | Cosmos DB | DuurzaamDigitaal_group | (multi) | SHARED DB (serverless) |
+| amp-comms | Communication Services | DuurzaamDigitaal_group | global | ACS for booking emails |
+| amp-email | Email Comm. Service | DuurzaamDigitaal_group | global | Azure-managed email domain (DKIM/SPF/DMARC verified) |
 | DuurzaamDigitaal-id-a078 | Managed Identity | DuurzaamDigitaal_group | North Europe | repair identity |
 
 RG deletion is OFF — every RG holds live resources. SWAs now live in `rg-websites` (Phase 4 done).
@@ -98,7 +100,20 @@ still sit in `DuurzaamDigitaal_group`.
   services" rule) can reach it, but **local data-plane access from a home IP is blocked (403)**.
   To inspect/edit docs locally: use Portal Data Explorer, or temporarily add your IP to ipRules.
 - Schedule rules live in `apps/api/Nido/NidoSchedule.cs` (days/hours/slot length) — edit there.
-- Not yet: admin view of bookings, email/notification on new booking, configurable services.
+
+#### Nido extras ✅ DONE (2026-06-29) — admin view + email
+- **Admin endpoint**: `GET /api/nido/appointments` (AuthorizationLevel.Function) lists upcoming
+  bookings. Page: nido site `/admin` (not in nav) — paste the key once, stored in localStorage.
+  Retrieve the key: `az functionapp keys list -n amp-api-730024 -g DuurzaamDigitaal_group
+  --query functionKeys.default -o tsv` (the per-function key was empty; the host key works).
+  Rotate it any time with `az functionapp keys set ...` if it leaks.
+- **Email on booking** via ACS (`amp-comms` + `amp-email`, Azure-managed domain). On a successful
+  booking the API sends a notification to the business inbox + a confirmation to the customer
+  (best-effort — a mail failure never breaks the booking). App settings on the Function app:
+  `Acs__ConnectionString`, `Acs__SenderAddress` (DoNotReply@<id>.azurecomm.net),
+  `Acs__BusinessEmail` (= tychohenzen@gmail.com). Code: `apps/api/Nido/BookingEmailService.cs`.
+- Not yet: admin cancel/delete (admin is read-only — delete test docs via Portal Data Explorer),
+  configurable services/prices.
 
 ### Phase 4 — RG tidy + hardening ✅ DONE (2026-06-29)
 - [x] Created `rg-websites` (westeurope); MOVED AutoARPG + nido-suave SWAs into it via

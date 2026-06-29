@@ -112,8 +112,15 @@ still sit in `DuurzaamDigitaal_group`.
   (best-effort — a mail failure never breaks the booking). App settings on the Function app:
   `Acs__ConnectionString`, `Acs__SenderAddress` (DoNotReply@<id>.azurecomm.net),
   `Acs__BusinessEmail` (= tychohenzen@gmail.com). Code: `apps/api/Nido/BookingEmailService.cs`.
-- Not yet: admin cancel/delete (admin is read-only — delete test docs via Portal Data Explorer),
-  configurable services/prices.
+- **Atomic slot reservation** (2026-06-29): each hour-slot maps to a deterministic Cosmos doc id
+  `{date}_{time}` (partition key = date). `CreateItemAsync` is atomic, so concurrent bookings for
+  the same hour can't both win — the loser gets a Cosmos 409 → `SlotUnavailableException` → HTTP 409.
+  Verified with two parallel POSTs (one 201, one 409). The old read-then-create check stays as a
+  friendly fast-path. Code: `NidoAppointmentRepository.CreateAsync`.
+- **Admin delete** (2026-06-29): `DELETE /api/nido/appointments/{id}?date=yyyy-MM-dd` (Functions key)
+  frees a slot; `/admin` has a "Verwijderen" button per booking. Idempotent. This is now the easy way
+  to delete docs (works through the API, no Cosmos-firewall issue).
+- Not yet: configurable services/prices, per-day custom hours.
 
 ### Phase 4 — RG tidy + hardening ✅ DONE (2026-06-29)
 - [x] Created `rg-websites` (westeurope); MOVED AutoARPG + nido-suave SWAs into it via

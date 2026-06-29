@@ -1,0 +1,249 @@
+@page "/boeken"
+@using System.Net.Http.Json
+@inject HttpClient Http
+
+<PageTitle>Afspraak maken — Nido Suave</PageTitle>
+
+<section class="block">
+    <div class="container-narrow">
+        <p class="eyebrow">Even tijd voor jou</p>
+        <h1 class="section-title">Afspraak maken</h1>
+
+        @if (_confirmed is not null)
+        {
+            <div class="card-soft booking-confirm">
+                <h3>Aanvraag ontvangen 🌿</h3>
+                <p>
+                    Bedankt, <strong>@_form.Name</strong>. Je aanvraag voor
+                    <strong>@_form.Service</strong> op <strong>@FormatDate(_confirmed.Date)</strong>
+                    om <strong>@_confirmed.Time</strong> is ontvangen.
+                </p>
+                <p style="color:var(--ink-soft);">
+                    Denise neemt persoonlijk contact met je op om de afspraak te bevestigen.
+                </p>
+                <button class="btn-soft" @onclick="ResetForm">Nog een afspraak maken</button>
+            </div>
+        }
+        else
+        {
+            <p style="max-width:600px; margin:0 auto 2.5rem; color:var(--ink-soft);">
+                Kies een behandeling, een dag en een tijd die je schikt. Je aanvraag wordt
+                persoonlijk bevestigd — je hoeft niks uit te leggen.
+            </p>
+
+            <div class="booking-form">
+                <label class="field">
+                    <span>Behandeling</span>
+                    <select @bind="_form.Service">
+                        <option value="">— Kies een behandeling —</option>
+                        @foreach (var s in Services)
+                        {
+                            <option value="@s">@s</option>
+                        }
+                    </select>
+                </label>
+
+                <label class="field">
+                    <span>Datum</span>
+                    <input type="date" min="@_today" value="@SelectedDate" @onchange="OnDateChanged" />
+                </label>
+
+                @if (_loadingSlots)
+                {
+                    <p class="booking-hint">Beschikbaarheid laden…</p>
+                }
+                else if (_availability is not null)
+                {
+                    @if (_availability.Past)
+                    {
+                        <p class="booking-hint">Die datum is al geweest. Kies een datum vanaf vandaag.</p>
+                    }
+                    else if (!_availability.Open)
+                    {
+                        <p class="booking-hint">Op deze dag zijn er geen behandelingen (open dinsdag t/m zaterdag).</p>
+                    }
+                    else if (_availability.Slots.All(s => !s.Available))
+                    {
+                        <p class="booking-hint">Geen vrije tijden meer op deze dag. Probeer een andere datum.</p>
+                    }
+                    else
+                    {
+                        <div class="field">
+                            <span>Tijd</span>
+                            <div class="slot-grid">
+                                @foreach (var slot in _availability.Slots)
+                                {
+                                    <button type="button"
+                                            class="slot @(slot.Time == _form.Time ? "slot--active" : "")"
+                                            disabled="@(!slot.Available)"
+                                            @onclick="() => _form.Time = slot.Time">
+                                        @slot.Time
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+
+                <label class="field">
+                    <span>Naam</span>
+                    <input type="text" @bind="_form.Name" placeholder="Je naam" />
+                </label>
+
+                <label class="field">
+                    <span>E-mail</span>
+                    <input type="email" @bind="_form.Email" placeholder="naam@voorbeeld.nl" />
+                </label>
+
+                <label class="field">
+                    <span>Telefoon</span>
+                    <input type="tel" @bind="_form.Phone" placeholder="06 12 34 56 78" />
+                </label>
+
+                <label class="field">
+                    <span>Bericht <em>(optioneel)</em></span>
+                    <textarea rows="3" @bind="_form.Notes" placeholder="Iets dat je wilt laten weten?"></textarea>
+                </label>
+
+                @if (_errors.Count > 0)
+                {
+                    <ul class="booking-errors">
+                        @foreach (var e in _errors)
+                        {
+                            <li>@e</li>
+                        }
+                    </ul>
+                }
+
+                <button class="btn-soft" @onclick="Submit" disabled="@(_submitting || !CanSubmit)">
+                    @(_submitting ? "Versturen…" : "Afspraak aanvragen")
+                </button>
+            </div>
+        }
+    </div>
+</section>
+
+@code {
+    private static readonly string[] Services =
+    {
+        "Ontspanningsmassage",
+        "Rug-, nek- & schoudermassage",
+        "Op maat"
+    };
+
+    private readonly string _today = DateTime.Now.ToString("yyyy-MM-dd");
+    private string SelectedDate { get; set; } = string.Empty;
+
+    private readonly BookingForm _form = new();
+    private AvailabilityResponse? _availability;
+    private BookingResponse? _confirmed;
+    private List<string> _errors = new();
+    private bool _loadingSlots;
+    private bool _submitting;
+
+    private bool CanSubmit =>
+        !string.IsNullOrWhiteSpace(_form.Service) &&
+        !string.IsNullOrWhiteSpace(_form.Date) &&
+        !string.IsNullOrWhiteSpace(_form.Time) &&
+        !string.IsNullOrWhiteSpace(_form.Name) &&
+        !string.IsNullOrWhiteSpace(_form.Email) &&
+        !string.IsNullOrWhiteSpace(_form.Phone);
+
+    private async Task OnDateChanged(ChangeEventArgs e)
+    {
+        SelectedDate = e.Value?.ToString() ?? string.Empty;
+        await LoadAvailability();
+    }
+
+    private async Task LoadAvailability()
+    {
+        _form.Date = SelectedDate;
+        _form.Time = string.Empty;
+        _availability = null;
+        if (string.IsNullOrWhiteSpace(SelectedDate)) return;
+
+        _loadingSlots = true;
+        try
+        {
+            _availability = await Http.GetFromJsonAsync<AvailabilityResponse>(
+                $"api/nido/availability?date={SelectedDate}");
+        }
+        catch
+        {
+            _errors = new() { "Beschikbaarheid kon niet worden geladen. Probeer het later opnieuw." };
+        }
+        finally
+        {
+            _loadingSlots = false;
+        }
+    }
+
+    private async Task Submit()
+    {
+        _errors = new();
+        _submitting = true;
+        try
+        {
+            var resp = await Http.PostAsJsonAsync("api/nido/appointments", _form);
+            if (resp.IsSuccessStatusCode)
+            {
+                _confirmed = await resp.Content.ReadFromJsonAsync<BookingResponse>();
+                return;
+            }
+
+            var problem = await resp.Content.ReadFromJsonAsync<ErrorResponse>();
+            if (problem?.Errors is { Count: > 0 })
+                _errors = problem.Errors;
+            else if (!string.IsNullOrWhiteSpace(problem?.Error))
+                _errors = new() { problem.Error! };
+            else
+                _errors = new() { "Er ging iets mis. Probeer het opnieuw." };
+
+            // slot may have been taken in the meantime — refresh availability
+            if (resp.StatusCode == System.Net.HttpStatusCode.Conflict)
+                await LoadAvailability();
+        }
+        catch
+        {
+            _errors = new() { "Versturen mislukte. Controleer je verbinding en probeer opnieuw." };
+        }
+        finally
+        {
+            _submitting = false;
+        }
+    }
+
+    private void ResetForm()
+    {
+        _confirmed = null;
+        _availability = null;
+        _errors = new();
+        SelectedDate = string.Empty;
+        _form.Reset();
+    }
+
+    private static string FormatDate(string isoDate) =>
+        DateTime.TryParse(isoDate, out var d) ? d.ToString("dddd d MMMM yyyy",
+            new System.Globalization.CultureInfo("nl-NL")) : isoDate;
+
+    private class BookingForm
+    {
+        public string Service { get; set; } = string.Empty;
+        public string Date { get; set; } = string.Empty;
+        public string Time { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public string Notes { get; set; } = string.Empty;
+
+        public void Reset()
+        {
+            Service = Date = Time = Name = Email = Phone = Notes = string.Empty;
+        }
+    }
+
+    private record SlotDto(string Time, bool Available);
+    private record AvailabilityResponse(string Date, bool Open, bool Past, List<SlotDto> Slots);
+    private record BookingResponse(string Id, string Status, string Date, string Time);
+    private record ErrorResponse(string? Error, List<string>? Errors);
+}

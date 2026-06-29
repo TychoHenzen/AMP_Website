@@ -293,3 +293,93 @@ section.block.alt { background: var(--cream-deep); }
     .nav-links.open { display: flex; }
     .nav-links a { padding: 0.7rem 0; border-bottom: 1px solid var(--sand); width: 100%; }
 }
+
+/* ===== Booking form (/boeken) ===== */
+.booking-form {
+    max-width: 560px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+.field > span {
+    font-weight: 600;
+    color: var(--ink);
+}
+.field > span em {
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-style: italic;
+}
+.field input,
+.field select,
+.field textarea {
+    font: inherit;
+    color: var(--ink);
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 12px;
+    padding: 0.7rem 0.9rem;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    outline: none;
+    border-color: var(--terracotta);
+    box-shadow: 0 0 0 3px rgba(192, 133, 82, 0.18);
+}
+.field textarea { resize: vertical; }
+
+.slot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+    gap: 0.6rem;
+}
+.slot {
+    font: inherit;
+    cursor: pointer;
+    padding: 0.55rem 0;
+    border: 1px solid var(--sand);
+    border-radius: 12px;
+    background: var(--white);
+    color: var(--ink);
+    transition: all 0.15s ease;
+}
+.slot:hover:not(:disabled) {
+    border-color: var(--terracotta);
+    color: var(--terracotta-deep);
+}
+.slot--active {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    color: var(--white);
+}
+.slot:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+.booking-hint {
+    color: var(--ink-soft);
+    font-style: italic;
+}
+.booking-errors {
+    margin: 0;
+    padding: 0.9rem 1.2rem;
+    list-style: disc inside;
+    color: #8a3b2e;
+    background: #f7e7e2;
+    border-radius: 12px;
+}
+.booking-confirm {
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto;
+}
+.booking-confirm .btn-soft { margin-top: 1.2rem; }

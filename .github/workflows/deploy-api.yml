@@ -1,0 +1,48 @@
+name: Deploy API (amp-api)
+
+# Shared .NET 8 isolated Azure Functions app (apps/api → Amp.Api), owns the Cosmos
+# connection (app setting CosmosDb__ConnectionString, never the repo). Serves /api/*
+# for the WASM sites. Requires GitHub secret AMP_API_PUBLISHPROFILE.
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'apps/api/**'
+      - 'shared/Data/**'
+      - '.github/workflows/deploy-api.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'apps/api/**'
+      - 'shared/Data/**'
+      - '.github/workflows/deploy-api.yml'
+
+env:
+  FUNCAPP_NAME: amp-api-730024
+  DOTNET_VERSION: '8.0.x'
+  PROJECT_PATH: apps/api/Amp.Api.csproj
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Publish
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o ./output
+
+      - name: Deploy to Azure Functions
+        if: github.event_name == 'push'
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ env.FUNCAPP_NAME }}
+          package: ./output
+          publish-profile: ${{ secrets.AMP_API_PUBLISHPROFILE }}

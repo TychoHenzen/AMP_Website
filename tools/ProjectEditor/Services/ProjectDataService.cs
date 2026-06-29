@@ -17,13 +17,13 @@ public class ProjectDataService
 
     public ProjectDataService()
     {
-        // Release layout: AppContext.BaseDirectory = bin/Debug/net8.0/ → 4 levels up to repo root
+        // Release layout: AppContext.BaseDirectory = tools/ProjectEditor/bin/Debug/net8.0/ → 5 levels up to repo root
         var fromBase = Path.GetFullPath(
-            Path.Combine(AppContext.BaseDirectory, "../../../../AutoARPG_WebAsm/wwwroot/Projects/projects.json"));
+            Path.Combine(AppContext.BaseDirectory, "../../../../../sites/portfolio/wwwroot/Projects/projects.json"));
 
-        // dotnet run fallback: CWD = ProjectEditor/
+        // dotnet run fallback: CWD = tools/ProjectEditor/
         var fromCwd = Path.GetFullPath(
-            Path.Combine(Directory.GetCurrentDirectory(), "../AutoARPG_WebAsm/wwwroot/Projects/projects.json"));
+            Path.Combine(Directory.GetCurrentDirectory(), "../../sites/portfolio/wwwroot/Projects/projects.json"));
 
         _jsonPath = File.Exists(fromBase) ? fromBase : fromCwd;
         _wwwrootProjectsPath = Path.GetDirectoryName(_jsonPath)!;

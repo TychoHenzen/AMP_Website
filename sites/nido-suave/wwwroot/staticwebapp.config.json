@@ -1,0 +1,13 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/css/*", "/_framework/*", "/*.{png,jpg,jpeg,gif,svg,ico,webp,woff,woff2}"]
+  },
+  "mimeTypes": {
+    ".json": "application/json",
+    ".webp": "image/webp"
+  },
+  "globalHeaders": {
+    "Cache-Control": "no-cache"
+  }
+}

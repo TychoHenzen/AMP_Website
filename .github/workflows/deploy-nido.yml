@@ -1,0 +1,55 @@
+name: Deploy Nido Suave
+
+# NOTE: Before this runs successfully you must:
+#   1. Create a new Azure Static Web App instance for Nido Suave.
+#   2. Add its deployment token as the GitHub secret below
+#      (AZURE_STATIC_WEB_APPS_API_TOKEN_NIDO_SUAVE).
+# Until then this workflow will fail on push — that is expected.
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'sites/nido-suave/**'
+      - '.github/workflows/deploy-nido.yml'
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - master
+    paths:
+      - 'sites/nido-suave/**'
+      - '.github/workflows/deploy-nido.yml'
+
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_NIDO_SUAVE }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "sites/nido-suave"
+          api_location: ""
+          output_location: "wwwroot"
+
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_NIDO_SUAVE }}
+          action: "close"

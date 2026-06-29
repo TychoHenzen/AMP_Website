@@ -1,0 +1,18 @@
+@inherits LayoutComponentBase
+
+<div class="page">
+    <NavMenu />
+
+    <main>
+        @Body
+    </main>
+
+    <footer class="site-footer">
+        <div class="container-narrow">
+            <a class="brand" href="">Nido <span>Suave</span></a>
+            <p>Ontspanningsmassage, afgestemd op jouw lichaam en jouw moment.</p>
+            <p><a href="contact">Maak een afspraak</a></p>
+            <p class="site-footer__small">© @DateTime.Now.Year Nido Suave — Denise. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+</div>

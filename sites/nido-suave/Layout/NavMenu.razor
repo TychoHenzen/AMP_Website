@@ -1,0 +1,20 @@
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="">Nido <span>Suave</span></a>
+
+        <button class="nav-toggle" @onclick="ToggleMenu" aria-label="Menu">☰</button>
+
+        <nav class="nav-links @(_open ? "open" : "")" @onclick="CloseMenu">
+            <NavLink href="" Match="NavLinkMatch.All">Home</NavLink>
+            <NavLink href="over">Over mij</NavLink>
+            <NavLink href="behandelingen">Behandelingen</NavLink>
+            <NavLink href="contact">Contact</NavLink>
+        </nav>
+    </div>
+</header>
+
+@code {
+    private bool _open;
+    private void ToggleMenu() => _open = !_open;
+    private void CloseMenu() => _open = false;
+}

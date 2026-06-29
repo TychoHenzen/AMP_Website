@@ -4,74 +4,91 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Personal portfolio website for Tycho Henzen. Blazor WebAssembly (.NET 6.0), deployed to Azure Static Web Apps.
+A **monorepo** hosting multiple small websites, each deployed to its own Azure Static Web Apps instance. Shared repo for tooling/conventions; isolated hosting per site (one SWA = one custom domain = one deploy).
 
-Live: https://icy-meadow-06fe80803.3.azurestaticapps.net
+```
+AMP_Website/
+├─ sites/
+│  ├─ portfolio/      Tycho's portfolio. Blazor WASM (.NET 6). → SWA "icy-meadow" (live)
+│  └─ nido-suave/     Denise's massage business (Dutch). Blazor WASM (.NET 8). → SWA TBD
+├─ tools/
+│  └─ ProjectEditor/  Local-only editor for portfolio data (.NET 8 Blazor Server). Not deployed.
+├─ .github/workflows/
+│  ├─ deploy-portfolio.yml   path filter: sites/portfolio/**
+│  └─ deploy-nido.yml        path filter: sites/nido-suave/**
+└─ AutoARPG_WebAsm.sln       solution covering all projects
+```
 
-## Build & Run
+Path-filtered workflows mean editing one site only redeploys that site.
+
+**Adding a new site**: scaffold under `sites/<name>/`, add a `staticwebapp.config.json` to its `wwwroot/`, add to the `.sln`, create a path-filtered `deploy-<name>.yml`, then create the Azure SWA instance + add its deploy token as a GitHub secret.
+
+## sites/portfolio — Tycho's portfolio
+
+Blazor WebAssembly (.NET 6.0). Live: https://icy-meadow-06fe80803.3.azurestaticapps.net
 
 ```bash
-# All commands from AutoARPG_WebAsm/ directory
-dotnet restore
-dotnet build
-dotnet run              # serves at https://localhost:7294 or http://localhost:5111
+# From sites/portfolio/
+dotnet restore && dotnet build
+dotnet run              # https://localhost:7294 or http://localhost:5111
 dotnet publish -c Release
 ```
 
-No test project exists. No linter configured.
+No test project. No linter.
 
-## Architecture
+**Project**: `sites/portfolio/AutoARPG_WebAsm.csproj` (project/assembly name still `AutoARPG_WebAsm`; only the folder was renamed to `portfolio`).
 
-Single-project Blazor WASM app. Solution file: `AutoARPG_WebAsm.sln`, project: `AutoARPG_WebAsm/AutoARPG_WebAsm.csproj`.
+**Entry point**: `Program.cs` — registers `HttpClient`, `ProjectService` (scoped), `Blazored.SessionStorage`. Root component `App.razor` runs the Blazor router.
 
-**Entry point**: `Program.cs` — registers `HttpClient`, `ProjectService` (scoped), and `Blazored.SessionStorage`. Root component is `App.razor` which runs the Blazor router.
+**Data flow**: `ProjectService` fetches `wwwroot/Projects/projects.json` via HTTP GET → `List<ProjectInfo>`. Models in `Models.cs`: `ProjectInfo`, `MediaItem`, `MediaType` enum, `ImageFitType` enum.
 
-**Data flow**: `ProjectService` fetches `wwwroot/Projects/projects.json` via HTTP GET → deserializes to `List<ProjectInfo>`. All models live in `Data/ProjectService.cs` (service + models in one file): `ProjectInfo`, `MediaItem`, `MediaType` enum, `ImageFitType` enum.
+**Pages** (5 routes in `Pages/`): Index (`/`), Projects (`/projects`), Skills (`/skills`), Experience (`/experience`), Contact (`/contact`). Projects page is the most complex — search, tag filtering, category grouping, media display (images/videos/PDFs).
 
-**Pages** (5 routes in `Pages/`): Index (`/`), Projects (`/projects`), Skills (`/skills`), Experience (`/experience`), Contact (`/contact`). Projects page is the most complex — has search, tag filtering, category grouping, and media display (images/videos/PDFs).
+**Layout**: `Shared/MainLayout.razor` + `Shared/NavMenu.razor`. Dark modern theme — `#0a0a0a` body, `#1a1a2e` navbar, `#60a5fa` accent. Global styles in `wwwroot/css/app.css`. Inter font, monospace for terminal elements. Terminal-style sections (`.terminal-*`); Experience uses a vertical timeline; Index has a JS-interop typing animation.
 
-**Layout**: `Shared/MainLayout.razor` (top navbar + footer) + `Shared/NavMenu.razor` (horizontal nav with Font Awesome icons, hamburger on mobile). Dark modern theme — `#0a0a0a` body, `#1a1a2e` navbar, `#60a5fa` accent. Global styles in `wwwroot/css/app.css` with Bootstrap dark overrides. Inter font (Google Fonts CDN) for body, monospace for terminal elements.
+**Key deps**: `Blazored.SessionStorage` 2.3.0, `Newtonsoft.Json` 13.0.3, `SixLabors.ImageSharp` 3.0.1.
 
-**Design patterns**: Terminal-style sections (`.terminal-section`, `.terminal-header`, `.terminal-body`) used on Index hero, Skills page, and Projects page. Experience page uses vertical timeline (`.timeline`, `.timeline-item`). Index has JS-interop typing animation (`OnAfterRenderAsync`).
+**Project data**: edit `sites/portfolio/wwwroot/Projects/projects.json`. Each entry: `finished`, `title`, `description`, `fullDescription`, `mediaItems` (`{url, name, type}`), `sourceUrl`, `tags`, `category`, `imageFit` (Cover/Contain).
 
-**State**: Component-local only. No global state store. `SessionStorage` available via Blazored but used sparingly.
+## sites/nido-suave — Denise's massage business
 
-## Key Dependencies
+Blazor WebAssembly (.NET 8). Dutch-language. Not yet deployed (Azure SWA + secret pending).
 
-- `Blazored.SessionStorage` 2.3.0 — browser session storage
-- `Newtonsoft.Json` 13.0.3 — JSON handling
-- `SixLabors.ImageSharp` 3.0.1 — image processing
+```bash
+# From sites/nido-suave/
+dotnet run
+```
+
+**Theme**: warm/soft — cream `#faf6f1`, terracotta `#c08552`, sage `#8a9a7b`. Cormorant Garamond (serif headings) + Nunito Sans (body), Google Fonts CDN. Global styles in `wwwroot/css/app.css`; scoped layout CSS deliberately emptied.
+
+**Layout**: `Layout/MainLayout.razor` (sticky header + footer) + `Layout/NavMenu.razor` (responsive nav, hamburger on mobile). Note: .NET 8 template uses `Layout/`, not `Shared/`.
+
+**Pages** (`Pages/`): Home (`/`), Over (`/over` — full "Over Nido Suave" about story), Behandelingen (`/behandelingen` — placeholder), Contact (`/contact` — placeholder contact details).
+
+## tools/ProjectEditor — Local Portfolio Manager
+
+.NET 8 Blazor Server app for editing portfolio data locally. **Not deployed** — local-only, no auth, outside any SWA build path.
+
+```bash
+# From tools/ProjectEditor/
+dotnet run    # https://localhost:7xxx
+```
+
+**What it does**: reads/writes `sites/portfolio/wwwroot/Projects/projects.json` via `ProjectDataService`. Project list with reorder (↑/↓) and delete, create/edit form, file upload (auto-routes by extension → `Projects/images/|videos/|pdfs/`).
+
+**Path resolution** (`Services/ProjectDataService.cs`): `AppContext.BaseDirectory` + `../../../../../sites/portfolio/wwwroot/Projects/projects.json` (5 levels up from `bin/Debug/net8.0/`), with a `Directory.GetCurrentDirectory()` + `../../sites/portfolio/...` fallback for `dotnet run`. **If the folder layout changes, update these relative paths.**
+
+**Models**: `tools/ProjectEditor/Models.cs` duplicates `sites/portfolio/Models.cs` as POCOs (no project reference). Keep in sync manually.
+
+**Pages**: live in `Pages/` (not `Components/Pages/`) — `ProjectList.razor` (`/`), `ProjectEdit.razor` (`/edit/new`, `/edit/{Index:int}`). Avoid scaffolding `@page "/"` pages in `Components/Pages/` or you'll get `AmbiguousMatchException`.
 
 ## Deployment
 
-Push to `master` triggers GitHub Actions → Azure Static Web Apps deploy. Workflow: `.github/workflows/azure-static-web-apps-icy-meadow-06fe80803.yml`.
-
-SPA routing configured in `staticwebapp.config.json` — all routes rewrite to `/index.html` except images and CSS.
-
-## ProjectEditor (Local Portfolio Manager)
-
-Second project in the solution. .NET 8 Blazor Server app for editing portfolio data locally. **Not deployed** — local-only, no auth, outside Azure SWA build path.
-
-```bash
-# From ProjectEditor/ directory
-dotnet run    # serves at https://localhost:7xxx
-```
-
-**What it does**: reads/writes `AutoARPG_WebAsm/wwwroot/Projects/projects.json` directly via `ProjectDataService`. Features: project list with reorder (↑/↓) and delete, create/edit form with all fields, file upload (auto-routes by extension → `Projects/images/|videos/|pdfs/`).
-
-**Path resolution**: `Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../AutoARPG_WebAsm/wwwroot/Projects/projects.json"))` with a `Directory.GetCurrentDirectory()` fallback for `dotnet run`.
-
-**Models**: `ProjectEditor/Models.cs` duplicates `AutoARPG_WebAsm/Models.cs` as POCOs (no project reference). Keep in sync manually when model changes are needed.
-
-**Pages**: `ProjectEditor/Pages/ProjectList.razor` (`/`), `ProjectEditor/Pages/ProjectEdit.razor` (`/edit/new`, `/edit/{Index:int}`). Note: pages live in `Pages/` (not `Components/Pages/`) — avoid creating Blazor-scaffolded pages with `@page "/"` in `Components/Pages/` or you'll get `AmbiguousMatchException`.
-
-## Project Data
-
-To add/edit portfolio projects, modify `wwwroot/Projects/projects.json`. Each entry has: `finished`, `title`, `description`, `fullDescription`, `mediaItems` (array of `{url, name, type}`), `sourceUrl`, `tags`, `category`, `imageFit` (Cover/Contain).
+Each site has its own path-filtered GitHub Actions workflow → its own Azure SWA. Pushing to `master` deploys only the site(s) whose files changed. Each site's `wwwroot/staticwebapp.config.json` handles SPA routing (all routes → `/index.html` except static assets).
 
 ## Conventions
 
-- Nullable reference types enabled, implicit usings enabled
-- Models and service colocated in `Data/ProjectService.cs`
-- Static assets organized by category under `wwwroot/` (Games, Shaders, Logos, Technical, etc.)
+- Nullable reference types + implicit usings enabled
+- Static assets organized by category under each site's `wwwroot/`
 - DI via `@inject` in Razor components
+- Keep each site self-contained; no shared Razor library yet (add `shared/` when real duplication appears)

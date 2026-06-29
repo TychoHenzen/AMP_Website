@@ -7,17 +7,17 @@ public class TaglineService : IDisposable
 {
     private static readonly string[] Taglines =
     [
-        "een moment voor jou…",
+        "Een moment voor jou…",
         "Een plek waar je even niets hoeft",
-        "Rust is geen luxe. Het is een noodzaak.",
+        "Rust is geen luxe.\nHet is een noodzaak.",
         "Een zachte plek voor groot en klein",
         "Een goede massage begint vóórdat je op de tafel ligt.",
-        "afgestemd op jouw lichaam en jouw moment.",
+        "Afgestemd op jouw lichaam en jouw moment.",
         "Waar je even niets hoeft.",
         "Gewoon terugzakken in je eigen lijf.",
-        "Jij verdient die ruimte.",
-        "Zonder masker, zonder verwachting, zonder rol. Gewoon jij.",
-        "Aanraking kan helen — niet alleen fysiek, maar ook emotioneel.",
+        "Jij verdient de ruimte.",
+        "Zonder masker, zonder verwachting, zonder rol.\nGewoon jij.",
+        "Aanraking kan helen\nniet alleen fysiek, maar ook emotioneel.",
     ];
 
     public string Current { get; private set; }

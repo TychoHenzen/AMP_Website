@@ -55,13 +55,27 @@ RG deletion is OFF — every RG holds live resources. Tidy = create dedicated RG
 - [ ] (optional) App Service `httpsOnly=true` on DuurzaamDigitaal (currently false).
 
 ### Phase 2 — shared data layer + Functions API
-- [ ] Extract a `shared/Data` class library (.NET 8) from the repair site's `Data/` (Cosmos client,
-      repositories, models, `CosmosDbConfig`). Per-site database/container naming.
-- [ ] New `apps/api/` Azure Functions app (.NET 8 isolated), references `shared/Data`, reads
-      `CosmosDb__ConnectionString` from app settings, CORS for site origins. Endpoints `/api/<site>/...`.
-- [ ] Provision Functions app in Azure (consumption), set its `CosmosDb__ConnectionString` app setting
-      to the **secondary** Cosmos connection string. Add deploy workflow + publish secret.
+- [x] Extract `shared/Data` class library (`Amp.Data`, .NET 8) from the repair site's `Data/`
+      (CosmosDbConfig, Entities, Repositories). Namespace `DuurzaamDigitaal.Data` → `Amp.Data`.
+      Repair site references it; builds clean, 18/18 tests pass. (commit 4cd0ee4)
+- [x] New `apps/api/` Azure Functions app (`Amp.Api`, .NET 8 isolated), references `Amp.Data`,
+      registers CosmosDbConfig + CosmosClient from app settings. `GET /api/health` endpoint. Builds.
+- [ ] **Provision** Functions app in Azure (consumption): needs a storage account + function app.
+      Set its `CosmosDb__ConnectionString` app setting to the **secondary** Cosmos connection string.
+      Configure CORS for site origins. Add `deploy-api.yml` (path filter `apps/api/**`) + publish secret.
 - [ ] (later) Repair site can switch from direct Cosmos to the shared lib/API; keep direct for now.
+
+      Provision sketch:
+      ```bash
+      az storage account create -n ampapistore<suffix> -g DuurzaamDigitaal_group -l westeurope --sku Standard_LRS
+      az functionapp create -n amp-api -g DuurzaamDigitaal_group --consumption-plan-location westeurope \
+        --runtime dotnet-isolated --runtime-version 8 --functions-version 4 --storage-account ampapistore<suffix>
+      SEC=$(az cosmosdb keys list -n duurzaamdigitaal -g DuurzaamDigitaal_group --type connection-strings \
+        --query "connectionStrings[?keyKind=='Secondary'].connectionString | [0]" -o tsv)
+      az functionapp config appsettings set -n amp-api -g DuurzaamDigitaal_group \
+        --settings "CosmosDb__ConnectionString=$SEC" "CosmosDb__DatabaseId=..." # + container ids
+      az functionapp cors add -n amp-api -g DuurzaamDigitaal_group --allowed-origins https://<nido-host>
+      ```
 
 ### Phase 3 — Nido Suave appointment booking
 - [ ] Cosmos: `nido` database + `appointments`, `timeslots` containers.

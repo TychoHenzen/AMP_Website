@@ -19,8 +19,13 @@ public class NidoBookingFunction
     private static readonly Regex EmailRx = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled);
 
     private readonly INidoAppointmentRepository _repo;
+    private readonly BookingEmailService _email;
 
-    public NidoBookingFunction(INidoAppointmentRepository repo) => _repo = repo;
+    public NidoBookingFunction(INidoAppointmentRepository repo, BookingEmailService email)
+    {
+        _repo = repo;
+        _email = email;
+    }
 
     [Function("nido-availability")]
     public async Task<IActionResult> Availability(
@@ -93,10 +98,37 @@ public class NidoBookingFunction
             Status = "pending"
         });
 
+        await _email.SendBookingEmailsAsync(created); // best-effort; never throws
+
         return new ObjectResult(new BookingResponse(created.Id, created.Status, created.Date, created.Time))
         {
             StatusCode = StatusCodes.Status201Created
         };
+    }
+
+    /// <summary>
+    /// Admin: list upcoming (today onward) bookings. Protected by a Functions key
+    /// (AuthorizationLevel.Function) — pass ?code=&lt;key&gt;.
+    /// </summary>
+    [Function("nido-list-appointments")]
+    public async Task<IActionResult> List(
+        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "nido/appointments")] HttpRequest req)
+    {
+        var fromDate = DateOnly.FromDateTime(NidoSchedule.NlNow()).ToString("yyyy-MM-dd");
+        var items = await _repo.GetUpcomingAsync(fromDate);
+        var result = items.Select(a => new
+        {
+            id = a.Id,
+            date = a.Date,
+            time = a.Time,
+            name = a.Name,
+            email = a.Email,
+            phone = a.Phone,
+            service = a.Service,
+            notes = a.Notes,
+            status = a.Status
+        });
+        return new OkObjectResult(result);
     }
 
     private static List<string> Validate(BookingRequest b, out DateOnly date)

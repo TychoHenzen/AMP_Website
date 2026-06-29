@@ -1,0 +1,127 @@
+@page "/admin"
+@using System.Net.Http.Json
+@inject HttpClient Http
+@inject IJSRuntime JS
+
+<PageTitle>Beheer — Nido Suave</PageTitle>
+
+<section class="block">
+    <div class="container-wide">
+        <p class="eyebrow">Beheer</p>
+        <h1 class="section-title">Afspraken</h1>
+
+        <div class="booking-form" style="max-width:520px;">
+            <label class="field">
+                <span>Beheersleutel</span>
+                <input type="password" @bind="_key" placeholder="Plak je sleutel" />
+            </label>
+            <button class="btn-soft" @onclick="Load" disabled="@_loading">
+                @(_loading ? "Laden…" : "Toon afspraken")
+            </button>
+            @if (_error is not null)
+            {
+                <ul class="booking-errors"><li>@_error</li></ul>
+            }
+        </div>
+
+        @if (_loaded)
+        {
+            @if (_bookings.Count == 0)
+            {
+                <p class="booking-hint" style="margin-top:2rem;">Geen aankomende afspraken.</p>
+            }
+            else
+            {
+                <p style="margin-top:2rem; color:var(--ink-soft);">@_bookings.Count aankomende afspra(a)k(en).</p>
+                @foreach (var day in _bookings.GroupBy(b => b.Date).OrderBy(g => g.Key))
+                {
+                    <h3 style="margin-top:1.5rem;">@FormatDate(day.Key)</h3>
+                    <div class="admin-table">
+                        @foreach (var b in day.OrderBy(b => b.Time))
+                        {
+                            <div class="admin-row">
+                                <span class="admin-time">@b.Time</span>
+                                <div>
+                                    <strong>@b.Name</strong> — @b.Service<br />
+                                    <span class="admin-meta">
+                                        <a href="mailto:@b.Email">@b.Email</a> ·
+                                        <a href="tel:@b.Phone">@b.Phone</a> · @b.Status
+                                    </span>
+                                    @if (!string.IsNullOrWhiteSpace(b.Notes))
+                                    {
+                                        <div class="admin-meta"><em>@b.Notes</em></div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+        }
+    </div>
+</section>
+
+@code {
+    private const string KeyStorage = "nido_admin_key";
+
+    private string _key = string.Empty;
+    private List<AdminBooking> _bookings = new();
+    private bool _loading;
+    private bool _loaded;
+    private string? _error;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        var saved = await JS.InvokeAsync<string?>("localStorage.getItem", KeyStorage);
+        if (!string.IsNullOrWhiteSpace(saved))
+        {
+            _key = saved;
+            await Load();
+            StateHasChanged();
+        }
+    }
+
+    private async Task Load()
+    {
+        _error = null;
+        if (string.IsNullOrWhiteSpace(_key)) { _error = "Vul een sleutel in."; return; }
+
+        _loading = true;
+        try
+        {
+            var resp = await Http.GetAsync($"api/nido/appointments?code={Uri.EscapeDataString(_key)}");
+            if (resp.IsSuccessStatusCode)
+            {
+                _bookings = await resp.Content.ReadFromJsonAsync<List<AdminBooking>>() ?? new();
+                _loaded = true;
+                await JS.InvokeVoidAsync("localStorage.setItem", KeyStorage, _key);
+            }
+            else if (resp.StatusCode == System.Net.HttpStatusCode.Unauthorized
+                     || resp.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                _error = "Ongeldige sleutel.";
+            }
+            else
+            {
+                _error = $"Laden mislukte ({(int)resp.StatusCode}).";
+            }
+        }
+        catch
+        {
+            _error = "Laden mislukte. Controleer je verbinding.";
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private static string FormatDate(string isoDate) =>
+        DateTime.TryParse(isoDate, out var d)
+            ? d.ToString("dddd d MMMM yyyy", new System.Globalization.CultureInfo("nl-NL"))
+            : isoDate;
+
+    private record AdminBooking(string Id, string Date, string Time, string Name,
+        string Email, string Phone, string Service, string Notes, string Status);
+}

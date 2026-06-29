@@ -1,3 +1,4 @@
+using Amp.Api.Nido;
 using Amp.Data;
 using Amp.Data.Nido;
 using Azure.Monitor.OpenTelemetry.Exporter;
@@ -21,6 +22,11 @@ builder.Services.AddSingleton(cosmosConfig);
 // Nido booking data lives in its own Cosmos database (defaults: db "nido", container "appointments").
 var nidoConfig = builder.Configuration.GetSection("Nido").Get<NidoConfig>() ?? new NidoConfig();
 builder.Services.AddSingleton(nidoConfig);
+
+// Azure Communication Services email (booking notifications). No-ops when unconfigured.
+var acsConfig = builder.Configuration.GetSection("Acs").Get<AcsConfig>() ?? new AcsConfig();
+builder.Services.AddSingleton(acsConfig);
+builder.Services.AddSingleton<BookingEmailService>();
 
 if (!string.IsNullOrWhiteSpace(cosmosConfig.ConnectionString))
 {

@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "Title": "Offline Licensing",
     "Description": "Offline licensing using encryption and steganography.",
@@ -54,7 +54,6 @@
         "Name": "D&D Calendar - Edge case: full/new moon",
         "Type": 0
       },
-
       {
         "Url": "Projects/videos/Manim/Lesson1.mp4",
         "Name": "Introduction to programming",
@@ -378,7 +377,6 @@
     "ImageFit": 1,
     "Finished": true
   },
-  
   {
     "Title": "Evolution Simulations",
     "Description": "Simulations of evolutionary processes as learning algorithms",
@@ -453,7 +451,8 @@
         "Url": "Projects/videos/DragNodeSim.mp4",
         "Name": "i can't remember if the red trails acted as pheromone trails",
         "Type": 1
-      }],
+      }
+    ],
     "SourceUrl": "",
     "Tags": [
       "Python",
@@ -468,10 +467,8 @@
   {
     "Title": "Curriculum Vitae",
     "Description": "I write my CV in LaTeX, the latest version generates that LaTeX from python",
-    "FullDescription": "",
-    "ImageUrl": "Projects/images/Logos/LaTeX.webp",
+    "FullDescription": "I have maintained my CV in LaTeX since 2014. The latest iteration generates the LaTeX source from a Python script, allowing programmatic content management and consistent formatting. Three versions spanning a decade of career development are available below.",
     "MediaItems": [
-
       {
         "Url": "Projects/images/Logos/LaTeX.png",
         "Type": 0,
@@ -500,10 +497,9 @@
     ],
     "SourceUrl": "",
     "Tags": [
-      "Typescript",
-      "Javascript",
-      "Educational Content",
-      "QR"
+      "Python",
+      "LaTeX",
+      "PDF"
     ],
     "Category": "Learning / Teaching / Hobby",
     "ImageFit": 1,
@@ -567,39 +563,38 @@
     "Finished": true
   },
   {
-  "Title": "SIC-1 in VCB",
-  "Description": "Implementation of SIC-1 architecture in Visual Circuit Builder.",
-  "FullDescription": "This project involves implementing the SIC-1 computer architecture using Visual Circuit Builder (VCB). It demonstrates low-level computer architecture principles and provides an interactive way to understand how computers work at a fundamental level.",
-  "MediaItems": [
-    {
-      "Url": "Projects/images/Technical/Fadder.png",
-      "Name": "A full-adder in VCB",
-      "Type": 0
-    },
-    {
-      "Url": "Projects/images/Technical/image (11).png",
-      "Name": "A 7-segment display being controlled manually",
-      "Type": 0
-    },
-    {
-      "Url": "Projects/videos/RamRW.webm",
-      "Name": "Showing the saving/loading capabilities for the 8-bit RAM chip i built",
-      "Type": 1
-    }
-  ],
-  "Tags": [
-    "Computer Architecture",
-    "Wireworld",
-    "Educational"
-  ],
-  "Category": "Learning / Teaching / Hobby",
-  "Finished": true
-},
+    "Title": "SIC-1 in VCB",
+    "Description": "Implementation of SIC-1 architecture in Visual Circuit Builder.",
+    "FullDescription": "This project involves implementing the SIC-1 computer architecture using Visual Circuit Builder (VCB). It demonstrates low-level computer architecture principles and provides an interactive way to understand how computers work at a fundamental level.",
+    "MediaItems": [
+      {
+        "Url": "Projects/images/Technical/Fadder.png",
+        "Name": "A full-adder in VCB",
+        "Type": 0
+      },
+      {
+        "Url": "Projects/images/Technical/image (11).png",
+        "Name": "A 7-segment display being controlled manually",
+        "Type": 0
+      },
+      {
+        "Url": "Projects/videos/RamRW.webm",
+        "Name": "Showing the saving/loading capabilities for the 8-bit RAM chip i built",
+        "Type": 1
+      }
+    ],
+    "Tags": [
+      "Computer Architecture",
+      "Wireworld",
+      "Educational"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
+  },
   {
     "Title": "Neural Networks/AI",
     "Description": "Implementation of various neural network architectures and AI algorithms.",
     "FullDescription": "This comprehensive project encompasses the implementation of various neural network architectures and AI algorithms. It includes deep learning models, reinforcement learning systems, showcasing a broad range of artificial intelligence techniques.",
-
     "MediaItems": [
       {
         "Url": "Projects/images/Shaders/EvobitsNeurons.png",
@@ -659,8 +654,6 @@
     ],
     "Tags": [
       "C#",
-      "Uno",
-      "Uno",
       "Machine Learning",
       "AI"
     ],
@@ -775,31 +768,6 @@
     "Finished": true
   },
   {
-    "Title": "Personal Website and Webshop Hosting",
-    "Description": "Self-hosted website and partner's webshop using various web technologies.",
-    "FullDescription": "Maintained a long-term personal website, working with HTML/CSS, Bootstrap, PHP, and JEE.\nCurrently hosting a personal website (this one) on microsoft azure\nPreviously hosted on a local laptop alongside a webshop (using PrestaShop) for my wife on a self-managed Apache HTTP server running on a laptop.\nThat setup included FTP, Git, jenkins and MySQL database\nThe project also involved configuring DNS records, SSL certificates, and implementing email security protocols (DMARC, SPF, DKIM) for a custom email address, i even tried to setup my own mailserver before realizing consumers are not allowed to do so\n\n Current configuration cannibalized the repo of another project in order to reuse the github actions i had set up for it in order to deploy the C#/Blazor application to microsoft Azure as a static website",
-    "MediaItems": [
-      {
-        "Url": "Projects/images/Logos/AerialMage.png",
-        "Name": "",
-        "Type": 0
-      }
-    ],
-    "SourceUrl": "https://github.com/sirius-black9999/AutoARPG_WebAsm",
-    "Tags": [
-      "Web Hosting",
-      "Apache",
-      "MySQL",
-      "DNS",
-      "SSL",
-      "Email Security",
-      "Blazor"
-    ],
-    "Category": "Learning / Teaching / Hobby",
-    "ImageFit": 1,
-    "Finished": true
-  },
-  {
     "Title": "Code Viewer",
     "Description": "A tool for viewing and analyzing code structures.",
     "FullDescription": "The Code Viewer is a tool designed to help developers visualize and analyze complex code structures. It attempts to show dependencies between code of various categories and structure analysis, making it easier to understand and work with large codebases. so far, although i have managed to analyze C# projects and create a theoretical project graph, i have not yet managed to effectively draw this graph, though v2 was already a significant improvement",
@@ -900,11 +868,51 @@
     "Finished": true
   },
   {
-    "Title": "TODO:Ellips: TrueSort",
-    "Description": "C#/Blazor/WPF frontend with C++ backend for fruit grading.",
+    "Title": "Ellips: TrueSort",
+    "Description": "C#/Blazor/WPF frontend with C++ backend for industrial fruit grading.",
     "FullDescription": "Developed a comprehensive fruit grading system featuring a C#/Blazor/WPF frontend integrated with C++ backend components. This project involved implementing web apps for system calibration, addressing localization issues, and contributing to code modernization and improved testing methodologies.",
-    "ImageUrl": "Projects/images/fruit-grading-system.jpg",
-    "VideoUrl": "",
+    "MediaItems": [
+      {
+        "Url": "https://ellips.com/wp-content/uploads/2023/06/TrueSortLogoTM-1.svg",
+        "Name": "TrueSort logo",
+        "Type": 0
+      },
+      {
+        "Url": "https://ellips.com/wp-content/uploads/2023/09/elifab-grading-machinery-1336x597px.jpg",
+        "Name": "Elifab grading machine — the hardware TrueSort runs on",
+        "Type": 0
+      },
+      {
+        "Url": "https://ellips.com/wp-content/uploads/2023/09/Elisam-grading-machinery-1336x597px.jpg",
+        "Name": "Elisam grading machine — second machine series supported by TrueSort",
+        "Type": 0
+      },
+      {
+        "Url": "https://ellips.com/wp-content/uploads/2023/06/technology-content-block.jpg",
+        "Name": "AI vision technology used for grading",
+        "Type": 0
+      },
+      {
+        "Url": "https://ellips.com/wp-content/uploads/2023/06/technology-content-block2.jpg",
+        "Name": "Grading technology in operation",
+        "Type": 0
+      },
+      {
+        "Url": "https://ellips.com/wp-content/uploads/2023/06/Elifab-machinery.jpg",
+        "Name": "Elifab machinery detail",
+        "Type": 0
+      },
+      {
+        "Url": "https://ellips.com/wp-content/uploads/2023/06/Elifab-machinery-2.jpg",
+        "Name": "Elifab machinery detail 2",
+        "Type": 0
+      },
+      {
+        "Url": "https://ellips.com/wp-content/uploads/2023/09/elisam-grading-machine2.jpg",
+        "Name": "Elisam grading machine detail",
+        "Type": 0
+      }
+    ],
     "SourceUrl": "",
     "Tags": [
       "C#",
@@ -914,85 +922,123 @@
       "Web Development",
       "Industrial Automation"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:VRee: Network Metrics",
+    "Title": "VRee: Network Metrics",
     "Description": "A system for measuring and optimizing VR network performance.",
-    "FullDescription": "VRee Network Metrics is a sophisticated system for measuring and optimizing network performance in virtual reality applications. It includes tools for monitoring latency, packet loss, and other critical metrics to ensure smooth VR experiences.",
-    "ImageUrl": "Projects/images/VRee_logo.png",
-    "VideoUrl": "",
+    "FullDescription": "VRee Network Metrics is a system for measuring and optimizing network performance in virtual reality applications. It includes tools for monitoring latency, packet loss, and other critical metrics to ensure smooth VR experiences.",
+    "MediaItems": [
+      {
+        "Url": "Projects/images/Logos/VRee.png",
+        "Name": "",
+        "Type": 0
+      }
+    ],
     "SourceUrl": "",
     "Tags": [
       "Networking",
       "VR",
       "Performance Optimization"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:VRee: Dialogue System",
+    "Title": "VRee: Dialogue System",
     "Description": "An advanced dialogue state machine for VR applications.",
     "FullDescription": "The VRee Dialogue System is a comprehensive solution for creating interactive dialogues in virtual reality applications. It supports branching conversations, character lip-syncing, and integration with VR gestures and interactions.",
-    "ImageUrl": "Projects/images/VRee_logo.png",
-    "VideoUrl": "",
+    "MediaItems": [
+      {
+        "Url": "Projects/images/Logos/VRee.png",
+        "Name": "",
+        "Type": 0
+      }
+    ],
     "SourceUrl": "",
     "Tags": [
       "VR",
       "Dialogue Systems",
       "Unity"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:VRee: Modular design",
+    "Title": "VRee: Modular Design",
     "Description": "Re-imagining the SDK in a less monolithic form, to make it easier to exclude features",
-    "FullDescription": "The VRee Dialogue System is a comprehensive solution for creating interactive dialogues in virtual reality applications. It supports branching conversations, character lip-syncing, and integration with VR gestures and interactions.",
-    "ImageUrl": "Projects/images/VRee_logo.png",
-    "VideoUrl": "",
+    "FullDescription": "As the VRee SDK grew larger and more feature-rich, we explored reimagining it as a collection of independent, composable modules rather than a monolithic package. The goal was to allow SDK integrators to exclude features they didn't need — reducing binary size, compilation overhead, and the surface area for bugs. The project explored plugin architectures, interface-based dependency boundaries, and build-system-level feature toggles, ultimately serving as a proof-of-concept that influenced later SDK3 architecture decisions.",
+    "MediaItems": [
+      {
+        "Url": "Projects/images/Logos/VRee.png",
+        "Name": "",
+        "Type": 0
+      }
+    ],
     "SourceUrl": "",
     "Tags": [
       "VR",
-      "Dialogue Systems",
-      "Unity"
+      "Architecture",
+      "C++",
+      "SDK"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:VRee: SDK3",
+    "Title": "VRee: SDK3",
     "Description": "The third iteration of the VRee Software Development Kit.",
     "FullDescription": "VRee SDK3 was the latest version of the VRee Software Development Kit, providing developers with powerful tools and APIs for creating immersive VR experiences. it was made as a complete re-write of the original, but unfortunately never made it to production.",
-    "ImageUrl": "Projects/images/VRee_logo.png",
-    "VideoUrl": "",
+    "MediaItems": [
+      {
+        "Url": "Projects/images/Logos/VRee.png",
+        "Name": "",
+        "Type": 0
+      }
+    ],
     "SourceUrl": "",
     "Tags": [
       "VR",
       "SDK",
       "C++"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:VRee: FIRST Robotic competition",
-    "Description": "An implementation of a finite state machine to simulate robots",
-    "FullDescription": "The VRee Map Editor is a tool developed for creating and editing virtual reality environments. It provides an intuitive interface for designing immersive VR spaces, supporting the development of VR applications and games, this was mostly just an idea that never really got off the ground",
-    "ImageUrl": "Projects/images/Work/VRee_editor.png",
-    "VideoUrl": "https://www.youtube.com/embed/Rs4RFfgVtGs",
+    "Title": "VRee: FIRST Robotic Competition",
+    "Description": "A finite state machine system to simulate FIRST Robotics Competition robots.",
+    "FullDescription": "Developed a finite state machine simulator for modeling robot behavior in the FIRST Robotics Competition context. The system modeled robot states, transitions, and actions — allowing strategy simulation and testing prior to physical implementation. Enabled prototyping of autonomous routines and teleoperated control strategies in software before committing to hardware configurations.",
+    "MediaItems": [
+      {
+        "Url": "Projects/images/Logos/VRee.png",
+        "Name": "",
+        "Type": 0
+      }
+    ],
     "SourceUrl": "",
     "Tags": [
-      "VR",
+      "C#",
       "Unity",
-      "Level Design",
-      "Concept"
+      "Finite State Machine",
+      "Robotics",
+      "Simulation"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:VRee: SDK2",
+    "Title": "VRee: SDK2",
     "Description": "The second iteration of the VRee Software Development Kit.",
     "FullDescription": "VRee SDK2 was a significant upgrade to the original VRee SDK, introducing new features and improvements for VR development. It included enhanced motion tracking capabilities, realtime video streaming, a better licensing workflow with offline licensing support and improved tools for creating multiplayer VR experiences.",
-    "ImageUrl": "Projects/images/vree-sdk2.jpg",
-    "VideoUrl": "",
+    "MediaItems": [
+      {
+        "Url": "Projects/images/Logos/VRee.png",
+        "Name": "",
+        "Type": 0
+      }
+    ],
     "SourceUrl": "",
     "Tags": [
       "VR",
@@ -1000,57 +1046,74 @@
       "C++",
       "Unity"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:VRee: BodyModel",
+    "Title": "VRee: BodyModel",
     "Description": "A sophisticated body tracking and modeling system for VR.",
     "FullDescription": "VRee BodyModel is an advanced system for tracking and modeling human bodies in virtual reality. It provides high-fidelity skeletal tracking from multiple sources (adapters), enabling natural and immersive VR experiences with full-body presence.",
-    "ImageUrl": "Projects/images/vree-bodymodel.jpg",
-    "VideoUrl": "",
+    "MediaItems": [
+      {
+        "Url": "Projects/images/Logos/VRee.png",
+        "Name": "",
+        "Type": 0
+      }
+    ],
     "SourceUrl": "",
     "Tags": [
       "VR",
       "Motion Tracking",
       "Computer Vision"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:VRee: SDK1",
-    "description": "A VR multiplayer framework in C++",
-    "fullDescription": "VReeSDK is a platform on unity we built in order to host multiplayer full-body VR experiences",
-    "imageUrl": "Projects/images/VRee-thumbnail.jpg",
-    "videoUrl": "https://www.youtube.com/embed/gloM2X74D1s",
-    "sourceUrl": "",
-    "tags": [
+    "Title": "VRee: SDK1",
+    "Description": "A VR multiplayer framework in C++",
+    "FullDescription": "VReeSDK is a platform on unity we built in order to host multiplayer full-body VR experiences",
+    "MediaItems": [
+      {
+        "Url": "Projects/images/VRee-thumbnail.jpg",
+        "Name": "",
+        "Type": 0
+      },
+      {
+        "Url": "https://www.youtube.com/embed/gloM2X74D1s",
+        "Name": "",
+        "Type": 1
+      }
+    ],
+    "SourceUrl": "",
+    "Tags": [
       "C++",
       "Unity",
       "VR",
       "C#"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:GLS: ProDnD Name Generator",
+    "Title": "ProDnD: Name Generator",
     "Description": "Procedural name generator for TTRPG maps.",
-    "FullDescription": "The ProD Name Generator is a sophisticated tool that generates unique and thematic names for RPG characters using advanced procedural generation techniques. It can create names for various fantasy races and cultures.",
-    "ImageUrl": "Projects/images/prod-name-generator.jpg",
-    "VideoUrl": "",
+    "FullDescription": "The ProDnD Name Generator is a tool that generates unique and thematic names for RPG characters and locations using advanced procedural generation techniques. It can create names for various fantasy races and cultures, integrated into the ProDnD mobile app.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "C#",
       "Procedural Generation",
       "RPG Tools"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:GLS: ProDnD Map Generators",
+    "Title": "ProDnD: Map Generators",
     "Description": "Procedural map generation tools for TTRPGs.",
-    "FullDescription": "This project includes a suite of tools for generating procedural maps for role-playing games, including dungeons, cities, and wilderness areas. It uses advanced algorithms to create realistic and varied environments.",
-    "ImageUrl": "Projects/images/prod-map-generators.jpg",
-    "VideoUrl": "",
+    "FullDescription": "A suite of tools for generating procedural maps for role-playing games, including dungeons, cities, and wilderness areas. Uses advanced algorithms to create realistic and varied environments, forming the core generation system of the ProDnD mobile application.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "C#",
@@ -1058,14 +1121,14 @@
       "Procedural Generation",
       "RPG Tools"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:GLS: ProDnD: Mobile App",
+    "Title": "ProDnD: Mobile App",
     "Description": "A mobile app for generating procedural battle maps for Dungeons & Dragons.",
     "FullDescription": "Contributed to the development of ProDnD, a mobile application available on Google Play Store. The app is designed to generate random, thematic battlefields for Dungeons & Dragons. Key contributions included optimizing performance for map generation, developing a service for sharing maps using steganography and QR codes, porting the app to iOS, and building a system for procedurally generating random names. The project was primarily developed using C# in Unity.",
-    "ImageUrl": "Projects/images/prodnD-mobile.jpg",
-    "VideoUrl": "",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "C#",
@@ -1075,14 +1138,14 @@
       "iOS",
       "Android"
     ],
-    "Category": "Professional"
+    "Category": "Professional",
+    "Finished": true
   },
   {
-    "Title": "TODO:GLS: Gust",
+    "Title": "Gust",
     "Description": "A mobile game about wind and flight.",
-    "FullDescription": "Gust is a visually stunning mobile game that explores the mechanics of wind and flight. It features intuitive touch controls and challenging gameplay, set in a beautifully rendered world affected by wind dynamics.",
-    "ImageUrl": "Projects/images/gust.jpg",
-    "VideoUrl": "",
+    "FullDescription": "Gust is a mobile game that explores the mechanics of wind and flight. It features intuitive touch controls and challenging gameplay, set in a world affected by wind dynamics.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Unity",
@@ -1090,84 +1153,84 @@
       "Mobile Game",
       "Physics Simulation"
     ],
-    "Category": "School Projects"
+    "Category": "School Projects",
+    "Finished": true
   },
   {
-    "Title": "TODO:Fhict: Splash Paint",
+    "Title": "Splash Paint",
     "Description": "An interactive painting application for swimming pools.",
     "FullDescription": "Splash Paint is an innovative project that turns a swimming pool into an interactive canvas. Using advanced computer vision techniques, it detects swimmers' movements and translates them into colorful visual effects on the water surface.",
-    "ImageUrl": "Projects/images/splash-paint.jpg",
-    "VideoUrl": "",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Computer Vision",
       "Interactive Art",
       "C++"
     ],
-    "Category": "School Projects"
+    "Category": "School Projects",
+    "Finished": true
   },
   {
-    "Title": "TODO:Fhict: Environment Survival",
+    "Title": "Environment Survival",
     "Description": "An educational game made in school about environmental challenges.",
     "FullDescription": "Environment Survival is an educational game that teaches players about environmental challenges and sustainability. Players must make decisions that affect the ecosystem, learning about the long-term consequences of their actions.",
-    "ImageUrl": "Projects/images/environment-survival.jpg",
-    "VideoUrl": "",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Unity",
       "Educational Game",
       "Environmental Science"
     ],
-    "Category": "School Projects"
+    "Category": "School Projects",
+    "Finished": true
   },
   {
-    "Title": "TODO:Fhict: Evil Clutches",
+    "Title": "Evil Clutches",
     "Description": "A game project developed during school.",
     "FullDescription": "Evil Clutches is a game project developed as part of a school assignment. It showcases game design principles, storytelling, and basic game development skills.",
-    "ImageUrl": "Projects/images/evil-clutches.jpg",
-    "VideoUrl": "",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Game Development",
       "School Project"
     ],
-    "Category": "School Projects"
+    "Category": "School Projects",
+    "Finished": true
   },
   {
-    "Title": "TODO:TU/e: Disk Sorter",
+    "Title": "Disk Sorter",
     "Description": "An automated system for sorting disks by color in raw assembly.",
     "FullDescription": "The Disk Sorter is a project that uses robotics and computer vision to automatically sort disks by color. It involves programming in assembly and demonstrates skills in automation and low-level system control.",
-    "ImageUrl": "Projects/images/disk-sorter.jpg",
-    "VideoUrl": "",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Robotics",
       "Assembly",
       "Computer Vision"
     ],
-    "Category": "School Projects"
+    "Category": "School Projects",
+    "Finished": true
   },
   {
-    "Title": "TODO:AutoRPG",
-    "Description": "An an attempt to make a combination between ARPG and an idle game game using blazor",
-    "FullDescription": "AutoRPG is an innovative project that generates role-playing game content automatically. It includes procedural generation of maps, characters, quests, and storylines, creating unique gaming experiences each time it's run.",
-    "ImageUrl": "Projects/images/ARPG-thumbnail.png",
-    "VideoUrl": "Projects/videos/ARPG-preview.mp4",
-    "SourceUrl": "https://github.com/yourusername/auto-rpg",
+    "Title": "AutoRPG",
+    "Description": "An attempt to make a combination between ARPG and an idle game using Blazor",
+    "FullDescription": "AutoRPG is a project attempting to blend action RPG mechanics with idle game progression — combat happens automatically while the player manages strategy and upgrades. Built as a Blazor WebAssembly application to run in the browser.",
+    "MediaItems": [],
+    "SourceUrl": "",
     "Tags": [
       "C#",
       "Blazor",
       "Game Development",
       "Procedural Generation"
     ],
-    "Category": "Game Development"
+    "Category": "Game Development",
+    "Finished": false
   },
   {
-    "Title": "TODO:Auto-ARPG Editor",
+    "Title": "Auto-ARPG Editor",
     "Description": "A Blazor-based editor for JSON files in AutoRPG.",
     "FullDescription": "Developed a Blazor-based editor for managing JSON files in an Auto-ARPG (Automatically generated Action Role-Playing Game) project. This tool streamlines the process of creating and editing game content. The project was built using C# 10/.NET 6 and utilized NuGet packages such as GdkSharp and ImageSharp.",
-    "ImageUrl": "",
-    "VideoUrl": "",
+    "MediaItems": [],
     "SourceUrl": "https://github.com/TychoHenzen/AutoARPG_Unity",
     "Tags": [
       "C#",
@@ -1176,14 +1239,14 @@
       "JSON",
       "Game Development Tools"
     ],
-    "Category": "Game Development"
+    "Category": "Game Development",
+    "Finished": true
   },
   {
-    "Title": "TODO:Night Night",
+    "Title": "Night Night",
     "Description": "A bedtime horror game.",
-    "FullDescription": "Night Night is a horror game designed explore a child's fear of the monster under their bed. It features 5 short chapters, each exploring a different fear, the game has been slowly taking shape over the past several years",
-    "ImageUrl": "Projects/images/night-night.jpg",
-    "VideoUrl": "",
+    "FullDescription": "Night Night is a horror game designed to explore a child's fear of the monster under their bed. It features 5 short chapters, each exploring a different fear. The game has been slowly taking shape over the past several years.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Unity",
@@ -1191,57 +1254,57 @@
       "Game Design",
       "Horror"
     ],
-    "Category": "Game Development"
+    "Category": "Game Development",
+    "Finished": false
   },
   {
-    "Title": "TODO:WireWorld",
+    "Title": "WireWorld",
     "Description": "Implementation of variations on the WireWorld cellular automaton, including 3d and color theory",
-    "FullDescription": "This project is an implementation of the WireWorld cellular automaton, demonstrating complex behavior emerging from simple rules. It provides an interactive environment to explore and experiment with cellular automata concepts.",
-    "ImageUrl": "Projects/images/wireworld.jpg",
-    "VideoUrl": "",
-    "SourceUrl": "https://github.com/yourusername/wireworld",
+    "FullDescription": "This project is an implementation of the WireWorld cellular automaton, demonstrating complex behavior emerging from simple rules. It provides an interactive environment to explore and experiment with cellular automata concepts. Variations include 3D WireWorld with color theory applied to signal propagation, which was the basis for the Starloop: Crisis game jam entry.",
+    "MediaItems": [],
+    "SourceUrl": "",
     "Tags": [
       "Java",
       "Cellular Automaton",
       "Simulation"
     ],
-    "Category": "Game Development"
+    "Category": "Game Development",
+    "Finished": true
   },
   {
-    "Title": "TODO:Octree Galaxy",
+    "Title": "Octree Galaxy",
     "Description": "A galaxy simulation using octrees, theoretically capable of sub-millimeter precision at a galactic scale",
     "FullDescription": "Octree Galaxy is an ambitious project that simulates a galaxy using octree data structures for efficient spatial partitioning and rendering. It allows users to explore a vast, procedurally generated galaxy with realistic celestial mechanics. unfortunately never went much further than seeding the galaxy, rendering nearby stars via a shader, and generating some alien races with procedurally determined traits",
-    "ImageUrl": "Projects/images/octree-galaxy.jpg",
-    "VideoUrl": "",
-    "SourceUrl": "https://github.com/yourusername/octree-galaxy",
+    "MediaItems": [],
+    "SourceUrl": "",
     "Tags": [
       "C++",
       "OpenGL",
       "Simulation",
       "Astronomy"
     ],
-    "Category": "Game Development"
+    "Category": "Game Development",
+    "Finished": false
   },
   {
-    "Title": "TODO:Voxel Engine",
-    "Description": "various voxel-based rendering engines, including raymarching and signed distance fields",
+    "Title": "Voxel Engine",
+    "Description": "Various voxel-based rendering engines, including raymarching and signed distance fields",
     "FullDescription": "This project developed a prototype voxel engine using signed-distance-field raymarching techniques. It explores efficient ways to render large, detailed voxel environments, pushing the boundaries of real-time voxel graphics.",
-    "ImageUrl": "Projects/images/voxel-engine.jpg",
-    "VideoUrl": "",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Graphics Programming",
       "Voxels",
       "Raymarching"
     ],
-    "Category": "Learning / Teaching / Hobby"
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": false
   },
   {
-    "Title": "TODO:Audio Processing Projects",
-    "Description": "Various audio-related Projects including an oscilloscope, dynamic music system and MIDI tracker.",
-    "FullDescription": "A collection of audio processing Projects primarily developed in C#. Notable Projects include a custom oscilloscope for audio visualization, a MIDI tracker for music composition, and systems for dynamic audio generation and manipulation.",
-    "ImageUrl": "Projects/images/audio-Projects.jpg",
-    "VideoUrl": "",
+    "Title": "Audio Processing Projects",
+    "Description": "Various audio-related projects including an oscilloscope, dynamic music system and MIDI tracker.",
+    "FullDescription": "A collection of audio processing projects primarily developed in C#. Notable projects include a custom oscilloscope for audio visualization, a MIDI tracker for music composition, and systems for dynamic audio generation and manipulation.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "C#",
@@ -1249,134 +1312,446 @@
       "MIDI",
       "Digital Signal Processing"
     ],
-    "Category": "Learning / Teaching / Hobby"
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
   },
   {
-    "Title": "TODO:COVAI",
+    "Title": "COVAI",
     "Description": "Connecting the captain's log of Elite: Dangerous to ChatGPT to replace the stock Covas",
-    "FullDescription": "i fed the captain's log of Elite: Dangerous as an input for ChatGPT playground to let it provide commentary on gameplay events,\nthen fed it's responses into google Text to speech to act as an AI-driven replacement for the game's cockpit voice assistent",
-    "ImageUrl": "Projects/images/stellar-cartography.jpg",
-    "VideoUrl": "",
+    "FullDescription": "I fed the captain's log of Elite: Dangerous as an input for ChatGPT playground to let it provide commentary on gameplay events, then fed its responses into Google Text-to-Speech to act as an AI-driven replacement for the game's cockpit voice assistant (COVAS). An early experiment in AI-driven game commentary before dedicated tooling existed for this kind of integration.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
-      "Astronomy",
-      "Data Visualization",
-      "Scientific Computing"
+      "Python",
+      "Elite: Dangerous",
+      "ChatGPT",
+      "Text-to-Speech",
+      "AI Integration"
     ],
-    "Category": "Learning / Teaching / Hobby"
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
   },
   {
-    "Title": "TODO:Stellar Cartography",
+    "Title": "Stellar Cartography",
     "Description": "A tool for visualizing and analyzing stellar catalogues.",
-    "FullDescription": "The Stellar Cartography project is a tool for rendering and analyzing stellar catalogues. It provides stunning visualizations of galactic structures, unfortunately never went much further than that.",
-    "ImageUrl": "Projects/images/stellar-cartography.jpg",
-    "VideoUrl": "",
+    "FullDescription": "The Stellar Cartography project is a tool for rendering and analyzing stellar catalogues. It provides visualizations of galactic structures, unfortunately never went much further than that.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Astronomy",
       "Data Visualization",
       "Scientific Computing"
     ],
-    "Category": "Learning / Teaching / Hobby"
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": false
   },
   {
-    "Title": "TODO:Distant Worlds (Elite Dangerous)",
+    "Title": "Distant Worlds (Elite Dangerous)",
     "Description": "Travelling salesman algorithm for optimizing travel routes in Elite Dangerous.",
     "FullDescription": "This project tackles the Traveling Salesman problem in the context of the game Elite Dangerous. It develops an efficient algorithm to optimize travel routes between star systems, enhancing gameplay and exploration strategies for players.",
-    "ImageUrl": "Projects/images/distant-worlds.jpg",
-    "VideoUrl": "",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Algorithms",
       "Game Enhancement",
       "Optimization"
     ],
-    "Category": "Learning / Teaching / Hobby"
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
   },
   {
-    "Title": "TODO:8-Dimensional Bezier Curves",
+    "Title": "8-Dimensional Bezier Curves",
     "Description": "Exploration of high-dimensional curve interpolation.",
-    "FullDescription": "This ambitious project delves into the realm of 8-dimensional bezier curves, exploring advanced mathematical concepts in computer graphics. It includes implementations for interpolating across these high-dimensional surfaces and sampling from complex geometric structures.",
-    "ImageUrl": "Projects/images/8d-bezier.jpg",
-    "VideoUrl": "",
+    "FullDescription": "This project delves into the realm of 8-dimensional bezier curves, exploring advanced mathematical concepts in computer graphics. It includes implementations for interpolating across these high-dimensional surfaces and sampling from complex geometric structures.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Computer Graphics",
       "Mathematics",
       "High-Dimensional Geometry"
     ],
-    "Category": "Game Development"
+    "Category": "Game Development",
+    "Finished": true
   },
   {
-    "Title": "TODO:Mouse Tracking Analytics",
+    "Title": "Mouse Tracking Analytics",
     "Description": "A background process for analyzing mouse cursor movements.",
-    "FullDescription": "This project developed a sophisticated background process for tracking and analyzing mouse cursor movements. It provides insights into user behavior and interaction patterns, useful for UI/UX research and productivity analysis.",
-    "ImageUrl": "Projects/images/mouse-tracking.jpg",
-    "VideoUrl": "",
+    "FullDescription": "This project developed a background process for tracking and analyzing mouse cursor movements. It provides insights into user behavior and interaction patterns, useful for UI/UX research and productivity analysis.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "User Analytics",
       "Background Processing",
       "UI/UX"
     ],
-    "Category": "Learning / Teaching / Hobby"
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
   },
   {
-    "Title": "TODO:Minecraft Mod",
+    "Title": "Minecraft Mod",
     "Description": "A custom mod for Minecraft.",
-    "FullDescription": "This Minecraft mod adds new features and mechanics to the game, including custom blocks, items, and gameplay elements. It demonstrates proficiency in Java programming and game modding techniques. The mod featured a way to convert rotten flesh into redstone, a wireworld-based signalling system somewhat similar to redstone, which interacted with a magnet-like block that responded to a coil of this redstone-like cable, in order to provide functionality similar to ProjectE, but with values based on the blocks' frequency within the surrounding worldgen",
-    "ImageUrl": "Projects/images/minecraft-mod.jpg",
-    "VideoUrl": "https://www.youtube.com/watch?v=s8ZXQ9tntBY",
+    "FullDescription": "This Minecraft mod adds new features and mechanics to the game, including custom blocks, items, and gameplay elements. The mod featured a way to convert rotten flesh into redstone, a wireworld-based signalling system somewhat similar to redstone, which interacted with a magnet-like block that responded to a coil of this redstone-like cable, in order to provide functionality similar to ProjectE, but with values based on the blocks' frequency within the surrounding worldgen",
+    "MediaItems": [
+      {
+        "Url": "https://www.youtube.com/embed/s8ZXQ9tntBY",
+        "Name": "Minecraft mod demonstration",
+        "Type": 1
+      }
+    ],
     "SourceUrl": "https://github.com/TychoHenzen/AMP-mc-magnet-chem",
     "Tags": [
       "Java",
       "Minecraft",
       "Modding"
     ],
-    "Category": "Game Development"
+    "Category": "Game Development",
+    "Finished": true
   },
   {
-    "Title": "TODO:Unreal",
-    "Description": "My first introduction to game development",
-    "FullDescription": "HackMud is a game about hacking and learning to program in javascript/typescript,\nwhile learning to play the game after a community i was part of discovered it\ni learned to reverse-engineer QR codes, as the early part of tier 2 content\nrequired scanning a partially corrupted QR code, which my phone wouldn't do\ni also just wanted to automate the process",
-    "ImageUrl": "Projects/images/Hackmud_logo.png",
-    "VideoUrl": "https://youtu.be/uFRodoJXqyo",
+    "Title": "Unreal Engine Experiments",
+    "Description": "My first introduction to 3D game development through Unreal Engine.",
+    "FullDescription": "My early explorations with Unreal Engine marked my introduction to 3D game development. Working with Unreal's Blueprint visual scripting and C++ API provided foundational experience with game loops, actors, collision systems, and the Unreal toolchain — skills that carried forward into later game projects.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
-      "Typescript",
-      "Javascript",
-      "Educational Content",
-      "QR"
+      "Unreal Engine",
+      "C++",
+      "Game Development",
+      "3D Graphics"
     ],
-    "Category": "Learning / Teaching / Hobby"
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
   },
   {
-    "Title": "TODO:x86 Assembly Art",
+    "Title": "x86 Assembly Art",
     "Description": "A drawing program that generates x86 assembly code.",
     "FullDescription": "This unique project created a drawing program that saves ASCII art as x86 assembly code. It combines artistic expression with low-level programming, resulting in executable art pieces that blur the line between code and visual design.",
-    "ImageUrl": "Projects/images/x86-art.jpg",
-    "VideoUrl": "",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
       "Assembly",
       "Creative Coding",
       "ASCII Art"
     ],
-    "Category": "Learning / Teaching / Hobby"
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
   },
   {
-    "Title": "TODO:TI-84",
-    "Description": "first learned to write some visual basic on my TI-84 graphing calculator",
-    "FullDescription": "",
-    "ImageUrl": "Projects/images/Hackmud_logo.png",
-    "VideoUrl": "https://youtu.be/uFRodoJXqyo",
+    "Title": "TI-84 Programming",
+    "Description": "First programming experience writing programs on a TI-84 graphing calculator.",
+    "FullDescription": "My first experience with programming was writing TI-BASIC programs on my TI-84 graphing calculator. Starting with simple games and math utilities that ran on the calculator's 24x8 character display, this was the spark that led to everything else. The constraints of severely limited memory and a monochrome screen taught resourcefulness early on.",
+    "MediaItems": [],
     "SourceUrl": "",
     "Tags": [
-      "Typescript",
-      "Javascript",
-      "Educational Content",
-      "QR"
+      "TI-BASIC",
+      "Calculator"
     ],
-    "Category": "Learning / Teaching / Hobby"
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
+  },
+  {
+    "Title": "Axiom2d",
+    "Description": "Custom modular 2D game engine in Rust with wgpu rendering, Rapier physics, and Bevy ECS.",
+    "FullDescription": "A modular, LLM-optimized 2D game engine built from scratch in Rust. The workspace spans 9 subsystem crates — rendering (wgpu/WGSL/DirectX12 with lyon vector tessellation), physics (Rapier2d), audio (cpal + fundsp DSP synthesis), ECS (bevy_ecs integration), UI, input, scene graph, and asset loading. Each subsystem is an optional feature gate so games only link what they use.\n\nIncludes a card game demo integrating terrain generation (dual-grid + wave function collapse), a living documentation system auto-generated from tests, snapshot regression testing for rendering (insta + image-compare), and multiple build profiles for development, profiling, and size-optimized production. The engine is designed with code clarity and token efficiency in mind, enabling rapid AI-assisted prototyping.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Rust",
+      "wgpu",
+      "Game Engine",
+      "ECS",
+      "Rapier",
+      "Bevy ECS",
+      "WFC"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": false
+  },
+  {
+    "Title": "WhisCorTex",
+    "Description": "Dual-personality AI Twitch VTuber bot running entirely on local open-source models.",
+    "FullDescription": "Two independent AI characters — WhisCor and Cortex — run simultaneously on local Ollama (Llama 3.1) instances, each with their own personality, conversation history, and TTS voice. They interact with Twitch chat and with each other while managing a shared spaceship simulation that degrades over time.\n\nKey systems: Piper TTS with hot-reloadable pronunciation dictionary, VTube Studio integration for lip sync and avatar expressions, RAG-based long-term memory via SQLite vector embeddings (embeddinggemma), a priority message queue (VOICE > CHAT > AUTONOMOUS) with interrupt handling, LLM-callable tools for memory and ship system management, and a FastAPI dashboard for monitoring. An interaction logger captures all messages with evaluation scores for dataset generation. Target latency under 2 seconds total. Built entirely on local software — no cloud APIs required.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "Ollama",
+      "LLM",
+      "Piper TTS",
+      "VTuber",
+      "Twitch",
+      "RAG",
+      "FastAPI"
+    ],
+    "Category": "Biology/Artificial Intelligence",
+    "Finished": true
+  },
+  {
+    "Title": "WavReconstruction",
+    "Description": "Converts WAV audio into FastTracker 2 Extended Module (.xm) tracker files using ML and evolutionary optimization.",
+    "FullDescription": "A hybrid pipeline that converts standard audio recordings back into the symbolic notation of tracker music. The pipeline chains Demucs stem separation → Basic Pitch neural transcription → instrument matching against a GM soundbank → 8-channel greedy allocation → quantization → XM binary serialization, then optionally applies CMA-ES evolutionary refinement using a perceptual multi-resolution STFT loss.\n\nThe core challenge: standard MIDI converters fail on polyphonic audio because harmonic overlap causes octave confusion and peak-picking produces 90% spurious notes. WavReconstruction solves this with supervised NMF constrained by neural priors, and a differentiable tracker renderer enabling gradient-based pitch optimization via Spectral Optimal Transport loss.\n\nPhase 3 complete with 264 passing tests. Includes a custom PerceiverTF + Transformer model (~45M parameters) trained on synthetic tracker data with curriculum learning (1→4→8 channels), an async Mod Archive scraper for dataset building, and complete XM binary reader/writer with round-trip validation.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "PyTorch",
+      "Audio Processing",
+      "CMA-ES",
+      "Demucs",
+      "Tracker Music",
+      "Machine Learning"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": false
+  },
+  {
+    "Title": "AudioEvolve",
+    "Description": "Reconstructs WAV audio into tracker modules via hybrid neural transcription and evolutionary optimization.",
+    "FullDescription": "AudioEvolve tackles the hard version of audio transcription: recovering which notes play when in a polyphonic recording, assigned to the actual tracker instruments. Unlike standard MIDI converters that fail from octave confusion and spurious note detection, AudioEvolve uses supervised fixed-dictionary NMF/SI-PLCA constrained by neural priors from Onsets&Frames, Basic Pitch, and MT3.\n\nThe pipeline: Demucs v4 stem separation → probabilistic neural transcription → NMF instrument matching → differentiable tracker rendering → perceptual loss optimization (multi-resolution mel-STFT + Spectral Optimal Transport) → CMA-ES refinement over discrete parameters. A WPF frontend (.NET 9) provides the user interface, invoking a Python engine (PyTorch 2.x) for all neural network inference and optimization, with libopenmpt for playback.\n\nEvaluation uses synthetic ground truth: render a known tracker module → WAV → reconstruct → compare, providing perfect note labels without hand annotation. Targets .mod, .xm, and .it formats with progressive difficulty.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "C#",
+      "Python",
+      "WPF",
+      "PyTorch",
+      "Audio Processing",
+      "CMA-ES",
+      "Demucs"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": false
+  },
+  {
+    "Title": "OctarineCodex",
+    "Description": "Tactical RPG engine with an 8-dimensional magic system, LDtk level integration, and DefaultEcs architecture.",
+    "FullDescription": "A .NET 8 / MonoGame RPG engine where all systemic interactions are driven by an 8-dimensional vector space (EleAspects) representing physical properties: Solidum (solidity), Febris (temperature), Ordinem (orderedness), Lumines (luminance), Varias (manifold/time-space), Inertiae (density), Subsidium (helpfulness), and Spatium (distance). Players collect trading-card-style cards that procedurally generate worlds for an autonomous agent to explore — loot converts back into cards, creating a feedback loop.\n\nFeatures seamless LDtk multi-level integration with automatic C# code generation from .ldtk files, layered Aseprite character animation (state machine + per-layer compositing), a DefaultEcs ECS architecture, event-driven messaging, and collision resolution. Clean architecture with SOLID principles throughout; a phased ECS migration is managed via feature flags for safe transitions. Named after Path of Exile's Octarine — a theoretical 8th color of magic.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "C#",
+      ".NET",
+      "MonoGame",
+      "ECS",
+      "LDtk",
+      "Procedural Generation",
+      "RPG"
+    ],
+    "Category": "Game Development",
+    "Finished": false
+  },
+  {
+    "Title": "RME — Ratcheting Micro-Evolution",
+    "Description": "Evolutionary code generation framework using weak LLMs and compiler-guided selection.",
+    "FullDescription": "RME solves complex coding problems using 7B parameter models that most LLM systems would consider insufficient. Instead of asking a weak model to fix broken code, RME makes mutations so small that even a 7B model succeeds occasionally — then uses evolutionary selection to accumulate improvements. A ratchet mechanism ensures the best solution never regresses.\n\nThe fitness loop uses only deterministic signals: compiler diagnostics, test results, branch coverage, and cyclomatic complexity — no LLM judgment in evaluation. A MAP-Elites population with test-bitmap features maintains solution diversity. Nine mutation types range from error-guided fixes to structural refactors. A strong model (Sonnet/Opus) writes executable property tests; the 7B model implements to pass them.\n\nBuilt as a multi-crate Rust workspace: rme-core (business logic), rme-cli (headless CI interface), rme-tui (interactive ratatui dashboard with setup/monitor/specs/runs tabs), and rme-props (property test runner). Supports local Ollama, Anthropic API, and tiered model escalation (7B → Haiku → Sonnet → Opus).",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Rust",
+      "LLM",
+      "Evolutionary Algorithms",
+      "Code Generation",
+      "TUI",
+      "Developer Tools"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": false
+  },
+  {
+    "Title": "dod-guard",
+    "Description": "Anti-cheat Definition of Done quality gate for Claude Code, published as a Claude Code plugin.",
+    "FullDescription": "dod-guard prevents the common failure mode where an AI or developer converts machine-checkable tests to manual-only claims to fake completion. Proof commands are stored in locked MCP storage (~/.claude/dod-store/), not in editable markdown — so editing the rendered file cannot weaken verification.\n\nCore features: 8 proof predicate types (exit_code, output_contains, regex matching, TDD enforcement), SHA256 tamper detection across all proofs, and an amendment audit trail requiring a mandatory reason for any criteria change. The TDD predicate rejects tests that pass on first run — proving they were written before the implementation existed.\n\nThe /interview skill automates requirements gathering: researches the codebase, asks targeted one-at-a-time questions, confirms a requirements summary, applies company-wide baseline proofs per work type (lint, format, regression tests, two-layer integration tests, manual review), then creates a locked DoD ready to pass to /goal for autonomous implementation.",
+    "MediaItems": [],
+    "SourceUrl": "https://github.com/tychohenzen/dod-guard",
+    "Tags": [
+      "TypeScript",
+      "Node.js",
+      "MCP",
+      "Developer Tools",
+      "TDD",
+      "Claude Code Plugin"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
+  },
+  {
+    "Title": "FNAF-ai",
+    "Description": "Reinforcement learning agent for Five Nights at Freddy's using SMiRL surprise minimization and a Dreamer world model.",
+    "FullDescription": "An RL agent that learns to survive in Five Nights at Freddy's by minimizing surprise rather than maximizing reward — using SMiRL (Surprise Minimization RL). In a horror game, novel states signal danger, so the agent learns to stay in familiar states by minimizing KL divergence from its historical state distribution.\n\nThe world model is a Dreamer-style Recurrent State-Space Model (RSSM) combining a GRU deterministic hidden state for temporal memory with a stochastic categorical latent, enabling offline imagination rollouts without direct environment interaction.\n\nThe agent uses online PPO training bootstrapped with behavioral cloning from human demonstrations, log-polar foveated vision (high resolution at cursor center, lower at periphery — 64×64×4 output from full-screen capture), and cross-attention fusion of vision and stereo audio. Action space covers 17 keyboard actions plus continuous mouse. Auto game cycle management handles death detection and restarts. Curriculum learning scales from 1 to 50 animatronics across 7 stages. ~16M parameters targeting RTX 4060 (8GB VRAM).",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "PyTorch",
+      "Reinforcement Learning",
+      "SMiRL",
+      "Dreamer",
+      "Computer Vision"
+    ],
+    "Category": "Biology/Artificial Intelligence",
+    "Finished": false
+  },
+  {
+    "Title": "CodeEvolution",
+    "Description": "AlphaEvolve-style closed-loop genetic programming for Rust using LLMs and compiler-guided fitness.",
+    "FullDescription": "CodeEvolution implements an evolutionary code optimization loop: mark EVOLVE-BLOCK regions in Rust source, generate mutations via a multi-LLM ensemble (Claude, Codex, Qwen2.5-Coder via Ollama), evaluate fitness through a cascade of hard gates (compile → tests → Clippy lints → benchmarks → LLM judgment), then iterate with OpenEvolve MAP-Elites island-based evolution.\n\nDesigned for constrained hardware targeting RTX 4060 (8GB VRAM) with local Llama.cpp orchestration. Supports checkpoint/resume with full evolution history tracking. A tech debt ledger tracks accumulated improvements across runs. SEARCH/REPLACE diff normalization handles LLM output malformations. Achieves ShinkaEvolve-style sample efficiency: 150–1,440 evaluations per 3-hour session.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "Rust",
+      "LLM",
+      "Evolutionary Algorithms",
+      "Code Generation",
+      "Developer Tools"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": false
+  },
+  {
+    "Title": "PoEMCP",
+    "Description": "MCP server for Path of Exile 1 & 2 build analysis with 32+ tools for AI-assisted theorycrafting.",
+    "FullDescription": "A Model Context Protocol server exposing 32+ tools for deep Path of Exile build analysis to AI assistants. Supports both PoE1 and PoE2 with separate server entrypoints.\n\nPoE1 features: character import via poe.ninja/GGG API/Path of Building codes, passive tree analysis (keystones, notables, masteries, atlas tree), skill/support gem databases with compatibility validation, defense calculations (EHP, armor, evasion, block, resistances, stun), damage calculations (hit DPS, DoT, ailments), mana reservation tracking, and build validation.\n\nPoE2 features mirror PoE1 but with PoE2-specific mechanics: Spirit system (flat costs replacing percentage mana reservation), Ward defense (absorbs all damage types, auto-regenerates), updated ailment rules, 50% block cap, and Mobalytics integration. Full async Python with SQLAlchemy local database, httpx for API calls, and optional Playwright for trade site scraping.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "MCP",
+      "Path of Exile",
+      "Game Tools",
+      "Build Analysis",
+      "AI Integration"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
+  },
+  {
+    "Title": "CodeContextMcp",
+    "Description": "MCP server for semantic C# code navigation using Roslyn, enabling AI-assisted codebase understanding.",
+    "FullDescription": "A Model Context Protocol server exposing 15+ semantic analysis tools for C# codebases to AI assistants. Built on Roslyn (Microsoft.CodeAnalysis), it provides symbol search with partial/exact matching, code compilation analysis, file-by-file code context retrieval, directory tree traversal with token budget controls, and VCS status tracking via LibGit2Sharp.\n\nDesigned for use with Claude Code on large .NET solutions — token budget management and content truncation strategies ensure responses fit within LLM context windows. Supports multi-project solutions with project switching. Enables AI assistants to navigate and understand large C# codebases without requiring full file dumps.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "C#",
+      ".NET",
+      "MCP",
+      "Roslyn",
+      "Code Analysis",
+      "Developer Tools",
+      "AI Integration"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": false
+  },
+  {
+    "Title": "SearchitBreakher",
+    "Description": "Infinite voxel world engine with chunk streaming, face culling, and distance shading, built on MonoGame.",
+    "FullDescription": "A voxel graphics engine built on MonoGame (.NET 8/9) featuring chunk-based streaming for infinite worlds (32³ voxels per chunk), dynamic load/unload based on player position, optimized mesh generation with per-face culling (only exposed faces rendered), distance-based vertex shading for depth perception, and persistence via a custom .gox binary format.\n\nThe library architecture cleanly separates the MonoGame-agnostic core (fully testable with Microsoft.Extensions.DependencyInjection) from the thin rendering wrapper. Includes SearchitContextExporter — a companion CLI tool that bundles the full project codebase for AI context windows, with git-tracked file filtering, hierarchical directory tree visualization, and GPT-4o token counting via TiktokenSharp.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "C#",
+      "MonoGame",
+      "Voxel Engine",
+      "3D Graphics",
+      "Game Development"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
+  },
+  {
+    "Title": "ClaudeConfig",
+    "Description": "GUI tool for viewing and editing Claude Code global configuration, with cross-machine sync.",
+    "FullDescription": "A desktop GUI application for managing Claude Code configuration files across two Windows machines. Provides visual editing of the global Claude Code configuration, browsing installed MCP servers and hooks, and a sync mechanism for keeping configuration images consistent between machines — an alternative to manually editing JSON files and copying them manually.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "GUI",
+      "Claude Code",
+      "Developer Tools",
+      "Configuration Management"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
+  },
+  {
+    "Title": "Pixel Art MCP",
+    "Description": "MCP server for reading and writing 8x8-tile indexed pixel art PNGs.",
+    "FullDescription": "A Model Context Protocol server that gives AI assistants the ability to read and write pixel art in PNG format. Operates on 8×8 tile grids with indexed color palettes, enabling AI-driven pixel art creation and editing workflows. Exposes tools for reading tile data, modifying individual pixels or tiles, and writing the result back to PNG.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "MCP",
+      "Pixel Art",
+      "PNG",
+      "AI Integration"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
+  },
+  {
+    "Title": "LilyTracker2",
+    "Description": "LilyPond music sheet editor — generates sheet music PDF from spreadsheet data.",
+    "FullDescription": "A desktop GUI application that generates LilyPond music notation from .ods spreadsheet data, producing professional-quality sheet music PDFs. Provides a visual editor for composing music in a spreadsheet-like interface while abstracting the complexities of raw LilyPond syntax. The workflow: edit notes in the GUI → generate LilyPond source → compile to PDF.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "LilyPond",
+      "Music Notation",
+      "GUI",
+      "PDF Generation"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": false
+  },
+  {
+    "Title": "ResourceFlow",
+    "Description": "Factory resource flow analyzer with GUI for modeling and optimizing production chains.",
+    "FullDescription": "A desktop GUI tool for analyzing and designing factory production chains. Models resource flow between production stages, calculates throughput bottlenecks, and visualizes factory layouts. Features a dedicated factory design tab for planning production lines and a clean data model layer separating business logic from UI.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "GUI",
+      "Factory Simulation",
+      "Resource Management",
+      "Data Visualization"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": false
+  },
+  {
+    "Title": "WorstBench",
+    "Description": "Worst-case LLM reliability benchmark — tests failure modes under adversarial conditions.",
+    "FullDescription": "A benchmark framework targeting the worst-case reliability of LLMs rather than average performance. Tests how models behave under adversarial prompting, edge cases, and conditions specifically designed to elicit failures, providing a more honest picture of model reliability than standard capability benchmarks.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "LLM",
+      "Benchmarking",
+      "AI Evaluation"
+    ],
+    "Category": "Biology/Artificial Intelligence",
+    "Finished": false
+  },
+  {
+    "Title": "Voiceover TTS",
+    "Description": "Scene-aware voiceover text-to-speech with semantic scene parsing and subtitle export.",
+    "FullDescription": "A text-to-speech tool that goes beyond simple TTS by understanding scene context. Parses input into semantic scenes, selects appropriate voice characteristics per scene (tone, pacing, emotion), and produces voiced output with synchronized subtitle export.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": [
+      "Python",
+      "Text-to-Speech",
+      "Audio Processing",
+      "NLP",
+      "Subtitles"
+    ],
+    "Category": "Learning / Teaching / Hobby",
+    "Finished": true
   }
 ]

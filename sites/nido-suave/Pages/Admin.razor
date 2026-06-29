@@ -52,6 +52,7 @@
                                         <div class="admin-meta"><em>@b.Notes</em></div>
                                     }
                                 </div>
+                                <button class="btn-ghost admin-del" @onclick="() => Delete(b)">Verwijderen</button>
                             </div>
                         }
                     </div>
@@ -114,6 +115,29 @@
         finally
         {
             _loading = false;
+        }
+    }
+
+    private async Task Delete(AdminBooking b)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm",
+            $"Afspraak van {b.Name} op {b.Date} om {b.Time} verwijderen?");
+        if (!confirmed) return;
+
+        _error = null;
+        try
+        {
+            var url = $"api/nido/appointments/{Uri.EscapeDataString(b.Id)}" +
+                      $"?date={Uri.EscapeDataString(b.Date)}&code={Uri.EscapeDataString(_key)}";
+            var resp = await Http.SendAsync(new HttpRequestMessage(HttpMethod.Delete, url));
+            if (resp.IsSuccessStatusCode)
+                _bookings.RemoveAll(x => x.Id == b.Id);
+            else
+                _error = $"Verwijderen mislukte ({(int)resp.StatusCode}).";
+        }
+        catch
+        {
+            _error = "Verwijderen mislukte. Controleer je verbinding.";
         }
     }
 

@@ -82,21 +82,31 @@ public class NidoBookingFunction
         if (!NidoSchedule.Slots(date).Contains(body.Time))
             return new BadRequestObjectResult(new { error = "Gekozen tijd is niet beschikbaar." });
 
+        // Fast-path friendly check (also covers any legacy GUID-id docs).
         var booked = (await _repo.GetByDateAsync(body.Date!)).Select(a => a.Time).ToHashSet();
         if (booked.Contains(body.Time!))
             return new ConflictObjectResult(new { error = "Dit tijdslot is net bezet. Kies een ander tijdstip." });
 
-        var created = await _repo.CreateAsync(new NidoAppointment
+        NidoAppointment created;
+        try
         {
-            Name = body.Name!.Trim(),
-            Email = body.Email!.Trim(),
-            Phone = body.Phone!.Trim(),
-            Service = body.Service!.Trim(),
-            Date = body.Date!,
-            Time = body.Time!,
-            Notes = (body.Notes ?? string.Empty).Trim(),
-            Status = "pending"
-        });
+            // Authoritative guard: atomic slot reservation (deterministic id) — wins the race or 409s.
+            created = await _repo.CreateAsync(new NidoAppointment
+            {
+                Name = body.Name!.Trim(),
+                Email = body.Email!.Trim(),
+                Phone = body.Phone!.Trim(),
+                Service = body.Service!.Trim(),
+                Date = body.Date!,
+                Time = body.Time!,
+                Notes = (body.Notes ?? string.Empty).Trim(),
+                Status = "pending"
+            });
+        }
+        catch (SlotUnavailableException)
+        {
+            return new ConflictObjectResult(new { error = "Dit tijdslot is net bezet. Kies een ander tijdstip." });
+        }
 
         await _email.SendBookingEmailsAsync(created); // best-effort; never throws
 
@@ -129,6 +139,23 @@ public class NidoBookingFunction
             status = a.Status
         });
         return new OkObjectResult(result);
+    }
+
+    /// <summary>
+    /// Admin: delete a booking (frees the slot). Protected by a Functions key — pass ?code=&lt;key&gt;.
+    /// Requires ?date=yyyy-MM-dd (the partition key). Route: DELETE /api/nido/appointments/{id}.
+    /// </summary>
+    [Function("nido-delete-appointment")]
+    public async Task<IActionResult> Delete(
+        [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "nido/appointments/{id}")] HttpRequest req,
+        string id)
+    {
+        var date = req.Query["date"].ToString();
+        if (string.IsNullOrWhiteSpace(date))
+            return new BadRequestObjectResult(new { error = "Query param 'date' (yyyy-MM-dd) is verplicht." });
+
+        await _repo.DeleteAsync(id, date);
+        return new NoContentResult();
     }
 
     private static List<string> Validate(BookingRequest b, out DateOnly date)

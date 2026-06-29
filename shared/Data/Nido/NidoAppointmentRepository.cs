@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.Azure.Cosmos;
 
 namespace Amp.Data.Nido;
@@ -11,11 +12,24 @@ public class NidoAppointmentRepository : INidoAppointmentRepository
         _container = cosmosClient.GetContainer(config.DatabaseId, config.AppointmentsContainerId);
     }
 
+    /// <summary>
+    /// Reserves a slot atomically. The doc id is deterministic (date_time) so two concurrent
+    /// bookings for the same hour can't both win — Cosmos rejects the second with 409, which we
+    /// surface as <see cref="SlotUnavailableException"/>. No read-then-write race.
+    /// </summary>
     public async Task<NidoAppointment> CreateAsync(NidoAppointment appointment)
     {
         appointment.PartitionKey = appointment.Date;
-        var response = await _container.CreateItemAsync(appointment, new PartitionKey(appointment.Date));
-        return response.Resource;
+        appointment.Id = SlotId(appointment.Date, appointment.Time);
+        try
+        {
+            var response = await _container.CreateItemAsync(appointment, new PartitionKey(appointment.Date));
+            return response.Resource;
+        }
+        catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.Conflict)
+        {
+            throw new SlotUnavailableException(appointment.Date, appointment.Time);
+        }
     }
 
     public async Task<IReadOnlyList<NidoAppointment>> GetByDateAsync(string date)
@@ -47,4 +61,18 @@ public class NidoAppointmentRepository : INidoAppointmentRepository
             .ThenBy(a => a.Time, StringComparer.Ordinal)
             .ToList();
     }
+
+    public async Task DeleteAsync(string id, string date)
+    {
+        try
+        {
+            await _container.DeleteItemAsync<NidoAppointment>(id, new PartitionKey(date));
+        }
+        catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+        {
+            // already gone — treat delete as idempotent
+        }
+    }
+
+    private static string SlotId(string date, string time) => $"{date}_{time}";
 }

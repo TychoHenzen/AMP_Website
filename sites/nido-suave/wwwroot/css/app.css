@@ -409,3 +409,10 @@ section.block.alt { background: var(--cream-deep); }
     color: var(--ink-soft);
     font-size: 0.92rem;
 }
+.admin-del {
+    margin-left: auto;
+    align-self: center;
+    flex-shrink: 0;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.85rem;
+}

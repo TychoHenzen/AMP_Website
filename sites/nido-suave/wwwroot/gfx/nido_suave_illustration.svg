@@ -1,0 +1,129 @@
+<svg width="100%" viewBox="155 5 370 265" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Zachte achtergrond -->
+  <ellipse cx="340" cy="165" rx="160" ry="152" fill="#F5EDE3" opacity="0.38"/>
+
+  <!-- === LELIE KRANS === -->
+
+  <!-- Linker grote lelie (open bloem) -->
+  <line x1="198" y1="242" x2="210" y2="148" stroke="#7A8F5A" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+  <ellipse cx="197" cy="200" rx="14" ry="5" fill="#8FAF7A" opacity="0.6" transform="rotate(-55,197,200)"/>
+  <ellipse cx="214" cy="185" rx="13" ry="4.5" fill="#7A9B6A" opacity="0.55" transform="rotate(40,214,185)"/>
+  <ellipse cx="206" cy="135" rx="5" ry="10" fill="#E8C9A8" opacity="0.7" transform="rotate(-10,206,135)"/>
+  <ellipse cx="214" cy="132" rx="4.5" ry="9" fill="#D4956A" opacity="0.55" transform="rotate(10,214,132)"/>
+  <g opacity="0.82">
+    <ellipse cx="210" cy="118" rx="7" ry="20" fill="#E8C9A8" transform="rotate(-15,210,148)"/>
+    <ellipse cx="210" cy="118" rx="7" ry="20" fill="#E8B896" opacity="0.7" transform="rotate(15,210,148)"/>
+    <ellipse cx="210" cy="118" rx="7" ry="20" fill="#E8C9A8" transform="rotate(45,210,148)"/>
+    <ellipse cx="210" cy="118" rx="7" ry="20" fill="#D4956A" opacity="0.6" transform="rotate(-45,210,148)"/>
+    <ellipse cx="210" cy="118" rx="6" ry="18" fill="#E8C9A8" transform="rotate(75,210,148)"/>
+    <ellipse cx="210" cy="118" rx="6" ry="18" fill="#E8B896" opacity="0.65" transform="rotate(-75,210,148)"/>
+  </g>
+  <g stroke="#C17B4A" stroke-linecap="round" fill="none" opacity="0.7">
+    <line x1="210" y1="148" x2="204" y2="128" stroke-width="0.9"/>
+    <line x1="210" y1="148" x2="210" y2="126" stroke-width="0.9"/>
+    <line x1="210" y1="148" x2="216" y2="128" stroke-width="0.9"/>
+    <line x1="210" y1="148" x2="220" y2="132" stroke-width="0.8"/>
+    <line x1="210" y1="148" x2="200" y2="132" stroke-width="0.8"/>
+  </g>
+  <g fill="#C17B4A" opacity="0.65">
+    <circle cx="204" cy="127" r="2.2"/>
+    <circle cx="210" cy="125" r="2.2"/>
+    <circle cx="216" cy="127" r="2.2"/>
+    <circle cx="220" cy="131" r="1.8"/>
+    <circle cx="200" cy="131" r="1.8"/>
+  </g>
+
+  <!-- Tweede kleinere lelie links (knop) -->
+  <line x1="178" y1="235" x2="182" y2="165" stroke="#7A8F5A" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+  <ellipse cx="178" cy="210" rx="12" ry="4" fill="#8FAF7A" opacity="0.5" transform="rotate(-45,178,210)"/>
+  <ellipse cx="182" cy="155" rx="5" ry="13" fill="#E8C9A8" opacity="0.65" transform="rotate(-5,182,155)"/>
+  <ellipse cx="188" cy="153" rx="4.5" ry="11" fill="#D4956A" opacity="0.5" transform="rotate(12,188,153)"/>
+  <ellipse cx="176" cy="153" rx="4" ry="11" fill="#E8B896" opacity="0.5" transform="rotate(-12,176,153)"/>
+
+  <!-- Rechter grote lelie (gespiegeld) -->
+  <line x1="482" y1="242" x2="470" y2="148" stroke="#7A8F5A" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+  <ellipse cx="483" cy="200" rx="14" ry="5" fill="#8FAF7A" opacity="0.6" transform="rotate(55,483,200)"/>
+  <ellipse cx="466" cy="185" rx="13" ry="4.5" fill="#7A9B6A" opacity="0.55" transform="rotate(-40,466,185)"/>
+  <ellipse cx="474" cy="135" rx="5" ry="10" fill="#E8C9A8" opacity="0.7" transform="rotate(10,474,135)"/>
+  <ellipse cx="466" cy="132" rx="4.5" ry="9" fill="#D4956A" opacity="0.55" transform="rotate(-10,466,132)"/>
+  <g opacity="0.82">
+    <ellipse cx="470" cy="118" rx="7" ry="20" fill="#E8C9A8" transform="rotate(15,470,148)"/>
+    <ellipse cx="470" cy="118" rx="7" ry="20" fill="#E8B896" opacity="0.7" transform="rotate(-15,470,148)"/>
+    <ellipse cx="470" cy="118" rx="7" ry="20" fill="#E8C9A8" transform="rotate(-45,470,148)"/>
+    <ellipse cx="470" cy="118" rx="7" ry="20" fill="#D4956A" opacity="0.6" transform="rotate(45,470,148)"/>
+    <ellipse cx="470" cy="118" rx="6" ry="18" fill="#E8C9A8" transform="rotate(-75,470,148)"/>
+    <ellipse cx="470" cy="118" rx="6" ry="18" fill="#E8B896" opacity="0.65" transform="rotate(75,470,148)"/>
+  </g>
+  <g stroke="#C17B4A" stroke-linecap="round" fill="none" opacity="0.7">
+    <line x1="470" y1="148" x2="464" y2="128" stroke-width="0.9"/>
+    <line x1="470" y1="148" x2="470" y2="126" stroke-width="0.9"/>
+    <line x1="470" y1="148" x2="476" y2="128" stroke-width="0.9"/>
+    <line x1="470" y1="148" x2="480" y2="132" stroke-width="0.8"/>
+    <line x1="470" y1="148" x2="460" y2="132" stroke-width="0.8"/>
+  </g>
+  <g fill="#C17B4A" opacity="0.65">
+    <circle cx="464" cy="127" r="2.2"/>
+    <circle cx="470" cy="125" r="2.2"/>
+    <circle cx="476" cy="127" r="2.2"/>
+    <circle cx="480" cy="131" r="1.8"/>
+    <circle cx="460" cy="131" r="1.8"/>
+  </g>
+
+  <!-- Tweede kleinere lelie rechts (knop) -->
+  <line x1="502" y1="235" x2="498" y2="165" stroke="#7A8F5A" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+  <ellipse cx="502" cy="210" rx="12" ry="4" fill="#8FAF7A" opacity="0.5" transform="rotate(45,502,210)"/>
+  <ellipse cx="498" cy="155" rx="5" ry="13" fill="#E8C9A8" opacity="0.65" transform="rotate(5,498,155)"/>
+  <ellipse cx="492" cy="153" rx="4.5" ry="11" fill="#D4956A" opacity="0.5" transform="rotate(-12,492,153)"/>
+  <ellipse cx="504" cy="153" rx="4" ry="11" fill="#E8B896" opacity="0.5" transform="rotate(12,504,153)"/>
+
+  <!-- Kleine lelie bovenaan midden -->
+  <line x1="340" y1="68" x2="340" y2="28" stroke="#7A8F5A" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+  <ellipse cx="328" cy="52" rx="10" ry="3.5" fill="#8FAF7A" opacity="0.55" transform="rotate(-35,328,52)"/>
+  <ellipse cx="352" cy="52" rx="10" ry="3.5" fill="#7A9B6A" opacity="0.55" transform="rotate(35,352,52)"/>
+  <ellipse cx="340" cy="22" rx="5" ry="11" fill="#E8C9A8" opacity="0.7"/>
+  <ellipse cx="334" cy="24" rx="4" ry="10" fill="#E8B896" opacity="0.55" transform="rotate(-8,334,24)"/>
+  <ellipse cx="346" cy="24" rx="4" ry="10" fill="#D4956A" opacity="0.5" transform="rotate(8,346,24)"/>
+
+  <!-- Verbindingsboog onderaan -->
+  <path d="M198,242 Q265,262 340,265 Q415,262 482,242" fill="none" stroke="#8B5E3C" stroke-width="1" opacity="0.22" stroke-dasharray="3 6"/>
+
+  <!-- Extra kleine blaadjes links en rechts onderaan -->
+  <g fill="#8FAF7A" opacity="0.5">
+    <ellipse cx="228" cy="248" rx="12" ry="4" transform="rotate(-20,228,248)"/>
+    <ellipse cx="215" cy="255" rx="11" ry="3.5" transform="rotate(-30,215,255)"/>
+    <ellipse cx="452" cy="248" rx="12" ry="4" transform="rotate(20,452,248)"/>
+    <ellipse cx="465" cy="255" rx="11" ry="3.5" transform="rotate(30,465,255)"/>
+  </g>
+
+  <!-- === NEST === -->
+  <g fill="none" stroke="#8B5E3C" stroke-linecap="round">
+    <path d="M252,190 Q265,180 282,183 Q296,177 310,184" stroke-width="2.2" opacity="0.65"/>
+    <path d="M250,197 Q265,188 285,191 Q300,185 314,192" stroke-width="1.8" opacity="0.5"/>
+    <path d="M254,204 Q270,195 290,198 Q306,192 318,198" stroke-width="1.5" opacity="0.4"/>
+    <path d="M428,190 Q415,180 398,183 Q384,177 370,184" stroke-width="2.2" opacity="0.65"/>
+    <path d="M430,197 Q415,188 395,191 Q380,185 366,192" stroke-width="1.8" opacity="0.5"/>
+    <path d="M426,204 Q410,195 390,198 Q374,192 362,198" stroke-width="1.5" opacity="0.4"/>
+    <path d="M254,204 Q282,222 322,227 Q340,230 358,227 Q398,222 426,204" stroke-width="2" opacity="0.55"/>
+    <path d="M262,209 Q286,228 324,233 Q340,236 356,233 Q394,228 418,209" stroke-width="1.4" opacity="0.35"/>
+  </g>
+
+  <!-- Nestschaduw -->
+  <ellipse cx="340" cy="212" rx="60" ry="16" fill="#C17B4A" opacity="0.07"/>
+
+  <!-- === DRIE FIGUREN === -->
+  <ellipse cx="340" cy="188" rx="13" ry="15" fill="#C17B4A" opacity="0.88"/>
+  <circle cx="340" cy="167" r="9" fill="#C17B4A" opacity="0.92"/>
+  <ellipse cx="315" cy="196" rx="9" ry="11" fill="#D4956A" opacity="0.82"/>
+  <circle cx="315" cy="179" r="6.5" fill="#D4956A" opacity="0.88"/>
+  <ellipse cx="365" cy="199" rx="7" ry="9" fill="#E8B896" opacity="0.82"/>
+  <circle cx="365" cy="185" r="5" fill="#E8B896" opacity="0.88"/>
+
+  <!-- Kleine leliebolletjes boven figuren -->
+  <g fill="#E8B896" opacity="0.4">
+    <circle cx="330" cy="157" r="2.5"/>
+    <circle cx="340" cy="153" r="2"/>
+    <circle cx="350" cy="157" r="2.5"/>
+  </g>
+
+</svg>

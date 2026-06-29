@@ -74,7 +74,9 @@ dotnet run
 
 **Layout**: `Layout/MainLayout.razor` (sticky header + footer) + `Layout/NavMenu.razor` (responsive nav, hamburger on mobile). Note: .NET 8 template uses `Layout/`, not `Shared/`.
 
-**Pages** (`Pages/`): Home (`/`), Over (`/over` — full "Over Nido Suave" about story), Behandelingen (`/behandelingen` — placeholder), Contact (`/contact` — placeholder contact details).
+**Pages** (`Pages/`): Home (`/`), Over (`/over`), Behandelingen (`/behandelingen`), Boeken (`/boeken` — appointment booking), Contact (`/contact`), Admin (`/admin` — booking management).
+
+**Logo assets**: Design source at `gfx/nido_suave_logo_lelie.svg` (full logo with text, not served). Served variants in `wwwroot/gfx/`: `nido_suave_mark.svg` (simplified 3-figures-in-nest mark, 64×64 — favicon + nav), `nido_suave_illustration.svg` (full lily wreath + figures, no text — hero + splash). Favicon: SVG primary with PNG fallback (`wwwroot/favicon.png`).
 
 ## tools/ProjectEditor — Local Portfolio Manager
 

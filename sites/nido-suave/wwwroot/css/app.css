@@ -53,11 +53,9 @@ a:hover { color: var(--terracotta); }
     gap: 0.4rem;
     background: var(--cream);
 }
-.loading-splash__mark {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.6rem;
-    color: var(--terracotta-deep);
-    letter-spacing: 0.04em;
+.loading-splash__logo {
+    width: clamp(160px, 38vw, 260px);
+    opacity: 0.92;
 }
 .loading-splash__sub {
     color: var(--ink-soft);
@@ -103,12 +101,20 @@ main { flex: 1; }
     position: relative;
 }
 .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.5rem;
     color: var(--terracotta-deep);
     letter-spacing: 0.04em;
 }
 .brand span { color: var(--sage); }
+.brand__mark {
+    height: 36px;
+    width: 36px;
+    flex-shrink: 0;
+}
 .nav-links {
     display: flex;
     gap: 1.6rem;
@@ -179,6 +185,12 @@ main { flex: 1; }
     color: var(--ink-soft);
     max-width: 600px;
     margin: 0 auto 2rem;
+}
+.hero__illustration {
+    width: clamp(200px, 44vw, 320px);
+    display: block;
+    margin: 0 auto 2.5rem;
+    opacity: 0.88;
 }
 .hero__eyebrow {
     text-transform: uppercase;

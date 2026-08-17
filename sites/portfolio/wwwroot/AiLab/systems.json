@@ -1,0 +1,146 @@
+[
+  {
+    "Title": "MAKER",
+    "Status": "Active",
+    "Description": "Multi-Agent Knowledge-Enhanced Reasoning - orchestration framework for complex multi-step LLM workflows.",
+    "FullDescription": "MAKER is a multi-agent orchestration system that coordinates specialized LLM agents to solve complex, multi-step reasoning tasks. It routes sub-problems to the best-suited agent, manages shared context, and assembles final outputs from individual agent contributions. Built to handle tasks that exceed what a single prompt can reliably accomplish.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": ["Multi-Agent", "Orchestration", "Claude", "Reasoning", "Workflow"],
+    "Assessments": [
+      { "Name": "Completion", "Score": 7 },
+      { "Name": "Success", "Score": 6 },
+      { "Name": "Cost", "Score": 4 },
+      { "Name": "Complexity", "Score": 8 },
+      { "Name": "Impact", "Score": 7 },
+      { "Name": "Maturity", "Score": 5 },
+      { "Name": "Reusability", "Score": 6 }
+    ]
+  },
+  {
+    "Title": "customclaude",
+    "Status": "Active",
+    "Description": "Customization package for Claude Code - skills, hooks, instincts, memory, and agent definitions.",
+    "FullDescription": "A comprehensive customization layer on top of Claude Code that bundles skills (slash-command workflows), hooks (event-driven shell automations), instincts (auto-distilled behavioral rules), persistent memory, and specialized agent definitions into a single deployable package. Enables rapid reconfiguration of Claude Code for different project contexts while maintaining consistency across sessions.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": ["Claude Code", "Customization", "Skills", "Hooks", "DX"],
+    "Assessments": [
+      { "Name": "Completion", "Score": 8 },
+      { "Name": "Success", "Score": 8 },
+      { "Name": "Cost", "Score": 9 },
+      { "Name": "Complexity", "Score": 6 },
+      { "Name": "Impact", "Score": 9 },
+      { "Name": "Maturity", "Score": 7 },
+      { "Name": "Reusability", "Score": 5 }
+    ]
+  },
+  {
+    "Title": "whiscortex",
+    "Status": "Archived",
+    "Description": "Fine-tuning experiments on Whisper-derived architectures for specialized audio understanding.",
+    "FullDescription": "A series of fine-tuning attempts on Whisper-derived model architectures, targeting specialized audio understanding tasks beyond standard transcription. Explored LoRA and full fine-tuning approaches with custom datasets. Ultimately archived due to compute cost constraints and the rapid improvement of foundation models making custom fine-tunes less necessary.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": ["Fine-tuning", "Whisper", "Audio", "LoRA", "Research"],
+    "Assessments": [
+      { "Name": "Completion", "Score": 4 },
+      { "Name": "Success", "Score": 3 },
+      { "Name": "Cost", "Score": 2 },
+      { "Name": "Complexity", "Score": 7 },
+      { "Name": "Impact", "Score": 2 },
+      { "Name": "Maturity", "Score": 3 },
+      { "Name": "Reusability", "Score": 2 }
+    ]
+  },
+  {
+    "Title": "DoD-guard",
+    "Status": "Active",
+    "Description": "Anti-cheat verification system for LLM-generated code - adversarial review, mutation testing, blind rewrites.",
+    "FullDescription": "An MCP server and skill suite that acts as a quality gate for LLM-generated code. Uses adversarial review workflows (multiple specialized reviewer agents attacking code from different angles), mutation testing ratchets, blind rewrites (delete-and-rebuild from contract), test integrity auditing, and step-by-step orchestration to catch the failure modes LLMs are prone to: output blessing, logic mirroring, shallow tests, and scope drift.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": ["MCP", "Testing", "Adversarial", "Quality", "Anti-cheat", "TypeScript"],
+    "Assessments": [
+      { "Name": "Completion", "Score": 7 },
+      { "Name": "Success", "Score": 7 },
+      { "Name": "Cost", "Score": 5 },
+      { "Name": "Complexity", "Score": 9 },
+      { "Name": "Impact", "Score": 8 },
+      { "Name": "Maturity", "Score": 6 },
+      { "Name": "Reusability", "Score": 7 }
+    ]
+  },
+  {
+    "Title": "Skills System",
+    "Status": "Active",
+    "Description": "Reusable, composable instruction packages that extend Claude Code's capabilities per-task.",
+    "FullDescription": "A library of skill definitions that load specialized instruction sets into Claude Code on demand via slash commands. Each skill is a markdown file with frontmatter metadata and structured instructions that override default behavior for specific workflows (code review, TDD, refactoring, deployment, etc). Skills compose with each other and with agent definitions, enabling complex multi-step workflows without custom tooling.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": ["Claude Code", "Skills", "Markdown", "Workflow", "Composability"],
+    "Assessments": [
+      { "Name": "Completion", "Score": 8 },
+      { "Name": "Success", "Score": 7 },
+      { "Name": "Cost", "Score": 9 },
+      { "Name": "Complexity", "Score": 5 },
+      { "Name": "Impact", "Score": 8 },
+      { "Name": "Maturity", "Score": 7 },
+      { "Name": "Reusability", "Score": 8 }
+    ]
+  },
+  {
+    "Title": "deepseekCustom",
+    "Status": "Experimental",
+    "Description": "Custom LLM harness using DeepSeek as a cost-optimized worker behind a Claude proxy.",
+    "FullDescription": "A custom harness that routes LLM workloads to DeepSeek models via a local proxy that presents an Anthropic-compatible API. Enables Claude Code subprocesses to use DeepSeek for fanout/parallel work at a fraction of the cost, while reserving Claude for orchestration and stuck-node escalation. Part of the cascade cost-optimization strategy where cheap models do 95% of the work.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": ["DeepSeek", "Proxy", "Cost Optimization", "Cascade", "Claude"],
+    "Assessments": [
+      { "Name": "Completion", "Score": 6 },
+      { "Name": "Success", "Score": 5 },
+      { "Name": "Cost", "Score": 8 },
+      { "Name": "Complexity", "Score": 7 },
+      { "Name": "Impact", "Score": 6 },
+      { "Name": "Maturity", "Score": 4 },
+      { "Name": "Reusability", "Score": 5 }
+    ]
+  },
+  {
+    "Title": "evomcp",
+    "Status": "Experimental",
+    "Description": "AlphaEvolve-inspired evolutionary code improvement via MCP - parallel mutation, selection, and recombination.",
+    "FullDescription": "An MCP server inspired by AlphaEvolve that applies evolutionary strategies to code improvement. Spawns parallel solution attempts with diverse strategies (mutation), evaluates them against a fitness function (selection), and combines successful traits from multiple attempts (recombination). Uses cheap model fanout with expensive model escalation for stuck nodes. Includes cascade orchestration, checkpoint management, and lesson extraction.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": ["Evolutionary", "MCP", "AlphaEvolve", "Mutation Testing", "Parallel"],
+    "Assessments": [
+      { "Name": "Completion", "Score": 6 },
+      { "Name": "Success", "Score": 5 },
+      { "Name": "Cost", "Score": 3 },
+      { "Name": "Complexity", "Score": 9 },
+      { "Name": "Impact", "Score": 6 },
+      { "Name": "Maturity", "Score": 4 },
+      { "Name": "Reusability", "Score": 5 }
+    ]
+  },
+  {
+    "Title": "pensieve",
+    "Status": "Experimental",
+    "Description": "Ground-up attempt at building a novel GPT-esque transformer architecture from scratch.",
+    "FullDescription": "An ambitious research project to build a completely new transformer-based language model architecture from the ground up, without relying on existing frameworks like HuggingFace Transformers. Explores alternative attention mechanisms, memory architectures, and training strategies. Named after the memory-viewing device from Harry Potter. Still in early experimental stages.",
+    "MediaItems": [],
+    "SourceUrl": "",
+    "Tags": ["Transformer", "Architecture", "Research", "From Scratch", "PyTorch"],
+    "Assessments": [
+      { "Name": "Completion", "Score": 2 },
+      { "Name": "Success", "Score": 1 },
+      { "Name": "Cost", "Score": 3 },
+      { "Name": "Complexity", "Score": 10 },
+      { "Name": "Impact", "Score": 3 },
+      { "Name": "Maturity", "Score": 1 },
+      { "Name": "Reusability", "Score": 2 }
+    ]
+  }
+]

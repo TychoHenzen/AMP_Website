@@ -10,7 +10,7 @@ public class TaglineService : IDisposable
         "Een moment voor jou…",
         "Een plek waar je even niets hoeft",
         "Rust is geen luxe.\nHet is een noodzaak.",
-        "Een zachte plek voor groot en klein",
+        "Een zachte plek\nvoor groot en klein",
         "Een goede massage begint vóórdat je op de tafel ligt.",
         "Afgestemd op jouw lichaam en jouw moment.",
         "Waar je even niets hoeft.",

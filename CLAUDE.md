@@ -51,9 +51,11 @@ No test project. No linter.
 
 **Entry point**: `Program.cs` — registers `HttpClient`, `ProjectService` (scoped), `Blazored.SessionStorage`. Root component `App.razor` runs the Blazor router.
 
-**Data flow**: `ProjectService` fetches `wwwroot/Projects/projects.json` via HTTP GET → `List<ProjectInfo>`. Models in `Models.cs`: `ProjectInfo`, `MediaItem`, `MediaType` enum, `ImageFitType` enum.
+**Data flow**: `ProjectService` fetches `wwwroot/Projects/projects.json` via HTTP GET -> `List<ProjectInfo>`. Models in `Models.cs`: `ProjectInfo`, `MediaItem`, `MediaType` enum, `ImageFitType` enum, `LlmSystemInfo`, `Assessment`.
 
-**Pages** (5 routes in `Pages/`): Index (`/`), Projects (`/projects`), Skills (`/skills`), Experience (`/experience`), Contact (`/contact`). Projects page is the most complex — search, tag filtering, category grouping, media display (images/videos/PDFs).
+**Pages** (6 routes in `Pages/`): Index (`/`), Projects (`/projects`), AI Lab (`/ai-lab`), Skills (`/skills`), Experience (`/experience`), Contact (`/contact`). Projects page has search, tag filtering, category grouping, media display. AI Lab page shows LLM systems with assessment scorecards (0-10 bars), status filters, and tag filters.
+
+**AI Lab data**: edit `sites/portfolio/wwwroot/AiLab/systems.json`. Each entry: `Title`, `Status` (Active/Experimental/Archived/Abandoned), `Description`, `FullDescription`, `MediaItems`, `SourceUrl`, `Tags`, `Assessments` (list of `{Name, Score}` where Score is 0-10).
 
 **Layout**: `Shared/MainLayout.razor` + `Shared/NavMenu.razor`. Dark modern theme — `#0a0a0a` body, `#1a1a2e` navbar, `#60a5fa` accent. Global styles in `wwwroot/css/app.css`. Inter font, monospace for terminal elements. Terminal-style sections (`.terminal-*`); Experience uses a vertical timeline; Index has a JS-interop typing animation.
 

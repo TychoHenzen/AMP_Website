@@ -30,3 +30,21 @@ public enum ImageFitType
     Cover,
     Contain
 }
+
+public class LlmSystemInfo
+{
+    public string Title { get; set; } = "";
+    public string Status { get; set; } = "Experimental";
+    public string Description { get; set; } = "";
+    public string FullDescription { get; set; } = "";
+    public List<MediaItem> MediaItems { get; set; } = new();
+    public string SourceUrl { get; set; } = "";
+    public List<string> Tags { get; set; } = new();
+    public List<Assessment> Assessments { get; set; } = new();
+}
+
+public class Assessment
+{
+    public string Name { get; set; } = "";
+    public int Score { get; set; } = 0;
+}

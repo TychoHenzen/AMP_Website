@@ -1,0 +1,335 @@
+@page "/ai-lab"
+@inject HttpClient Http
+
+<PageTitle>Tycho Henzen - AI Lab</PageTitle>
+
+<div class="container mt-5">
+    <h1>AI Lab</h1>
+
+    @if (isLoading)
+    {
+        <p>Loading systems...</p>
+    }
+    else if (loadError)
+    {
+        <div class="alert alert-danger" role="alert">
+            An error occurred while loading systems. Please try again later.
+        </div>
+    }
+    else
+    {
+        <div class="mb-3">
+            <input type="text" class="form-control" @bind="searchTerm" @bind:event="oninput" placeholder="Search systems...">
+        </div>
+
+        <div class="mb-3">
+            @foreach (var status in allStatuses)
+            {
+                <button class="btn btn-sm @(selectedStatuses.Contains(status) ? "btn-" + GetStatusColor(status) : "btn-outline-" + GetStatusColor(status)) me-2 mb-2"
+                        @onclick="() => ToggleStatus(status)">
+                    @status
+                </button>
+            }
+        </div>
+
+        <div class="mb-3">
+            @foreach (var tag in topTags)
+            {
+                <button class="btn btn-sm @(selectedTags.Contains(tag) ? "btn-primary" : "btn-outline-primary") me-2 mb-2"
+                        @onclick="() => ToggleTag(tag)">
+                    @tag
+                </button>
+            }
+            @if (remainingTags.Count > 0)
+            {
+                <button class="btn btn-sm btn-secondary me-2 mb-2" @onclick="ToggleRemainingTags">
+                    @(showAllTags ? "Hide Extra Tags" : $"+{remainingTags.Count} more")
+                </button>
+            }
+            @if (showAllTags)
+            {
+                @foreach (var tag in remainingTags)
+                {
+                    <button class="btn btn-sm @(selectedTags.Contains(tag) ? "btn-primary" : "btn-outline-primary") me-2 mb-2"
+                            @onclick="() => ToggleTag(tag)">
+                        @tag
+                    </button>
+                }
+            }
+        </div>
+
+        <div class="row">
+            @foreach (var system in systems.Where(FilterSystem))
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 system-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0">@system.Title</h5>
+                                <span class="badge status-badge status-@system.Status.ToLower()">@system.Status</span>
+                            </div>
+                            <p class="card-text">@system.Description</p>
+                            <div class="assessment-mini mb-3">
+                                @foreach (var a in system.Assessments)
+                                {
+                                    <div class="assessment-mini-row">
+                                        <span class="assessment-mini-label">@a.Name</span>
+                                        <div class="assessment-mini-track">
+                                            <div class="assessment-mini-fill @GetScoreClass(a.Score)" style="width: @(a.Score * 10)%"></div>
+                                        </div>
+                                        <span class="assessment-mini-score">@a.Score</span>
+                                    </div>
+                                }
+                            </div>
+                            <button class="btn btn-primary btn-sm" @onclick="() => OpenDetails(system)">Details</button>
+                            @if (!string.IsNullOrEmpty(system.SourceUrl))
+                            {
+                                <a href="@system.SourceUrl" target="_blank" class="btn btn-secondary btn-sm ms-2">Source</a>
+                            }
+                        </div>
+                        <div class="card-footer">
+                            @foreach (var tag in system.Tags.Take(3))
+                            {
+                                <span class="badge bg-secondary me-1">@tag</span>
+                            }
+                            @if (system.Tags.Count > 3)
+                            {
+                                <span class="badge bg-secondary">+@(system.Tags.Count - 3)</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@if (selectedSystem != null)
+{
+    <div class="modal" tabindex="-1" style="display:block; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title fw-bold mb-1">@selectedSystem.Title</h5>
+                        <span class="badge status-badge status-@selectedSystem.Status.ToLower()">@selectedSystem.Status</span>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CloseDetails"></button>
+                </div>
+                <div class="modal-body">
+                    @if (selectedSystem.MediaItems.Any())
+                    {
+                        <div id="systemCarousel" class="custom-carousel mb-4">
+                            <div class="carousel-content">
+                                @{
+                                    var currentItem = selectedSystem.MediaItems[currentMediaIndex];
+                                }
+                                @if (currentItem.Type == MediaType.Image)
+                                {
+                                    <img src="@currentItem.Url" class="d-block w-100" alt="@currentItem.Name">
+                                }
+                                else if (currentItem.Type == MediaType.Video)
+                                {
+                                    @if (IsYouTubeUrl(currentItem.Url))
+                                    {
+                                        <div class="ratio ratio-16x9">
+                                            <iframe src="@GetYouTubeEmbedUrl(currentItem.Url)" allowfullscreen></iframe>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="ratio ratio-16x9">
+                                            <video controls @key="currentItem.Url">
+                                                <source src="@currentItem.Url" type="video/mp4">
+                                            </video>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            @if (selectedSystem.MediaItems.Count > 1)
+                            {
+                                <div class="carousel-controls mt-2 d-flex justify-content-between">
+                                    <button class="btn btn-outline-primary" @onclick="PreviousMedia" disabled="@(currentMediaIndex == 0)">
+                                        <i class="fas fa-chevron-left"></i> Previous
+                                    </button>
+                                    <span class="align-self-center text-center">@currentItem.Name<br/>@(currentMediaIndex + 1) / @selectedSystem.MediaItems.Count</span>
+                                    <button class="btn btn-outline-primary" @onclick="NextMedia" disabled="@(currentMediaIndex == selectedSystem.MediaItems.Count - 1)">
+                                        Next <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    <h6 class="text-muted mb-3">Description</h6>
+                    <p>@selectedSystem.FullDescription</p>
+
+                    <h6 class="text-muted mt-4 mb-3">Assessment</h6>
+                    <div class="assessment-full mb-4">
+                        @foreach (var a in selectedSystem.Assessments)
+                        {
+                            <div class="assessment-full-row">
+                                <span class="assessment-full-label">@a.Name</span>
+                                <div class="assessment-full-track">
+                                    <div class="assessment-full-fill @GetScoreClass(a.Score)" style="width: @(a.Score * 10)%"></div>
+                                </div>
+                                <span class="assessment-full-score">@a.Score<span class="text-muted">/10</span></span>
+                            </div>
+                        }
+                    </div>
+
+                    <h6 class="text-muted mt-4 mb-3">Tags</h6>
+                    <div class="mb-3">
+                        @foreach (var tag in selectedSystem.Tags)
+                        {
+                            <span class="badge bg-secondary me-2 mb-2">@tag</span>
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @if (!string.IsNullOrEmpty(selectedSystem.SourceUrl))
+                    {
+                        <a href="@selectedSystem.SourceUrl" target="_blank" class="btn btn-outline-primary">
+                            <i class="fas fa-code-branch me-2"></i>View Source
+                        </a>
+                    }
+                    <button type="button" class="btn btn-secondary" @onclick="CloseDetails">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<LlmSystemInfo> systems = new();
+    private List<string> topTags = new();
+    private List<string> remainingTags = new();
+    private HashSet<string> selectedTags = new();
+    private List<string> allStatuses = new();
+    private HashSet<string> selectedStatuses = new();
+    private string searchTerm = "";
+    private LlmSystemInfo selectedSystem = null;
+    private bool isLoading = true;
+    private bool loadError = false;
+    private bool showAllTags = false;
+    private int currentMediaIndex = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSystems();
+    }
+
+    private async Task LoadSystems()
+    {
+        isLoading = true;
+        loadError = false;
+        try
+        {
+            var loaded = await Http.GetFromJsonAsync<List<LlmSystemInfo>>("AiLab/systems.json");
+            if (loaded == null)
+                throw new Exception("System data is null");
+
+            systems = loaded;
+            allStatuses = systems.Select(s => s.Status).Distinct().OrderBy(s => s).ToList();
+
+            var tagFrequency = systems
+                .SelectMany(s => s.Tags)
+                .GroupBy(t => t)
+                .Select(g => new { Tag = g.Key, Count = g.Count() })
+                .OrderByDescending(t => t.Count)
+                .ToList();
+
+            topTags = tagFrequency.Take(10).Select(t => t.Tag).ToList();
+            remainingTags = tagFrequency.Skip(10).Select(t => t.Tag).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading systems: {ex.Message}");
+            loadError = true;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private bool FilterSystem(LlmSystemInfo system)
+    {
+        var matchesSearch = string.IsNullOrEmpty(searchTerm) ||
+            system.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+            system.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase);
+
+        var matchesTags = selectedTags.Count == 0 || selectedTags.All(t => system.Tags.Contains(t));
+
+        var matchesStatus = selectedStatuses.Count == 0 || selectedStatuses.Contains(system.Status);
+
+        return matchesSearch && matchesTags && matchesStatus;
+    }
+
+    private void ToggleTag(string tag)
+    {
+        if (!selectedTags.Remove(tag))
+            selectedTags.Add(tag);
+    }
+
+    private void ToggleStatus(string status)
+    {
+        if (!selectedStatuses.Remove(status))
+            selectedStatuses.Add(status);
+    }
+
+    private void ToggleRemainingTags() => showAllTags = !showAllTags;
+
+    private void OpenDetails(LlmSystemInfo system)
+    {
+        selectedSystem = system;
+        currentMediaIndex = 0;
+    }
+
+    private void CloseDetails() => selectedSystem = null;
+
+    private void PreviousMedia()
+    {
+        if (currentMediaIndex > 0) currentMediaIndex--;
+    }
+
+    private void NextMedia()
+    {
+        if (selectedSystem != null && currentMediaIndex < selectedSystem.MediaItems.Count - 1)
+            currentMediaIndex++;
+    }
+
+    private static string GetScoreClass(int score) => score switch
+    {
+        < 4 => "score-low",
+        < 7 => "score-mid",
+        _ => "score-high"
+    };
+
+    private static string GetStatusColor(string status) => status.ToLower() switch
+    {
+        "active" => "success",
+        "experimental" => "warning",
+        "archived" => "secondary",
+        "abandoned" => "danger",
+        _ => "secondary"
+    };
+
+    private static bool IsYouTubeUrl(string url) =>
+        url.Contains("youtube.com") || url.Contains("youtu.be");
+
+    private static string GetYouTubeEmbedUrl(string url)
+    {
+        if (url.Contains("youtube.com/watch"))
+        {
+            var videoId = System.Web.HttpUtility.ParseQueryString(new Uri(url).Query)["v"];
+            return $"https://www.youtube.com/embed/{videoId}";
+        }
+        if (url.Contains("youtu.be"))
+        {
+            var videoId = new Uri(url).Segments.Last();
+            return $"https://www.youtube.com/embed/{videoId}";
+        }
+        return url;
+    }
+}

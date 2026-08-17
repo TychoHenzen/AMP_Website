@@ -299,21 +299,24 @@
             currentMediaIndex++;
     }
 
-    private static string GetScoreClass(int score) => score switch
+    private static string GetScoreClass(int score)
     {
-        < 4 => "score-low",
-        < 7 => "score-mid",
-        _ => "score-high"
-    };
+        if (score < 4) return "score-low";
+        if (score < 7) return "score-mid";
+        return "score-high";
+    }
 
-    private static string GetStatusColor(string status) => status.ToLower() switch
+    private static string GetStatusColor(string status)
     {
-        "active" => "success",
-        "experimental" => "warning",
-        "archived" => "secondary",
-        "abandoned" => "danger",
-        _ => "secondary"
-    };
+        switch (status.ToLower())
+        {
+            case "active": return "success";
+            case "experimental": return "warning";
+            case "archived": return "secondary";
+            case "abandoned": return "danger";
+            default: return "secondary";
+        }
+    }
 
     private static bool IsYouTubeUrl(string url) =>
         url.Contains("youtube.com") || url.Contains("youtu.be");
